@@ -368,10 +368,10 @@ function App() {
       setIsPrefetchingSessions(true)
       try {
         if (!prefetched_random_session) {
-          setPrefetchedRandomSession(generateRandom(dataset_bundle, 10))
+          setPrefetchedRandomSession(generateRandom(dataset_bundle, 50))
         }
         if (!prefetched_q1_session) {
-          setPrefetchedQ1Session(generateRandom(dataset_bundle, 10, ['Q1']))
+          setPrefetchedQ1Session(generateRandom(dataset_bundle, 50, ['Q1']))
         }
       } finally {
         if (!cancelled) {
@@ -446,13 +446,13 @@ function App() {
     if (!dataset_bundle) {
       return
     }
-    if (count === 10 && type_filter.length === 0 && prefetched_random_session && prefetched_random_session.length > 0) {
+    if (count === 50 && type_filter.length === 0 && prefetched_random_session && prefetched_random_session.length > 0) {
       startSession(prefetched_random_session)
       setPrefetchedRandomSession(null)
       return
     }
     if (
-      count === 10 &&
+      count === 50 &&
       type_filter.length === 1 &&
       type_filter[0] === 'Q1' &&
       prefetched_q1_session &&
@@ -777,7 +777,7 @@ function App() {
               <p className="hero_desc">覆盖 {overview_stats.covered_syndromes} / {syndromes.length} 个证型</p>
               {is_prefetching_sessions && <p className="hero_subtitle">正在后台预热练习题</p>}
             </div>
-            <button className="hero_button" onClick={() => startRandomSession(10)} disabled={!dataset_bundle || is_initializing}>
+            <button className="hero_button" onClick={() => startRandomSession(50)} disabled={!dataset_bundle || is_initializing}>
               随机刷题
             </button>
           </article>
@@ -802,7 +802,7 @@ function App() {
             <div className="quick_actions">
               <button
                 className="quick_btn quick_btn_random"
-                onClick={() => startRandomSession(10)}
+                onClick={() => startRandomSession(50)}
                 disabled={!dataset_bundle || is_initializing}
               >
                 随机刷题
@@ -812,7 +812,7 @@ function App() {
               </button>
               <button
                 className="quick_btn quick_btn_focus"
-                onClick={() => startRandomSession(10, ['Q1'])}
+                onClick={() => startRandomSession(50, ['Q1'])}
                 disabled={!dataset_bundle || is_initializing}
               >
                 Q1 专项突破
