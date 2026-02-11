@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
 import { getActiveDatasetSource, loadDataset, type DatasetBundle } from './data/dataset'
+import { generateCasesByDisease, generateRandomCases } from './engine/caseGenerator'
 import { generateByDisease, generateQuestion, generateRandom } from './engine/questionEngine'
 import { getAnswerRecords, getBookmarks, saveAnswerRecord, toggleBookmark } from './storage/localStore'
-import type { AnswerRecord, Bookmark, Question, QuestionType } from './types'
+import type { AnswerRecord, Bookmark, CaseExamSummary, CaseQuestion, CaseSelfRating, Question, QuestionType } from './types'
 import { pickOne, randomInt } from './utils/random'
 
 type Tab = 'dashboard' | 'library' | 'practice' | 'review' | 'stats'
-type SessionMode = 'practice' | 'exam'
+type SessionMode = 'practice' | 'exam' | 'case_exam' | 'case_practice'
 type ExamFinishReason = 'completed' | 'manual_submit' | 'time_up'
 
 interface SessionAnswerSummary {
@@ -33,8 +34,14 @@ interface ExamSummary {
 }
 
 const PRACTICE_QUESTION_SECONDS = 5 * 60
-const EXAM_TOTAL_SECONDS = 50 * 60
-const EXAM_QUESTION_COUNT = 2
+const CASE_EXAM_TOTAL_SECONDS = 60 * 60
+const CASE_EXAM_QUESTION_COUNT = 2
+const CASE_EXAM_PROMPTS = [
+  '1. 请写出中医病名诊断与证型诊断。',
+  '2. 请写出证机概要。',
+  '3. 请写出治法。',
+  '4. 请写出处方（方剂名称）。',
+]
 
 function getWeaknessStats(records: AnswerRecord[]) {
   const by_type = new Map<QuestionType, { correct: number; total: number }>()
@@ -114,12 +121,23 @@ function App() {
   const [library_sort, setLibrarySort] = useState<'default' | 'accuracy_desc' | 'accuracy_asc' | 'progress_desc' | 'progress_asc'>('default')
   const [review_type_filter, setReviewTypeFilter] = useState<'全部' | QuestionType>('全部')
   const [review_disease_filter, setReviewDiseaseFilter] = useState<'全部' | string>('全部')
+
+  // ── 病案论述题状态 ──
+  const [case_questions, setCaseQuestions] = useState<CaseQuestion[]>([])
+  const [case_index, setCaseIndex] = useState(0)
+  const [case_answer_visible, setCaseAnswerVisible] = useState(false)
+  const [case_ratings, setCaseRatings] = useState<Record<string, CaseSelfRating>>({})
+  const [case_exam_summary, setCaseExamSummary] = useState<CaseExamSummary | null>(null)
+
   const diseases = useMemo(() => dataset_bundle?.diseases ?? [], [dataset_bundle])
   const syndromes = useMemo(() => dataset_bundle?.syndromes ?? [], [dataset_bundle])
 
   const current_question = questions[current_index]
+  const current_case = case_questions[case_index] ?? null
   const progress = questions.length ? `${current_index + 1}/${questions.length}` : '0/0'
-  const is_exam_running = session_mode === 'exam' && exam_summary === null
+  const case_progress = case_questions.length ? `${case_index + 1}/${case_questions.length}` : '0/0'
+  const is_exam_running = (session_mode === 'exam' && exam_summary === null) || (session_mode === 'case_exam' && case_exam_summary === null)
+  const is_case_mode = session_mode === 'case_exam' || session_mode === 'case_practice'
   const disease_name_by_id = useMemo(() => {
     return new Map(diseases.map((item) => [item.disease_id, item.disease_name]))
   }, [diseases])
@@ -465,15 +483,35 @@ function App() {
     startSession(generateRandom(dataset_bundle, count, type_filter))
   }
 
-  function startExamSession() {
+  function startCaseExamSession() {
     if (!dataset_bundle) {
       return
     }
-    const exam_questions = generateRandom(dataset_bundle, EXAM_QUESTION_COUNT)
-    startSession(exam_questions, {
-      mode: 'exam',
-      total_seconds: EXAM_TOTAL_SECONDS,
-    })
+    const cases = generateRandomCases(dataset_bundle, CASE_EXAM_QUESTION_COUNT)
+    setCaseQuestions(cases)
+    setCaseIndex(0)
+    setCaseAnswerVisible(false)
+    setCaseRatings({})
+    setCaseExamSummary(null)
+    setSessionMode('case_exam')
+    setSessionStartedAt(now_timestamp())
+    setRemainingSeconds(CASE_EXAM_TOTAL_SECONDS)
+    setTab('practice')
+  }
+
+  function startCasePracticeByDisease(disease_id: string) {
+    if (!dataset_bundle) {
+      return
+    }
+    const cases = generateCasesByDisease(dataset_bundle, disease_id)
+    setCaseQuestions(cases)
+    setCaseIndex(0)
+    setCaseAnswerVisible(false)
+    setCaseRatings({})
+    setCaseExamSummary(null)
+    setSessionMode('case_practice')
+    setRemainingSeconds(0)
+    setTab('practice')
   }
 
   function startDiseaseSession(disease_id: string, count: number) {
@@ -503,7 +541,7 @@ function App() {
       accuracy,
       used_seconds:
         used_seconds_override ??
-        Math.max(0, Math.min(EXAM_TOTAL_SECONDS, Math.round((now_timestamp() - session_started_at) / 1000))),
+        Math.max(0, Math.round((now_timestamp() - session_started_at) / 1000)),
       finished_at: now_timestamp(),
       answers: answer_list,
     }
@@ -623,6 +661,66 @@ function App() {
     setTab('dashboard')
   }
 
+  /* ── 病案题导航 ── */
+
+  function revealCaseAnswer() {
+    setCaseAnswerVisible(true)
+  }
+
+  function rateCaseAnswer(rating: CaseSelfRating) {
+    if (!current_case) return
+    setCaseRatings((prev) => ({ ...prev, [current_case.id]: rating }))
+  }
+
+  function nextCaseQuestion() {
+    if (case_index + 1 >= case_questions.length) {
+      finishCaseExam('completed')
+      return
+    }
+    setCaseIndex((i) => i + 1)
+    setCaseAnswerVisible(false)
+  }
+
+  function finishCaseExam(reason: 'completed' | 'manual_submit' | 'time_up') {
+    const used_seconds = Math.max(0, Math.round((now_timestamp() - session_started_at) / 1000))
+    const rating_values = Object.values(case_ratings)
+    const mastered = rating_values.filter((r) => r === 'mastered').length
+    const partial = rating_values.filter((r) => r === 'partial').length
+    const failed = rating_values.filter((r) => r === 'failed').length
+    setCaseExamSummary({
+      reason,
+      total: case_questions.length,
+      reviewed: rating_values.length,
+      mastered,
+      partial,
+      failed,
+      used_seconds,
+      finished_at: now_timestamp(),
+      cases: case_questions,
+      ratings: case_ratings,
+    })
+  }
+
+  function submitCaseExamPaper() {
+    if (session_mode !== 'case_exam' || case_exam_summary) return
+    // 如果当前题未评分，先标记为未作答
+    if (current_case && !case_ratings[current_case.id]) {
+      setCaseRatings((prev) => ({ ...prev, [current_case.id]: 'failed' }))
+    }
+    finishCaseExam('manual_submit')
+  }
+
+  function closeCaseExamSummary() {
+    setSessionMode('practice')
+    setCaseExamSummary(null)
+    setCaseQuestions([])
+    setCaseIndex(0)
+    setCaseAnswerVisible(false)
+    setCaseRatings({})
+    setRemainingSeconds(PRACTICE_QUESTION_SECONDS)
+    setTab('dashboard')
+  }
+
   function navigateTab(next_tab: Tab) {
     if (is_exam_running && next_tab !== 'practice') {
       return
@@ -631,42 +729,62 @@ function App() {
   }
 
   useEffect(() => {
-    if (tab !== 'practice' || !current_question || submitted || exam_summary) {
+    // 选择题练习/考试计时
+    if (tab !== 'practice' || is_case_mode) {
+      // 不在此 effect 处理病案模式
+    } else if (current_question && !submitted && !exam_summary) {
+      const timer = window.setInterval(() => {
+        setRemainingSeconds((current) => {
+          if (current <= 1) {
+            window.clearInterval(timer)
+            setSubmitted(true)
+            void (async () => {
+              const timeout_at = now_timestamp()
+              const summary = await persistQuestionResult(current_question, null, timeout_at, true)
+              if (!summary) {
+                setSubmitted(false)
+                return
+              }
+
+              setSessionAnswers((current_answers) => {
+                const next_answers = {
+                  ...current_answers,
+                  [current_question.id]: summary,
+                }
+                if (session_mode === 'exam') {
+                  finishExam(next_answers, 'time_up', remaining_seconds)
+                }
+                return next_answers
+              })
+            })()
+            return 0
+          }
+          return current - 1
+        })
+      }, 1000)
+      return () => window.clearInterval(timer)
+    }
+    return undefined
+  }, [current_question, exam_summary, finishExam, is_case_mode, persistQuestionResult, remaining_seconds, session_mode, submitted, tab])
+
+  // 病案考试模式计时
+  useEffect(() => {
+    if (tab !== 'practice' || session_mode !== 'case_exam' || case_exam_summary) {
       return undefined
     }
-
     const timer = window.setInterval(() => {
       setRemainingSeconds((current) => {
         if (current <= 1) {
           window.clearInterval(timer)
-          setSubmitted(true)
-          void (async () => {
-            const timeout_at = now_timestamp()
-            const summary = await persistQuestionResult(current_question, null, timeout_at, true)
-            if (!summary) {
-              setSubmitted(false)
-              return
-            }
-
-            setSessionAnswers((current_answers) => {
-              const next_answers = {
-                ...current_answers,
-                [current_question.id]: summary,
-              }
-              if (session_mode === 'exam') {
-                finishExam(next_answers, 'time_up', EXAM_TOTAL_SECONDS)
-              }
-              return next_answers
-            })
-          })()
+          finishCaseExam('time_up')
           return 0
         }
         return current - 1
       })
     }, 1000)
-
     return () => window.clearInterval(timer)
-  }, [current_question, exam_summary, finishExam, persistQuestionResult, session_mode, submitted, tab])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab, session_mode, case_exam_summary])
 
   async function handleToggleBookmark() {
     if (!current_question) {
@@ -819,10 +937,10 @@ function App() {
               </button>
               <button
                 className="quick_btn quick_btn_exam"
-                onClick={startExamSession}
+                onClick={startCaseExamSession}
                 disabled={!dataset_bundle || is_initializing}
               >
-                模拟考试（2题 / 50分钟）
+                模拟考试（病案论述 · 2题 / 60分钟）
               </button>
             </div>
           </article>
@@ -919,7 +1037,14 @@ function App() {
                   onClick={() => startDiseaseSession(item.disease_id, item.syndrome_count)}
                   disabled={!dataset_bundle || is_initializing}
                 >
-                  开始
+                  选择题
+                </button>
+                <button
+                  className="start_btn start_btn_case"
+                  onClick={() => startCasePracticeByDisease(item.disease_id)}
+                  disabled={!dataset_bundle || is_initializing}
+                >
+                  病案题
                 </button>
               </div>
               <div className="progress_row">
@@ -939,7 +1064,228 @@ function App() {
 
       {tab === 'practice' && (
         <section className="panel">
-          {exam_summary ? (
+          {/* ═══ 病案论述题：考试总结 ═══ */}
+          {is_case_mode && case_exam_summary ? (
+            <article className="card exam_summary_card">
+              <h2 className="card_title">
+                {session_mode === 'case_exam' ? '病案考试已结束' : '病案练习已完成'}
+              </h2>
+              <div className="exam_summary_grid">
+                <div className="metric_card">
+                  <span className="metric_label">总题数</span>
+                  <span className="metric_value">{case_exam_summary.total}</span>
+                </div>
+                <div className="metric_card">
+                  <span className="metric_label">已评估</span>
+                  <span className="metric_value">{case_exam_summary.reviewed}</span>
+                </div>
+                <div className="metric_card metric_card_green">
+                  <span className="metric_label">掌握</span>
+                  <span className="metric_value">{case_exam_summary.mastered}</span>
+                </div>
+                <div className="metric_card metric_card_yellow">
+                  <span className="metric_label">部分掌握</span>
+                  <span className="metric_value">{case_exam_summary.partial}</span>
+                </div>
+                <div className="metric_card metric_card_red">
+                  <span className="metric_label">未掌握</span>
+                  <span className="metric_value">{case_exam_summary.failed}</span>
+                </div>
+                {session_mode === 'case_exam' && (
+                  <div className="metric_card">
+                    <span className="metric_label">用时</span>
+                    <span className="metric_value">{formatDuration(case_exam_summary.used_seconds)}</span>
+                  </div>
+                )}
+              </div>
+              {session_mode === 'case_exam' && (
+                <p className="hint_text">
+                  交卷方式：
+                  {case_exam_summary.reason === 'completed'
+                    ? '完成全部题目'
+                    : case_exam_summary.reason === 'manual_submit'
+                      ? '手动交卷'
+                      : '考试超时自动交卷'}
+                </p>
+              )}
+
+              {/* 考试结束后逐题回顾（含标准答案） */}
+              <div className="case_review_list">
+                {case_exam_summary.cases.map((c, idx) => {
+                  const rating = case_exam_summary.ratings[c.id]
+                  return (
+                    <div key={c.id} className="case_review_item">
+                      <h3 className="case_review_title">第 {idx + 1} 题</h3>
+                      <p className="case_text_block">{c.case_text}</p>
+                      <div className="case_answer_card">
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">诊断</span>
+                          <span>{c.standard_answer.diagnosis_text}</span>
+                        </div>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">证机概要</span>
+                          <span>{c.standard_answer.pathogenesis}</span>
+                        </div>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">治法</span>
+                          <span>{c.standard_answer.treatment_method}</span>
+                        </div>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">处方</span>
+                          <span>{c.standard_answer.prescription}</span>
+                        </div>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">辨证要点</span>
+                          <ul className="case_key_list">
+                            {c.standard_answer.key_symptom_analysis.map((k) => (
+                              <li key={k}>{k}</li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">完整证候</span>
+                          <span>{c.standard_answer.full_symptoms}</span>
+                        </div>
+                      </div>
+                      {rating && (
+                        <span className={`case_rating_tag case_rating_${rating}`}>
+                          {rating === 'mastered' ? '掌握' : rating === 'partial' ? '部分掌握' : '未掌握'}
+                        </span>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+
+              <div className="action_row">
+                <button className="primary_btn" onClick={closeCaseExamSummary}>返回首页</button>
+              </div>
+            </article>
+
+          /* ═══ 病案论述题：答题中 ═══ */
+          ) : is_case_mode && current_case ? (
+            <>
+              <div className="practice_head">
+                <div className="progress">
+                  <span>
+                    {session_mode === 'case_exam' ? `病案考试 ${case_progress}` : `病案练习 ${case_progress}`}
+                  </span>
+                  <div className="practice_right_meta">
+                    <span className="badge">论述题</span>
+                    {session_mode === 'case_exam' && (
+                      <span
+                        className={remaining_seconds <= 300 ? 'timer_badge timer_badge_warning' : 'timer_badge'}
+                      >
+                        {timer_text}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="progress_track">
+                  <div
+                    className="progress_fill"
+                    style={{ width: `${((case_index + 1) / Math.max(case_questions.length, 1)) * 100}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* 病案正文 */}
+              <article className="card case_card">
+                <h3 className="case_card_title">病案</h3>
+                <p className="case_text_block">{current_case.case_text}</p>
+
+                <div className="case_prompt_block">
+                  <h4 className="case_prompt_title">请根据以上病案，回答以下问题：</h4>
+                  {CASE_EXAM_PROMPTS.map((prompt) => (
+                    <p key={prompt} className="case_prompt_item">{prompt}</p>
+                  ))}
+                </div>
+
+                {/* 操作按钮 */}
+                {!case_answer_visible ? (
+                  <div className="action_row">
+                    <button className="primary_btn" onClick={revealCaseAnswer}>
+                      我已作答，查看标准答案
+                    </button>
+                    {session_mode === 'case_exam' && (
+                      <>
+                        <button className="secondary_btn" onClick={nextCaseQuestion}>
+                          {case_index + 1 >= case_questions.length ? '完成' : '跳过，下一题'}
+                        </button>
+                        <button className="secondary_btn" onClick={submitCaseExamPaper}>交卷</button>
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <>
+                    {/* 标准答案展示 */}
+                    <div className="case_answer_card">
+                      <h4 className="case_answer_heading">标准答案</h4>
+                      <div className="case_answer_row">
+                        <span className="case_answer_label">中医诊断</span>
+                        <span className="case_answer_value">{current_case.standard_answer.diagnosis_text}</span>
+                      </div>
+                      <div className="case_answer_row">
+                        <span className="case_answer_label">证机概要</span>
+                        <span className="case_answer_value">{current_case.standard_answer.pathogenesis}</span>
+                      </div>
+                      <div className="case_answer_row">
+                        <span className="case_answer_label">治法</span>
+                        <span className="case_answer_value">{current_case.standard_answer.treatment_method}</span>
+                      </div>
+                      <div className="case_answer_row">
+                        <span className="case_answer_label">处方</span>
+                        <span className="case_answer_value">{current_case.standard_answer.prescription}</span>
+                      </div>
+                      <div className="case_answer_section">
+                        <span className="case_answer_label">辨证要点</span>
+                        <ul className="case_key_list">
+                          {current_case.standard_answer.key_symptom_analysis.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="case_answer_section">
+                        <span className="case_answer_label">完整证候</span>
+                        <p className="case_full_symptoms">{current_case.standard_answer.full_symptoms}</p>
+                      </div>
+                    </div>
+
+                    {/* 自我评估 */}
+                    <div className="case_rating_row">
+                      <span className="case_rating_label">自我评估：</span>
+                      <button
+                        className={`case_rating_btn case_rating_btn_mastered ${case_ratings[current_case.id] === 'mastered' ? 'active' : ''}`}
+                        onClick={() => rateCaseAnswer('mastered')}
+                      >
+                        掌握
+                      </button>
+                      <button
+                        className={`case_rating_btn case_rating_btn_partial ${case_ratings[current_case.id] === 'partial' ? 'active' : ''}`}
+                        onClick={() => rateCaseAnswer('partial')}
+                      >
+                        部分掌握
+                      </button>
+                      <button
+                        className={`case_rating_btn case_rating_btn_failed ${case_ratings[current_case.id] === 'failed' ? 'active' : ''}`}
+                        onClick={() => rateCaseAnswer('failed')}
+                      >
+                        未掌握
+                      </button>
+                    </div>
+
+                    <button className="primary_btn full_btn" onClick={nextCaseQuestion}>
+                      {case_index + 1 >= case_questions.length
+                        ? (session_mode === 'case_exam' ? '完成考试' : '完成本轮练习')
+                        : '下一题'}
+                    </button>
+                  </>
+                )}
+              </article>
+            </>
+
+          /* ═══ MCQ 选择题模式（保持不变） ═══ */
+          ) : exam_summary ? (
             <article className="card exam_summary_card">
               <h2 className="card_title">考试已结束</h2>
               <div className="exam_summary_grid">

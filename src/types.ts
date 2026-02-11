@@ -84,3 +84,46 @@ export interface Bookmark {
   question_snapshot: Question
   created_at: number
 }
+
+/* ──── 病案论述题 ──── */
+
+export interface CaseStandardAnswer {
+  disease_name: string
+  syndrome_name: string
+  diagnosis_text: string
+  pathogenesis: string
+  treatment_method: string
+  prescription: string
+  key_symptom_analysis: string[]
+  full_symptoms: string
+}
+
+export interface CaseQuestion {
+  id: string
+  syndrome_id: string
+  disease_id: string
+  case_text: string
+  standard_answer: CaseStandardAnswer
+}
+
+export type CaseSelfRating = 'mastered' | 'partial' | 'failed'
+
+export interface CaseAnswerRecord {
+  case_id: string
+  syndrome_id: string
+  disease_id: string
+  self_rating: CaseSelfRating
+}
+
+export interface CaseExamSummary {
+  reason: 'completed' | 'manual_submit' | 'time_up'
+  total: number
+  reviewed: number
+  mastered: number
+  partial: number
+  failed: number
+  used_seconds: number
+  finished_at: number
+  cases: CaseQuestion[]
+  ratings: Record<string, CaseSelfRating>
+}
