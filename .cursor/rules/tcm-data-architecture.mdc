@@ -1,0 +1,18 @@
+---
+description: TCM dataset layering and source-of-truth structure
+alwaysApply: true
+---
+
+# TCM Data Architecture
+
+- Keep a 3-layer model:
+  - `source`: editable split files (by disease)
+  - `build`: scripts that merge/validate
+  - `runtime`: app-consumed aggregated JSON
+- Avoid direct large-file editing as first choice. Prefer editing source shards, then build.
+- Runtime reads from stable files (`src/data/diseases.json`, `src/data/syndromes.json`).
+- Import previews stay under `src/data/imports/` and must not silently replace runtime data.
+- Any schema change must update:
+  - `src/types.ts`
+  - validator logic in `scripts/validate-data.mjs`
+  - affected import/build scripts

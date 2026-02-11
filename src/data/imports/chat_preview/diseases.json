@@ -1,0 +1,557 @@
+[
+  {
+    "disease_id": "D001",
+    "disease_name": "感冒",
+    "key_symptoms": "恶寒、发热",
+    "key_pulse": "脉浮",
+    "category": "内科",
+    "related_diseases": ["D002"],
+    "syndromes": ["D001_S01", "D001_S02", "D001_S03", "D001_S04", "D001_S05"]
+  },
+  {
+    "disease_id": "D002",
+    "disease_name": "咳嗽",
+    "key_symptoms": "咳嗽、咳痰",
+    "key_pulse": "脉象变化多端",
+    "category": "内科",
+    "related_diseases": ["D001"],
+    "syndromes": ["D002_S01", "D002_S02", "D002_S03", "D002_S04", "D002_S05", "D002_S06", "D002_S07"]
+  },
+  {
+    "disease_id": "D003",
+    "disease_name": "哮病",
+    "key_symptoms": "哮鸣、喘憋",
+    "key_pulse": "脉弦",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D003_S01", "D003_S02", "D003_S03", "D003_S04", "D003_S05", "D003_S06", "D003_S07", "D003_S08"]
+  },
+  {
+    "disease_id": "D004",
+    "disease_name": "喘证",
+    "key_symptoms": "呼吸困难、喘息",
+    "key_pulse": "脉数或弦滑",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D004_S01", "D004_S02", "D004_S03", "D004_S04", "D004_S05", "D004_S06", "D004_S07", "D004_S08"]
+  },
+  {
+    "disease_id": "D005",
+    "disease_name": "肺痨",
+    "key_symptoms": "咳嗽、咳血、潮热、盗汗",
+    "key_pulse": "脉细数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D005_S01", "D005_S02", "D005_S03", "D005_S04"]
+  },
+  {
+    "disease_id": "D006",
+    "disease_name": "肺胀",
+    "key_symptoms": "胸部膨满、喘咳",
+    "key_pulse": "脉滑或数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D006_S01", "D006_S02", "D006_S03", "D006_S04", "D006_S05", "D006_S06", "D006_S07"]
+  },
+  {
+    "disease_id": "D007",
+    "disease_name": "心悸",
+    "key_symptoms": "心中悸动、惊惕不安",
+    "key_pulse": "脉细数或结代",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D007_S01", "D007_S02", "D007_S03", "D007_S04", "D007_S05", "D007_S06", "D007_S07"]
+  },
+  {
+    "disease_id": "D008",
+    "disease_name": "胸痹",
+    "key_symptoms": "胸部闷痛、胸痛彻背",
+    "key_pulse": "脉弦涩或沉细",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D008_S01", "D008_S02", "D008_S03", "D008_S04", "D008_S05", "D008_S06", "D008_S07"]
+  },
+  {
+    "disease_id": "D009",
+    "disease_name": "不寐",
+    "key_symptoms": "入寐困难、寐而易醒",
+    "key_pulse": "脉细数或弦数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D009_S01", "D009_S02", "D009_S03", "D009_S04", "D009_S05"]
+  },
+  {
+    "disease_id": "D010",
+    "disease_name": "痫病",
+    "key_symptoms": "突然昏倒、不省人事",
+    "key_pulse": "脉弦滑或沉细",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D010_S01", "D010_S02", "D010_S03", "D010_S04", "D010_S05", "D010_S06"]
+  },
+  {
+    "disease_id": "D011",
+    "disease_name": "胃痛",
+    "key_symptoms": "胃脘疼痛、上消化道症状",
+    "key_pulse": "脉弦或滑",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D011_S01", "D011_S02", "D011_S03", "D011_S04", "D011_S05", "D011_S06", "D011_S07", "D011_S08"]
+  },
+  {
+    "disease_id": "D012",
+    "disease_name": "呕吐",
+    "key_symptoms": "呕吐为主、常有诱因",
+    "key_pulse": "脉滑或弦",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D012_S01", "D012_S02", "D012_S03", "D012_S04", "D012_S05", "D012_S06"]
+  },
+  {
+    "disease_id": "D013",
+    "disease_name": "腹痛",
+    "key_symptoms": "腹痛、无泄泻",
+    "key_pulse": "脉弦或沉紧",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D013_S01", "D013_S02", "D013_S03", "D013_S04", "D013_S05", "D013_S06"]
+  },
+  {
+    "disease_id": "D014",
+    "disease_name": "泄泻",
+    "key_symptoms": "大便稀溏、次数增多",
+    "key_pulse": "脉濡缓或滑数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D014_S01", "D014_S02", "D014_S03", "D014_S04", "D014_S05", "D014_S06"]
+  },
+  {
+    "disease_id": "D015",
+    "disease_name": "痢疾",
+    "key_symptoms": "腹痛、里急后重、下痢脓血",
+    "key_pulse": "脉滑数或沉细",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D015_S01", "D015_S02", "D015_S03", "D015_S04", "D015_S05", "D015_S06"]
+  },
+  {
+    "disease_id": "D016",
+    "disease_name": "便秘",
+    "key_symptoms": "大便干结、排出艰难",
+    "key_pulse": "脉滑数或沉迟",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D016_S01", "D016_S02", "D016_S03", "D016_S04", "D016_S05", "D016_S06", "D016_S07"]
+  },
+  {
+    "disease_id": "D017",
+    "disease_name": "胁痛",
+    "key_symptoms": "一侧或两侧胁肋部疼痛",
+    "key_pulse": "脉弦或沉涩",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D017_S01", "D017_S02", "D017_S03", "D017_S04"]
+  },
+  {
+    "disease_id": "D018",
+    "disease_name": "黄疸",
+    "key_symptoms": "目黄、肤黄、小便黄",
+    "key_pulse": "脉弦数或濡缓",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D018_S01", "D018_S02", "D018_S03", "D018_S04", "D018_S05", "D018_S06", "D018_S07", "D018_S08", "D018_S09"]
+  },
+  {
+    "disease_id": "D019",
+    "disease_name": "鼓胀",
+    "key_symptoms": "腹部胀大如鼓、脉络暴露",
+    "key_pulse": "脉弦或沉细",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D019_S01", "D019_S02", "D019_S03", "D019_S04", "D019_S05", "D019_S06", "D019_S07", "D019_S08", "D019_S09"]
+  },
+  {
+    "disease_id": "D020",
+    "disease_name": "头痛",
+    "key_symptoms": "自觉头痛为主",
+    "key_pulse": "脉浮紧或弦数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D020_S01", "D020_S02", "D020_S03", "D020_S04", "D020_S05", "D020_S06", "D020_S07", "D020_S08", "D020_S09"]
+  },
+  {
+    "disease_id": "D021",
+    "disease_name": "眩晕",
+    "key_symptoms": "头晕目眩、视物旋转",
+    "key_pulse": "脉弦或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D021_S01", "D021_S02", "D021_S03", "D021_S04", "D021_S05"]
+  },
+  {
+    "disease_id": "D022",
+    "disease_name": "中风",
+    "key_symptoms": "半身不遂、口舌歪斜",
+    "key_pulse": "脉弦滑或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D022_S01", "D022_S02", "D022_S03", "D022_S04", "D022_S05", "D022_S06", "D022_S07", "D022_S08", "D022_S09"]
+  },
+  {
+    "disease_id": "D023",
+    "disease_name": "痴呆",
+    "key_symptoms": "善忘、智能缺失、生活失能",
+    "key_pulse": "脉沉细或弦滑",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D023_S01", "D023_S02", "D023_S03", "D023_S04", "D023_S05", "D023_S06", "D023_S07"]
+  },
+  {
+    "disease_id": "D024",
+    "disease_name": "颤证",
+    "key_symptoms": "头部或肢体颤抖",
+    "key_pulse": "脉弦或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D024_S01", "D024_S02", "D024_S03", "D024_S04", "D024_S05"]
+  },
+  {
+    "disease_id": "D025",
+    "disease_name": "水肿",
+    "key_symptoms": "眼睑或下肢浮肿，继及全身",
+    "key_pulse": "脉浮滑或沉细",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D025_S01", "D025_S02", "D025_S03", "D025_S04", "D025_S05", "D025_S06", "D025_S07"]
+  },
+  {
+    "disease_id": "D026",
+    "disease_name": "淋证",
+    "key_symptoms": "小便频数短涩、淋沥刺痛",
+    "key_pulse": "脉滑数或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D026_S01", "D026_S02", "D026_S03", "D026_S04", "D026_S05", "D026_S06"]
+  },
+  {
+    "disease_id": "D027",
+    "disease_name": "郁证",
+    "key_symptoms": "忧郁不畅、情绪不宁、胸胁胀痛",
+    "key_pulse": "脉弦或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D027_S01", "D027_S02", "D027_S03", "D027_S04", "D027_S05", "D027_S06"]
+  },
+  {
+    "disease_id": "D028",
+    "disease_name": "血证",
+    "key_symptoms": "血液不循常道，出血性疾患",
+    "key_pulse": "脉数或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": [
+      "D028_S01",
+      "D028_S02",
+      "D028_S03",
+      "D028_S04",
+      "D028_S05",
+      "D028_S06",
+      "D028_S07",
+      "D028_S08",
+      "D028_S09",
+      "D028_S10",
+      "D028_S11",
+      "D028_S12",
+      "D028_S13",
+      "D028_S14",
+      "D028_S15",
+      "D028_S16",
+      "D028_S17",
+      "D028_S18",
+      "D028_S19",
+      "D028_S20",
+      "D028_S21",
+      "D028_S22",
+      "D028_S23"
+    ]
+  },
+  {
+    "disease_id": "D029",
+    "disease_name": "消渴",
+    "key_symptoms": "多饮、多食、多尿",
+    "key_pulse": "脉洪数或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D029_S01", "D029_S02", "D029_S03", "D029_S04", "D029_S05"]
+  },
+  {
+    "disease_id": "D030",
+    "disease_name": "瘿病",
+    "key_symptoms": "颈前喉结两旁结块肿大",
+    "key_pulse": "脉弦或细数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D030_S01", "D030_S02", "D030_S03", "D030_S04"]
+  },
+  {
+    "disease_id": "D031",
+    "disease_name": "内伤发热",
+    "key_symptoms": "低热或自觉发热",
+    "key_pulse": "脉细数或弦涩",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D031_S01", "D031_S02", "D031_S03", "D031_S04", "D031_S05", "D031_S06", "D031_S07"]
+  },
+  {
+    "disease_id": "D032",
+    "disease_name": "癌病",
+    "key_symptoms": "肿块坚硬增大，伴恶液质表现",
+    "key_pulse": "脉细涩或弦数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D032_S01", "D032_S02", "D032_S03", "D032_S04", "D032_S05", "D032_S06"]
+  },
+  {
+    "disease_id": "D033",
+    "disease_name": "痹证",
+    "key_symptoms": "肢体关节肌肉疼痛，屈伸不利",
+    "key_pulse": "脉浮缓、弦紧或滑数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D033_S01", "D033_S02", "D033_S03", "D033_S04", "D033_S05", "D033_S06", "D033_S07", "D033_S08"]
+  },
+  {
+    "disease_id": "D034",
+    "disease_name": "痿证",
+    "key_symptoms": "肢体筋脉弛缓，软弱无力或肌肉萎缩",
+    "key_pulse": "脉细数、濡数或细涩",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D034_S01", "D034_S02", "D034_S03", "D034_S04", "D034_S05"]
+  },
+  {
+    "disease_id": "D035",
+    "disease_name": "腰痛",
+    "key_symptoms": "腰痛为主，转侧不利或酸软无力",
+    "key_pulse": "脉沉迟、濡数、涩或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D035_S01", "D035_S02", "D035_S03", "D035_S04", "D035_S05"]
+  },
+  {
+    "disease_id": "D036",
+    "disease_name": "乳癖",
+    "key_symptoms": "乳房肿块疼痛，与月经及情志变化相关",
+    "key_pulse": "脉弦滑或沉细",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D036_S01", "D036_S02"]
+  },
+  {
+    "disease_id": "D037",
+    "disease_name": "湿疮",
+    "key_symptoms": "对称分布，多形损害，剧烈瘙痒，倾向湿润",
+    "key_pulse": "脉滑数、濡缓或弦细",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D037_S01", "D037_S02", "D037_S03"]
+  },
+  {
+    "disease_id": "D038",
+    "disease_name": "痔",
+    "key_symptoms": "大便出血、痔核脱出、肛周潮湿瘙痒",
+    "key_pulse": "脉数、弦数、弦细涩或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D038_S01", "D038_S02", "D038_S03", "D038_S04"]
+  },
+  {
+    "disease_id": "D039",
+    "disease_name": "脱疽",
+    "key_symptoms": "四肢末端间歇性跛行，趾指坏疽或脱落",
+    "key_pulse": "脉沉细、弦涩、弦数或细无力",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D039_S01", "D039_S02", "D039_S03", "D039_S04", "D039_S05"]
+  },
+  {
+    "disease_id": "D040",
+    "disease_name": "精癃",
+    "key_symptoms": "尿频夜尿增多，排尿困难",
+    "key_pulse": "脉滑数、细弱、弦涩或沉细",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D040_S01", "D040_S02", "D040_S03", "D040_S04", "D040_S05"]
+  },
+  {
+    "disease_id": "D041",
+    "disease_name": "肠痈",
+    "key_symptoms": "转移性右下腹疼痛，压痛反跳痛",
+    "key_pulse": "脉弦滑、弦数、洪数或细数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D041_S01", "D041_S02", "D041_S03"]
+  },
+  {
+    "disease_id": "D042",
+    "disease_name": "崩漏",
+    "key_symptoms": "周期、经期及经量严重紊乱",
+    "key_pulse": "脉滑数、细数、沉细、弱或涩",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D042_S01", "D042_S02", "D042_S03", "D042_S04", "D042_S05", "D042_S06"]
+  },
+  {
+    "disease_id": "D043",
+    "disease_name": "闭经",
+    "key_symptoms": "年届应行月经而未行，或经闭6个月以上",
+    "key_pulse": "脉沉弱、细数、沉涩、滑或沉紧",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D043_S01", "D043_S02", "D043_S03", "D043_S04", "D043_S05", "D043_S06"]
+  },
+  {
+    "disease_id": "D044",
+    "disease_name": "痛经",
+    "key_symptoms": "随月经周期发作的小腹疼痛",
+    "key_pulse": "脉弦涩、沉紧、弦数或细弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D044_S01", "D044_S02", "D044_S03", "D044_S04", "D044_S05"]
+  },
+  {
+    "disease_id": "D045",
+    "disease_name": "绝经前后诸证",
+    "key_symptoms": "45~55岁经断前后烘热汗出、烦躁易怒、潮热面红",
+    "key_pulse": "脉细数、沉细无力或沉弱",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D045_S01", "D045_S02", "D045_S03"]
+  },
+  {
+    "disease_id": "D046",
+    "disease_name": "带下病",
+    "key_symptoms": "白带色、质、气味异常，量过多或过少",
+    "key_pulse": "脉缓弱、沉迟、细数、滑数或细涩",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D046_S01", "D046_S02", "D046_S03", "D046_S04", "D046_S05", "D046_S06", "D046_S07"]
+  },
+  {
+    "disease_id": "D047",
+    "disease_name": "胎漏、胎动不安",
+    "key_symptoms": "妊娠期少量阴道出血，伴或不伴腰腹痛",
+    "key_pulse": "脉沉滑尺弱、细滑、滑数或沉涩",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D047_S01", "D047_S02", "D047_S03", "D047_S04", "D047_S05"]
+  },
+  {
+    "disease_id": "D048",
+    "disease_name": "产后发热",
+    "key_symptoms": "产褥期内发热",
+    "key_pulse": "脉数有力、浮、弦涩或虚微数",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D048_S01", "D048_S02", "D048_S03", "D048_S04"]
+  },
+  {
+    "disease_id": "D049",
+    "disease_name": "不孕症",
+    "key_symptoms": "已婚同居1年以上未避孕而未孕",
+    "key_pulse": "脉沉细、沉弱、弦或滑",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D049_S01", "D049_S02", "D049_S03", "D049_S04", "D049_S05", "D049_S06"]
+  },
+  {
+    "disease_id": "D050",
+    "disease_name": "癥瘕",
+    "key_symptoms": "妇女下腹胞中结块，伴痛胀满或出血",
+    "key_pulse": "脉沉弦涩、弦紧、弦滑数或细涩",
+    "category": "内科",
+    "related_diseases": [],
+    "syndromes": ["D050_S01", "D050_S02", "D050_S03", "D050_S04", "D050_S05", "D050_S06"]
+  },
+  {
+    "disease_id": "D051",
+    "disease_name": "肺炎喘嗽",
+    "key_symptoms": "小儿起病急，发热咳嗽气喘鼻扇痰鸣",
+    "key_pulse": "脉浮紧、浮数、滑数、细数或细弱疾数",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D051_S01", "D051_S02", "D051_S03", "D051_S04", "D051_S05", "D051_S06", "D051_S07", "D051_S08"]
+  },
+  {
+    "disease_id": "D052",
+    "disease_name": "小儿泄泻",
+    "key_symptoms": "小儿大便次数增多，粪质稀薄或如水样",
+    "key_pulse": "脉浮紧、滑数、细弱、细数或沉细欲绝",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D052_S01", "D052_S02", "D052_S03", "D052_S04", "D052_S05", "D052_S06", "D052_S07"]
+  },
+  {
+    "disease_id": "D053",
+    "disease_name": "积滞",
+    "key_symptoms": "小儿伤乳伤食后不思乳食，食而不化",
+    "key_pulse": "脉弦滑或细弱",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D053_S01", "D053_S02"]
+  },
+  {
+    "disease_id": "D054",
+    "disease_name": "鹅口疮",
+    "key_symptoms": "小儿口腔黏膜及舌面散在或满布白屑",
+    "key_pulse": "脉滑数或细数",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D054_S01", "D054_S02"]
+  },
+  {
+    "disease_id": "D055",
+    "disease_name": "水痘",
+    "key_symptoms": "小儿丘疹、疱疹、结痂并见，皮疹瘙痒",
+    "key_pulse": "脉浮数或数有力",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D055_S01", "D055_S02"]
+  },
+  {
+    "disease_id": "D056",
+    "disease_name": "痄腮",
+    "key_symptoms": "小儿发热，耳下腮部肿胀疼痛",
+    "key_pulse": "脉浮数、滑数、弦数或数",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D056_S01", "D056_S02", "D056_S03", "D056_S04"]
+  },
+  {
+    "disease_id": "D057",
+    "disease_name": "手足口病",
+    "key_symptoms": "小儿发热伴手掌、足跖、口腔、臀部疱疹",
+    "key_pulse": "脉浮数或滑数",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D057_S01", "D057_S02"]
+  },
+  {
+    "disease_id": "D058",
+    "disease_name": "麻疹",
+    "key_symptoms": "小儿发热咳嗽，口腔颊黏膜可见麻疹黏膜斑",
+    "key_pulse": "脉浮数、数有力、细无力或滑数",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D058_S01", "D058_S02", "D058_S03", "D058_S04", "D058_S05", "D058_S06"]
+  },
+  {
+    "disease_id": "D059",
+    "disease_name": "紫癜",
+    "key_symptoms": "小儿血液溢于皮肤黏膜之下，见瘀点瘀斑",
+    "key_pulse": "脉浮数、数有力、细无力或细数",
+    "category": "儿科",
+    "related_diseases": [],
+    "syndromes": ["D059_S01", "D059_S02", "D059_S03", "D059_S04"]
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "disease_id": "D001",
+    "disease_name": "感冒",
+    "key_symptoms": "恶寒、发热",
+    "key_pulse": "脉浮",
+    "category": "内科",
+    "related_diseases": ["D002"],
+    "syndromes": ["D001_S01", "D001_S02", "D001_S03", "D001_S04", "D001_S05"]
+  },
+  {
+    "disease_id": "D002",
+    "disease_name": "咳嗽",
+    "key_symptoms": "咳嗽、咳痰",
+    "key_pulse": "脉象变化多端",
+    "category": "内科",
+    "related_diseases": ["D001"],
+    "syndromes": ["D002_S01", "D002_S02"]
+  }
+]

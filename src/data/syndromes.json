@@ -1,0 +1,209 @@
+[
+  {
+    "syndrome_id": "D001_S01",
+    "disease_id": "D001",
+    "syndrome_name": "风寒感冒",
+    "symptoms": {
+      "full_text": "恶寒重，发热轻，无汗，头痛，肢节酸疼，鼻塞声重，或鼻痒喷嚏，时流清涕，咽痒，咳嗽，咳痰稀薄色白，口不渴或渴喜热饮，舌苔薄白而润，脉浮或浮紧。",
+      "items": [
+        { "text": "恶寒重", "is_key": true },
+        { "text": "发热轻", "is_key": true },
+        { "text": "无汗", "is_key": true },
+        { "text": "头痛", "is_key": false },
+        { "text": "肢节酸疼", "is_key": false },
+        { "text": "鼻塞声重", "is_key": false },
+        { "text": "或鼻痒喷嚏", "is_key": false },
+        { "text": "时流清涕", "is_key": true },
+        { "text": "咽痒", "is_key": false },
+        { "text": "咳嗽", "is_key": false },
+        { "text": "咳痰稀薄色白", "is_key": true },
+        { "text": "口不渴或渴喜热饮", "is_key": true },
+        { "text": "舌苔薄白而润", "is_key": true },
+        { "text": "脉浮或浮紧", "is_key": true }
+      ]
+    },
+    "pathogenesis": "风寒外束，卫阳被郁，腠理闭塞，肺气不宣。",
+    "treatment_method": "辛温解表",
+    "prescription": { "primary": "荆防败毒散", "alternative": "荆防达表汤" },
+    "key_symptom_analysis": [
+      "恶寒重、发热轻 -> 风寒束表，卫阳被郁",
+      "无汗 -> 腠理闭塞",
+      "清涕、痰稀薄色白 -> 寒邪犯肺，津液未伤",
+      "口不渴或渴喜热饮 -> 无热伤津之象",
+      "舌苔薄白而润，脉浮或浮紧 -> 风寒在表"
+    ]
+  },
+  {
+    "syndrome_id": "D001_S02",
+    "disease_id": "D001",
+    "syndrome_name": "风热感冒",
+    "symptoms": {
+      "full_text": "身热较著，微恶风，汗泄不畅，头胀痛，面赤，咳嗽，痰黏或黄，咽燥，或咽喉乳蛾红肿疼痛，鼻塞，流黄浊涕，口干欲饮，舌苔薄白微黄，舌边尖红，脉浮数。",
+      "items": [
+        { "text": "身热较著", "is_key": true },
+        { "text": "微恶风", "is_key": true },
+        { "text": "汗泄不畅", "is_key": true },
+        { "text": "头胀痛", "is_key": false },
+        { "text": "面赤", "is_key": false },
+        { "text": "咳嗽", "is_key": false },
+        { "text": "痰黏或黄", "is_key": true },
+        { "text": "咽燥", "is_key": false },
+        { "text": "或咽喉乳蛾红肿疼痛", "is_key": false },
+        { "text": "鼻塞", "is_key": false },
+        { "text": "流黄浊涕", "is_key": true },
+        { "text": "口干欲饮", "is_key": true },
+        { "text": "舌苔薄白微黄", "is_key": true },
+        { "text": "舌边尖红", "is_key": true },
+        { "text": "脉浮数", "is_key": true }
+      ]
+    },
+    "pathogenesis": "风热犯表，热郁肌腠，卫表失和，肺失清肃。",
+    "treatment_method": "辛凉解表",
+    "prescription": { "primary": "银翘散", "alternative": "葱豉桔梗汤" },
+    "key_symptom_analysis": [
+      "身热较著、微恶风 -> 风热犯表，热重于寒",
+      "汗泄不畅 -> 热郁肌腠",
+      "痰黏或黄、流黄浊涕 -> 热邪犯肺",
+      "口干欲饮 -> 热伤津液",
+      "舌苔薄白微黄、舌边尖红、脉浮数 -> 风热在表"
+    ]
+  },
+  {
+    "syndrome_id": "D001_S03",
+    "disease_id": "D001",
+    "syndrome_name": "暑湿感冒",
+    "symptoms": {
+      "full_text": "身热，微恶风，汗少，肢体酸重或疼痛，头昏重胀痛，咳嗽痰黏，鼻流浊涕，心烦口渴，或口中黏腻，渴不多饮，胸闷脘痞，泛恶，腹胀，大便或溏，小便短赤，舌苔薄黄腻或白腻，脉濡数。",
+      "items": [
+        { "text": "身热", "is_key": false },
+        { "text": "微恶风", "is_key": false },
+        { "text": "汗少", "is_key": false },
+        { "text": "肢体酸重或疼痛", "is_key": true },
+        { "text": "头昏重胀痛", "is_key": true },
+        { "text": "咳嗽痰黏", "is_key": false },
+        { "text": "鼻流浊涕", "is_key": false },
+        { "text": "心烦口渴", "is_key": false },
+        { "text": "或口中黏腻", "is_key": true },
+        { "text": "渴不多饮", "is_key": true },
+        { "text": "胸闷脘痞", "is_key": true },
+        { "text": "泛恶", "is_key": false },
+        { "text": "腹胀", "is_key": false },
+        { "text": "大便或溏", "is_key": true },
+        { "text": "小便短赤", "is_key": true },
+        { "text": "舌苔薄黄腻或白腻", "is_key": true },
+        { "text": "脉濡数", "is_key": true }
+      ]
+    },
+    "pathogenesis": "暑湿遏表，湿热伤中，表卫不和，肺气不清。",
+    "treatment_method": "清暑祛湿解表",
+    "prescription": { "primary": "新加香薷饮", "alternative": null },
+    "key_symptom_analysis": [
+      "肢体酸重、头昏重胀痛 -> 湿邪困表，清阳不升",
+      "口中黏腻、渴不多饮 -> 湿邪内阻",
+      "胸闷脘痞 -> 湿热伤中",
+      "大便或溏、小便短赤 -> 湿热下注",
+      "舌苔薄黄腻或白腻、脉濡数 -> 暑湿内蕴"
+    ]
+  },
+  {
+    "syndrome_id": "D001_S04",
+    "disease_id": "D001",
+    "syndrome_name": "气虚感冒",
+    "symptoms": {
+      "full_text": "恶寒较甚，或并发热，鼻塞，流涕，气短，乏力，自汗，咳嗽，痰白，咳痰无力，平素神疲体弱，或易感冒，舌淡苔薄白，脉浮无力。",
+      "items": [
+        { "text": "恶寒较甚", "is_key": false },
+        { "text": "或并发热", "is_key": false },
+        { "text": "鼻塞", "is_key": false },
+        { "text": "流涕", "is_key": false },
+        { "text": "气短", "is_key": true },
+        { "text": "乏力", "is_key": true },
+        { "text": "自汗", "is_key": true },
+        { "text": "咳嗽", "is_key": false },
+        { "text": "痰白", "is_key": false },
+        { "text": "咳痰无力", "is_key": true },
+        { "text": "平素神疲体弱", "is_key": true },
+        { "text": "或易感冒", "is_key": true },
+        { "text": "舌淡苔薄白", "is_key": true },
+        { "text": "脉浮无力", "is_key": true }
+      ]
+    },
+    "pathogenesis": "表虚卫弱，风寒乘袭，气虚无力达邪。",
+    "treatment_method": "益气解表",
+    "prescription": { "primary": "参苏饮", "alternative": null },
+    "key_symptom_analysis": [
+      "气短、乏力、自汗 -> 气虚卫表不固",
+      "咳痰无力 -> 气虚无力驱邪",
+      "平素神疲体弱、易感冒 -> 素体气虚，卫外不固",
+      "舌淡苔薄白、脉浮无力 -> 气虚在表"
+    ]
+  },
+  {
+    "syndrome_id": "D001_S05",
+    "disease_id": "D001",
+    "syndrome_name": "阴虚感冒",
+    "symptoms": {
+      "full_text": "身热，微恶风寒，少汗，头昏，心烦，口干咽燥，干咳少痰，舌红少苔，脉细数。",
+      "items": [
+        { "text": "身热", "is_key": false },
+        { "text": "微恶风寒", "is_key": false },
+        { "text": "少汗", "is_key": false },
+        { "text": "头昏", "is_key": false },
+        { "text": "心烦", "is_key": true },
+        { "text": "口干咽燥", "is_key": true },
+        { "text": "干咳少痰", "is_key": true },
+        { "text": "舌红少苔", "is_key": true },
+        { "text": "脉细数", "is_key": true }
+      ]
+    },
+    "pathogenesis": "阴亏津少，外受风热，表卫失和，津液不能作汗。",
+    "treatment_method": "滋阴解表",
+    "prescription": { "primary": "加减葳蕤汤", "alternative": null },
+    "key_symptom_analysis": [
+      "心烦、口干咽燥 -> 阴亏津少，虚热内扰",
+      "干咳少痰 -> 阴虚肺燥",
+      "舌红少苔、脉细数 -> 阴虚内热"
+    ]
+  },
+  {
+    "syndrome_id": "D002_S01",
+    "disease_id": "D002",
+    "syndrome_name": "风寒袭肺",
+    "symptoms": {
+      "full_text": "咳嗽声重，气急，咽痒，痰稀薄色白，鼻塞流清涕，舌苔薄白，脉浮紧。",
+      "items": [
+        { "text": "咳嗽声重", "is_key": true },
+        { "text": "气急", "is_key": false },
+        { "text": "咽痒", "is_key": false },
+        { "text": "痰稀薄色白", "is_key": true },
+        { "text": "鼻塞流清涕", "is_key": true },
+        { "text": "舌苔薄白", "is_key": true },
+        { "text": "脉浮紧", "is_key": true }
+      ]
+    },
+    "pathogenesis": "风寒袭肺，肺气失宣，津液不布。",
+    "treatment_method": "疏风散寒，宣肺止咳",
+    "prescription": { "primary": "三拗汤合止嗽散", "alternative": null },
+    "key_symptom_analysis": ["痰稀白、鼻流清涕、脉浮紧 -> 风寒束肺，肺失宣降"]
+  },
+  {
+    "syndrome_id": "D002_S02",
+    "disease_id": "D002",
+    "syndrome_name": "痰热郁肺",
+    "symptoms": {
+      "full_text": "咳嗽气粗，咯痰黄稠，咽喉肿痛，口渴，舌红苔黄腻，脉滑数。",
+      "items": [
+        { "text": "咳嗽气粗", "is_key": true },
+        { "text": "咯痰黄稠", "is_key": true },
+        { "text": "咽喉肿痛", "is_key": false },
+        { "text": "口渴", "is_key": false },
+        { "text": "舌红苔黄腻", "is_key": true },
+        { "text": "脉滑数", "is_key": true }
+      ]
+    },
+    "pathogenesis": "痰热壅肺，肺失肃降，气道不利。",
+    "treatment_method": "清热肃肺，豁痰止咳",
+    "prescription": { "primary": "清金化痰汤", "alternative": null },
+    "key_symptom_analysis": ["痰黄稠、舌红苔黄腻、脉滑数 -> 痰热壅肺"]
+  }
+]

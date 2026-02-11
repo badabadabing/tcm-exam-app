@@ -1,0 +1,19 @@
+---
+description: TCM disease and syndrome schema naming conventions
+globs: src/data/**/*.json
+alwaysApply: false
+---
+
+# Import Schema Conventions
+
+- Disease object fields:
+  - `disease_id`, `disease_name`, `key_symptoms`, `key_pulse`, `category`, `related_diseases`, `syndromes`
+- Syndrome object fields:
+  - `syndrome_id`, `disease_id`, `syndrome_name`, `symptoms`, `pathogenesis`, `treatment_method`, `prescription`, `key_symptom_analysis`
+- `symptoms` shape:
+  - `full_text`: string
+  - `items`: array of `{ text: string, is_key: boolean }`
+- `prescription` shape:
+  - `primary`: string (required)
+  - `alternative`: string or `null`
+- Keep wording concise and clinical; do not drop key signs, pulse/tongue clues, or stage labels.

@@ -1,0 +1,17 @@
+---
+description: Require validator pass for all TCM data updates
+alwaysApply: true
+---
+
+# Data Validation Gate
+
+- After any data edit, run validation before concluding work.
+- Standard command:
+  - `node ./scripts/validate-data.mjs --diseases <path> --syndromes <path>`
+- Required checks:
+  - `is_key` is boolean
+  - `symptoms.items` exists and non-empty
+  - `prescription.primary` is non-empty
+  - disease/syndrome links are bidirectionally consistent
+  - related disease references are valid and not self-referential
+- If validation fails, fix data first; do not leave partial broken states.

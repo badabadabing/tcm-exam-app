@@ -1,0 +1,16 @@
+---
+description: Enforce syndrome JSON sharding by disease
+globs: src/data/**/*.json
+alwaysApply: false
+---
+
+# Syndrome Sharding Policy
+
+- Preferred editable pattern: one disease per file (e.g. `D001.json` ... `D059.json`).
+- Each shard contains only its own `disease_id` records.
+- Keep `syndrome_id` deterministic: `Dxxx_Syy`.
+- Before adding a syndrome:
+  - ensure `disease_id` exists
+  - ensure `syndrome_id` is unique globally
+  - ensure disease -> syndrome list is synchronized
+- If a merged `syndromes.json` exists, treat it as build output, not primary edit target.

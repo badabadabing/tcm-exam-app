@@ -1,0 +1,3653 @@
+[
+  {
+    "syndrome_id": "D001_S01",
+    "disease_id": "D001",
+    "syndrome_name": "风寒感冒",
+    "symptoms": {
+      "full_text": "恶寒重，发热轻，无汗，头痛，肢节酸疼，鼻塞声重，或鼻痒喷嚏，时流清涕，咽痒，咳嗽，",
+      "items": [
+        {
+          "text": "恶寒重",
+          "is_key": true
+        },
+        {
+          "text": "发热轻",
+          "is_key": true
+        },
+        {
+          "text": "无汗",
+          "is_key": true
+        },
+        {
+          "text": "头痛",
+          "is_key": false
+        },
+        {
+          "text": "肢节酸疼",
+          "is_key": false
+        },
+        {
+          "text": "鼻塞声重",
+          "is_key": false
+        },
+        {
+          "text": "或鼻痒喷嚏",
+          "is_key": false
+        },
+        {
+          "text": "时流清涕",
+          "is_key": false
+        },
+        {
+          "text": "咽痒",
+          "is_key": false
+        },
+        {
+          "text": "咳嗽",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S02",
+    "disease_id": "D001",
+    "syndrome_name": "咳痰稀薄色白",
+    "symptoms": {
+      "full_text": "，口不渴或渴喜热饮，舌苔薄白而润，脉浮或浮紧。",
+      "items": [
+        {
+          "text": "口不渴或渴喜热饮",
+          "is_key": true
+        },
+        {
+          "text": "舌苔薄白而润",
+          "is_key": true
+        },
+        {
+          "text": "脉浮或浮紧",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "风寒外束，卫阳被郁，腠理闭塞，肺气不宣。",
+    "treatment_method": "辛温解表",
+    "prescription": {
+      "primary": "荆防败毒散",
+      "alternative": "荆防达表汤"
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S03",
+    "disease_id": "D001",
+    "syndrome_name": "风热感冒",
+    "symptoms": {
+      "full_text": "身热较著,微恶风，汗泄不畅，头胀痛，面赤，",
+      "items": [
+        {
+          "text": "身热较著",
+          "is_key": true
+        },
+        {
+          "text": "微恶风",
+          "is_key": true
+        },
+        {
+          "text": "汗泄不畅",
+          "is_key": true
+        },
+        {
+          "text": "头胀痛",
+          "is_key": false
+        },
+        {
+          "text": "面赤",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S04",
+    "disease_id": "D001",
+    "syndrome_name": "咳嗽",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S05",
+    "disease_id": "D001",
+    "syndrome_name": "痰黏或黄",
+    "symptoms": {
+      "full_text": "，咽燥，或咽喉乳蛾红肿疼痛，",
+      "items": [
+        {
+          "text": "咽燥",
+          "is_key": true
+        },
+        {
+          "text": "或咽喉乳蛾红肿疼痛",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S06",
+    "disease_id": "D001",
+    "syndrome_name": "鼻塞",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S07",
+    "disease_id": "D001",
+    "syndrome_name": "流黄浊涕",
+    "symptoms": {
+      "full_text": "，口干欲饮，舌苔薄白微黄，",
+      "items": [
+        {
+          "text": "口干欲饮",
+          "is_key": true
+        },
+        {
+          "text": "舌苔薄白微黄",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S08",
+    "disease_id": "D001",
+    "syndrome_name": "舌",
+    "symptoms": {
+      "full_text": "边尖红，脉浮数。",
+      "items": [
+        {
+          "text": "边尖红",
+          "is_key": true
+        },
+        {
+          "text": "脉浮数",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "风热犯表，热郁肌腠，卫表失和，肺失清肃。",
+    "treatment_method": "辛凉解表",
+    "prescription": {
+      "primary": "银翘散",
+      "alternative": "葱豉桔梗汤"
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S09",
+    "disease_id": "D001",
+    "syndrome_name": "暑湿感冒",
+    "symptoms": {
+      "full_text": "身热，微恶风，",
+      "items": [
+        {
+          "text": "身热",
+          "is_key": true
+        },
+        {
+          "text": "微恶风",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S10",
+    "disease_id": "D001",
+    "syndrome_name": "汗少",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S11",
+    "disease_id": "D001",
+    "syndrome_name": "肢体酸重",
+    "symptoms": {
+      "full_text": "或疼痛，头昏重胀痛，咳嗽痰黏，鼻流浊涕，心烦口渴，或",
+      "items": [
+        {
+          "text": "或疼痛",
+          "is_key": true
+        },
+        {
+          "text": "头昏重胀痛",
+          "is_key": true
+        },
+        {
+          "text": "咳嗽痰黏",
+          "is_key": true
+        },
+        {
+          "text": "鼻流浊涕",
+          "is_key": false
+        },
+        {
+          "text": "心烦口渴",
+          "is_key": false
+        },
+        {
+          "text": "或",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S12",
+    "disease_id": "D001",
+    "syndrome_name": "口中",
+    "symptoms": {
+      "full_text": "黏腻，渴不多饮，胸闷脘痞，泛恶，腹胀，大便或溏，小便短赤，舌苔薄黄腻或白腻，脉濡数。",
+      "items": [
+        {
+          "text": "黏腻",
+          "is_key": true
+        },
+        {
+          "text": "渴不多饮",
+          "is_key": true
+        },
+        {
+          "text": "胸闷脘痞",
+          "is_key": true
+        },
+        {
+          "text": "泛恶",
+          "is_key": false
+        },
+        {
+          "text": "腹胀",
+          "is_key": false
+        },
+        {
+          "text": "大便或溏",
+          "is_key": false
+        },
+        {
+          "text": "小便短赤",
+          "is_key": false
+        },
+        {
+          "text": "舌苔薄黄腻或白腻",
+          "is_key": false
+        },
+        {
+          "text": "脉濡数",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "暑湿遏表，湿热伤中，表卫不和，肺气不清。",
+    "treatment_method": "清暑祛湿解表",
+    "prescription": {
+      "primary": "新加香薷饮：",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S13",
+    "disease_id": "D001",
+    "syndrome_name": "气虚感冒恶寒较甚",
+    "symptoms": {
+      "full_text": "，或并发热，鼻塞，流涕，气短，乏力，自汗，咳嗽，痰白，",
+      "items": [
+        {
+          "text": "或并发热",
+          "is_key": true
+        },
+        {
+          "text": "鼻塞",
+          "is_key": true
+        },
+        {
+          "text": "流涕",
+          "is_key": true
+        },
+        {
+          "text": "气短",
+          "is_key": false
+        },
+        {
+          "text": "乏力",
+          "is_key": false
+        },
+        {
+          "text": "自汗",
+          "is_key": false
+        },
+        {
+          "text": "咳嗽",
+          "is_key": false
+        },
+        {
+          "text": "痰白",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S14",
+    "disease_id": "D001",
+    "syndrome_name": "咳痰无力",
+    "symptoms": {
+      "full_text": "，平素神疲体弱，",
+      "items": [
+        {
+          "text": "平素神疲体弱",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S15",
+    "disease_id": "D001",
+    "syndrome_name": "或易感冒",
+    "symptoms": {
+      "full_text": "，舌淡苔薄白，脉浮无力。",
+      "items": [
+        {
+          "text": "舌淡苔薄白",
+          "is_key": true
+        },
+        {
+          "text": "脉浮无力",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "表虚卫弱，风寒乘袭，气虚无力达邪。",
+    "treatment_method": "益气解表",
+    "prescription": {
+      "primary": "参苏饮",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D001_S16",
+    "disease_id": "D001",
+    "syndrome_name": "阴虚感冒",
+    "symptoms": {
+      "full_text": "身热，微恶风寒，少汗，头昏，心烦，口干咽燥，干咳少痰，舌红少苔，脉细数。",
+      "items": [
+        {
+          "text": "身热",
+          "is_key": true
+        },
+        {
+          "text": "微恶风寒",
+          "is_key": true
+        },
+        {
+          "text": "少汗",
+          "is_key": true
+        },
+        {
+          "text": "头昏",
+          "is_key": false
+        },
+        {
+          "text": "心烦",
+          "is_key": false
+        },
+        {
+          "text": "口干咽燥",
+          "is_key": false
+        },
+        {
+          "text": "干咳少痰",
+          "is_key": false
+        },
+        {
+          "text": "舌红少苔",
+          "is_key": false
+        },
+        {
+          "text": "脉细数",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "阴亏津少，外受风热，表卫失和，津液不能作汗。",
+    "treatment_method": "滋阴解表",
+    "prescription": {
+      "primary": "加减葳蕤汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S01",
+    "disease_id": "D002",
+    "syndrome_name": "风寒袭肺咳嗽声重",
+    "symptoms": {
+      "full_text": "，气急，咽痒，",
+      "items": [
+        {
+          "text": "气急",
+          "is_key": true
+        },
+        {
+          "text": "咽痒",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S02",
+    "disease_id": "D002",
+    "syndrome_name": "咳痰稀薄色白",
+    "symptoms": {
+      "full_text": "，常伴鼻塞，流清涕，头痛，肢体酸楚，或见恶寒发热、",
+      "items": [
+        {
+          "text": "常伴鼻塞",
+          "is_key": true
+        },
+        {
+          "text": "流清涕",
+          "is_key": true
+        },
+        {
+          "text": "头痛",
+          "is_key": true
+        },
+        {
+          "text": "肢体酸楚",
+          "is_key": false
+        },
+        {
+          "text": "或见恶寒发热",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S03",
+    "disease_id": "D002",
+    "syndrome_name": "无汗",
+    "symptoms": {
+      "full_text": "等风寒表证，舌苔薄白，脉浮或",
+      "items": [
+        {
+          "text": "等风寒表证",
+          "is_key": true
+        },
+        {
+          "text": "舌苔薄白",
+          "is_key": true
+        },
+        {
+          "text": "脉浮或",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S04",
+    "disease_id": "D002",
+    "syndrome_name": "浮紧",
+    "symptoms": {
+      "full_text": "。",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "风寒袭肺，肺气失宣。",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "疏风散寒宣肺止咳三拗汤合止嗽",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S05",
+    "disease_id": "D002",
+    "syndrome_name": "风热犯肺",
+    "symptoms": {
+      "full_text": "咳嗽频剧，气粗或咳声嘶哑，喉燥咽痛，咳痰不",
+      "items": [
+        {
+          "text": "咳嗽频剧",
+          "is_key": true
+        },
+        {
+          "text": "气粗或咳声嘶哑",
+          "is_key": true
+        },
+        {
+          "text": "喉燥咽痛",
+          "is_key": true
+        },
+        {
+          "text": "咳痰不",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S06",
+    "disease_id": "D002",
+    "syndrome_name": "爽",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S07",
+    "disease_id": "D002",
+    "syndrome_name": "痰黏稠或黄",
+    "symptoms": {
+      "full_text": "，咳时汗出，常伴鼻流黄涕，口渴，头痛，身楚，或见恶风、身热等风热表证，舌苔薄黄，",
+      "items": [
+        {
+          "text": "咳时汗出",
+          "is_key": true
+        },
+        {
+          "text": "常伴鼻流黄涕",
+          "is_key": true
+        },
+        {
+          "text": "口渴",
+          "is_key": true
+        },
+        {
+          "text": "头痛",
+          "is_key": false
+        },
+        {
+          "text": "身楚",
+          "is_key": false
+        },
+        {
+          "text": "或见恶风",
+          "is_key": false
+        },
+        {
+          "text": "身热等风热表证",
+          "is_key": false
+        },
+        {
+          "text": "舌苔薄黄",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S08",
+    "disease_id": "D002",
+    "syndrome_name": "脉浮数或浮滑",
+    "symptoms": {
+      "full_text": "。",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "风热犯肺，肺失宣肃。",
+    "treatment_method": "疏风清热，宣肺止咳",
+    "prescription": {
+      "primary": "桑菊饮",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S09",
+    "disease_id": "D002",
+    "syndrome_name": "风燥伤肺干咳",
+    "symptoms": {
+      "full_text": "，连声作呛，喉痒，咽喉干痛，唇鼻干燥，",
+      "items": [
+        {
+          "text": "连声作呛",
+          "is_key": true
+        },
+        {
+          "text": "喉痒",
+          "is_key": true
+        },
+        {
+          "text": "咽喉干痛",
+          "is_key": true
+        },
+        {
+          "text": "唇鼻干燥",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S10",
+    "disease_id": "D002",
+    "syndrome_name": "无痰或痰少而黏",
+    "symptoms": {
+      "full_text": "，不易咯出，或痰中带有血丝，口干，初起或伴鼻塞、头痛、微寒、身热",
+      "items": [
+        {
+          "text": "不易咯出",
+          "is_key": true
+        },
+        {
+          "text": "或痰中带有血丝",
+          "is_key": true
+        },
+        {
+          "text": "口干",
+          "is_key": true
+        },
+        {
+          "text": "初起或伴鼻塞",
+          "is_key": false
+        },
+        {
+          "text": "头痛",
+          "is_key": false
+        },
+        {
+          "text": "微寒",
+          "is_key": false
+        },
+        {
+          "text": "身热",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S11",
+    "disease_id": "D002",
+    "syndrome_name": "等表证",
+    "symptoms": {
+      "full_text": "，舌质红干而少津，苔薄白或薄黄，脉浮数或小数。",
+      "items": [
+        {
+          "text": "舌质红干而少津",
+          "is_key": true
+        },
+        {
+          "text": "苔薄白或薄黄",
+          "is_key": true
+        },
+        {
+          "text": "脉浮数或小数",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "风燥伤肺，肺失清润。",
+    "treatment_method": "疏风清肺，润燥止咳",
+    "prescription": {
+      "primary": "桑杏汤(微信",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S12",
+    "disease_id": "D002",
+    "syndrome_name": "痰湿蕴肺",
+    "symptoms": {
+      "full_text": "咳嗽反复发作，咳声重浊，痰多，因痰而嗽，痰",
+      "items": [
+        {
+          "text": "咳嗽反复发作",
+          "is_key": true
+        },
+        {
+          "text": "咳声重浊",
+          "is_key": true
+        },
+        {
+          "text": "痰多",
+          "is_key": true
+        },
+        {
+          "text": "因痰而嗽",
+          "is_key": false
+        },
+        {
+          "text": "痰",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S13",
+    "disease_id": "D002",
+    "syndrome_name": "出咳平",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S14",
+    "disease_id": "D002",
+    "syndrome_name": "痰黏腻或稠厚成块",
+    "symptoms": {
+      "full_text": "，色白或带灰色，每于早晨或食后则咳甚痰多，进甘甜油腻食物加重，胸闷脘痞，呕恶食少，体倦，大便时溏，舌苔白",
+      "items": [
+        {
+          "text": "色白或带灰色",
+          "is_key": true
+        },
+        {
+          "text": "每于早晨或食后则咳甚痰多",
+          "is_key": true
+        },
+        {
+          "text": "进甘甜油腻食物加重",
+          "is_key": true
+        },
+        {
+          "text": "胸闷脘痞",
+          "is_key": false
+        },
+        {
+          "text": "呕恶食少",
+          "is_key": false
+        },
+        {
+          "text": "体倦",
+          "is_key": false
+        },
+        {
+          "text": "大便时溏",
+          "is_key": false
+        },
+        {
+          "text": "舌苔白",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S15",
+    "disease_id": "D002",
+    "syndrome_name": "腻",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S16",
+    "disease_id": "D002",
+    "syndrome_name": "脉濡滑",
+    "symptoms": {
+      "full_text": "。",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "脾虚生痰，上渍于肺，壅遏肺气。",
+    "treatment_method": "燥湿化痰，理气止咳",
+    "prescription": {
+      "primary": "二陈平胃散合三子养亲汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S17",
+    "disease_id": "D002",
+    "syndrome_name": "痰热郁肺",
+    "symptoms": {
+      "full_text": "咳嗽，气息粗促，或喉中有痰声，",
+      "items": [
+        {
+          "text": "咳嗽",
+          "is_key": true
+        },
+        {
+          "text": "气息粗促",
+          "is_key": true
+        },
+        {
+          "text": "或喉中有痰声",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S18",
+    "disease_id": "D002",
+    "syndrome_name": "痰多质黏厚或稠黄",
+    "symptoms": {
+      "full_text": "，咯吐不爽，或咯血痰，胸胁胀满，咳时引",
+      "items": [
+        {
+          "text": "咯吐不爽",
+          "is_key": true
+        },
+        {
+          "text": "或咯血痰",
+          "is_key": true
+        },
+        {
+          "text": "胸胁胀满",
+          "is_key": true
+        },
+        {
+          "text": "咳时引",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S19",
+    "disease_id": "D002",
+    "syndrome_name": "痛",
+    "symptoms": {
+      "full_text": "，面赤，或有身热，口干而黏，欲饮水，舌质红，舌苔薄黄腻，脉滑数。",
+      "items": [
+        {
+          "text": "面赤",
+          "is_key": true
+        },
+        {
+          "text": "或有身热",
+          "is_key": true
+        },
+        {
+          "text": "口干而黏",
+          "is_key": true
+        },
+        {
+          "text": "欲饮水",
+          "is_key": false
+        },
+        {
+          "text": "舌质红",
+          "is_key": false
+        },
+        {
+          "text": "舌苔薄黄腻",
+          "is_key": false
+        },
+        {
+          "text": "脉滑数",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "痰热壅肺，肺失肃降。",
+    "treatment_method": "清热肃肺，豁痰止咳",
+    "prescription": {
+      "primary": "清金化痰汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S20",
+    "disease_id": "D002",
+    "syndrome_name": "第2页共31页肝火犯肺",
+    "symptoms": {
+      "full_text": "咳嗽呈",
+      "items": [
+        {
+          "text": "咳嗽呈",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S21",
+    "disease_id": "D002",
+    "syndrome_name": "阵发性",
+    "symptoms": {
+      "full_text": "，表现为上气咳逆阵作，咳时面赤，咽干口苦，常感痰滞咽喉而咯之难出，量少质黏，或如絮条，胸胁胀痛，咳时引痛，症状可随情绪",
+      "items": [
+        {
+          "text": "表现为上气咳逆阵作",
+          "is_key": true
+        },
+        {
+          "text": "咳时面赤",
+          "is_key": true
+        },
+        {
+          "text": "咽干口苦",
+          "is_key": true
+        },
+        {
+          "text": "常感痰滞咽喉而咯之难出",
+          "is_key": false
+        },
+        {
+          "text": "量少质黏",
+          "is_key": false
+        },
+        {
+          "text": "或如絮条",
+          "is_key": false
+        },
+        {
+          "text": "胸胁胀痛",
+          "is_key": false
+        },
+        {
+          "text": "咳时引痛",
+          "is_key": false
+        },
+        {
+          "text": "症状可随情绪",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S22",
+    "disease_id": "D002",
+    "syndrome_name": "波动而增减",
+    "symptoms": {
+      "full_text": "，舌红或舌边红，舌苔薄黄少津，",
+      "items": [
+        {
+          "text": "舌红或舌边红",
+          "is_key": true
+        },
+        {
+          "text": "舌苔薄黄少津",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S23",
+    "disease_id": "D002",
+    "syndrome_name": "脉",
+    "symptoms": {
+      "full_text": "弦数。",
+      "items": [
+        {
+          "text": "弦数",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "肝郁化火，上逆侮肺。",
+    "treatment_method": "清肺泻肝，",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S24",
+    "disease_id": "D002",
+    "syndrome_name": "顺气降火",
+    "symptoms": {
+      "full_text": "黛蛤散合加减泻白散",
+      "items": [
+        {
+          "text": "黛蛤散合加减泻白散",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S25",
+    "disease_id": "D002",
+    "syndrome_name": "肺阴亏耗",
+    "symptoms": {
+      "full_text": "干咳，咳声短促，痰少黏白，或痰中带血丝，或",
+      "items": [
+        {
+          "text": "干咳",
+          "is_key": true
+        },
+        {
+          "text": "咳声短促",
+          "is_key": true
+        },
+        {
+          "text": "痰少黏白",
+          "is_key": true
+        },
+        {
+          "text": "或痰中带血丝",
+          "is_key": false
+        },
+        {
+          "text": "或",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S26",
+    "disease_id": "D002",
+    "syndrome_name": "声音逐渐嘶哑",
+    "symptoms": {
+      "full_text": "，口干咽燥，或午后潮热，颧红，盗汗，日渐消瘦，",
+      "items": [
+        {
+          "text": "口干咽燥",
+          "is_key": true
+        },
+        {
+          "text": "或午后潮热",
+          "is_key": true
+        },
+        {
+          "text": "颧红",
+          "is_key": true
+        },
+        {
+          "text": "盗汗",
+          "is_key": false
+        },
+        {
+          "text": "日渐消瘦",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D002_S27",
+    "disease_id": "D002",
+    "syndrome_name": "神疲",
+    "symptoms": {
+      "full_text": "，舌质红少苔，脉细数。",
+      "items": [
+        {
+          "text": "舌质红少苔",
+          "is_key": true
+        },
+        {
+          "text": "脉细数",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "肺阴亏虚，虚热内灼，肺失润降。",
+    "treatment_method": "滋阴清热，润肺止咳",
+    "prescription": {
+      "primary": "沙参麦冬汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S01",
+    "disease_id": "D003",
+    "syndrome_name": "发作期",
+    "symptoms": {
+      "full_text": "冷哮",
+      "items": [
+        {
+          "text": "冷哮",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S02",
+    "disease_id": "D003",
+    "syndrome_name": "证",
+    "symptoms": {
+      "full_text": "喉中哮鸣如水鸡声，呼吸急促，喘憋气逆，胸膈满闷如塞，咳不甚，痰少咯吐不爽，色白而多泡沫，",
+      "items": [
+        {
+          "text": "喉中哮鸣如水鸡声",
+          "is_key": true
+        },
+        {
+          "text": "呼吸急促",
+          "is_key": true
+        },
+        {
+          "text": "喘憋气逆",
+          "is_key": true
+        },
+        {
+          "text": "胸膈满闷如塞",
+          "is_key": false
+        },
+        {
+          "text": "咳不甚",
+          "is_key": false
+        },
+        {
+          "text": "痰少咯吐不爽",
+          "is_key": false
+        },
+        {
+          "text": "色白而多泡沫",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S03",
+    "disease_id": "D003",
+    "syndrome_name": "口不渴或",
+    "symptoms": {
+      "full_text": "渴喜热饮，形寒怕冷，天冷或受寒易发，面色青晦，舌苔白滑，脉弦紧或浮紧。",
+      "items": [
+        {
+          "text": "渴喜热饮",
+          "is_key": true
+        },
+        {
+          "text": "形寒怕冷",
+          "is_key": true
+        },
+        {
+          "text": "天冷或受寒易发",
+          "is_key": true
+        },
+        {
+          "text": "面色青晦",
+          "is_key": false
+        },
+        {
+          "text": "舌苔白滑",
+          "is_key": false
+        },
+        {
+          "text": "脉弦紧或浮紧",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "寒痰伏肺，遇感触发，痰升气阻，肺失宣畅。",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "宣肺散寒化痰平喘射干麻黄汤或",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S04",
+    "disease_id": "D003",
+    "syndrome_name": "热哮证",
+    "symptoms": {
+      "full_text": "喉中痰鸣如吼，喘而气粗息涌，胸高胁胀，咳呛阵作，咳痰色黄或白，黏浊稠厚，咯吐不利，口苦，口渴喜饮，汗出，面赤，或有身热，舌质红，苔黄",
+      "items": [
+        {
+          "text": "喉中痰鸣如吼",
+          "is_key": true
+        },
+        {
+          "text": "喘而气粗息涌",
+          "is_key": true
+        },
+        {
+          "text": "胸高胁胀",
+          "is_key": true
+        },
+        {
+          "text": "咳呛阵作",
+          "is_key": false
+        },
+        {
+          "text": "咳痰色黄或白",
+          "is_key": false
+        },
+        {
+          "text": "黏浊稠厚",
+          "is_key": false
+        },
+        {
+          "text": "咯吐不利",
+          "is_key": false
+        },
+        {
+          "text": "口苦",
+          "is_key": false
+        },
+        {
+          "text": "口渴喜饮",
+          "is_key": false
+        },
+        {
+          "text": "汗出",
+          "is_key": false
+        },
+        {
+          "text": "面赤",
+          "is_key": false
+        },
+        {
+          "text": "或有身热",
+          "is_key": false
+        },
+        {
+          "text": "舌质红",
+          "is_key": false
+        },
+        {
+          "text": "苔黄",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S05",
+    "disease_id": "D003",
+    "syndrome_name": "腻",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S06",
+    "disease_id": "D003",
+    "syndrome_name": "脉滑数或弦滑",
+    "symptoms": {
+      "full_text": "。",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "痰热蕴肺，壅阻气道，肺失清肃。",
+    "treatment_method": "清热宣肺，化痰定喘",
+    "prescription": {
+      "primary": "定喘汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S07",
+    "disease_id": "D003",
+    "syndrome_name": "寒包热哮",
+    "symptoms": {
+      "full_text": "喉中哮鸣有声，胸膈烦闷，呼吸急促，喘咳气逆，咳痰不爽，痰黏色黄，或黄白相兼，烦躁，发热，恶寒，无汗，身痛，口干欲饮，大便偏干，",
+      "items": [
+        {
+          "text": "喉中哮鸣有声",
+          "is_key": true
+        },
+        {
+          "text": "胸膈烦闷",
+          "is_key": true
+        },
+        {
+          "text": "呼吸急促",
+          "is_key": true
+        },
+        {
+          "text": "喘咳气逆",
+          "is_key": false
+        },
+        {
+          "text": "咳痰不爽",
+          "is_key": false
+        },
+        {
+          "text": "痰黏色黄",
+          "is_key": false
+        },
+        {
+          "text": "或黄白相兼",
+          "is_key": false
+        },
+        {
+          "text": "烦躁",
+          "is_key": false
+        },
+        {
+          "text": "发热",
+          "is_key": false
+        },
+        {
+          "text": "恶寒",
+          "is_key": false
+        },
+        {
+          "text": "无汗",
+          "is_key": false
+        },
+        {
+          "text": "身痛",
+          "is_key": false
+        },
+        {
+          "text": "口干欲饮",
+          "is_key": false
+        },
+        {
+          "text": "大便偏干",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S08",
+    "disease_id": "D003",
+    "syndrome_name": "舌苔白",
+    "symptoms": {
+      "full_text": "腻，舌尖边红，脉弦紧。",
+      "items": [
+        {
+          "text": "腻",
+          "is_key": true
+        },
+        {
+          "text": "舌尖边红",
+          "is_key": true
+        },
+        {
+          "text": "脉弦紧",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "痰热壅肺，复感风寒，客寒包火，肺失宣降。",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "解表散寒清化痰热",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S09",
+    "disease_id": "D003",
+    "syndrome_name": "小青龙加石膏",
+    "symptoms": {
+      "full_text": "汤或厚朴麻黄汤",
+      "items": [
+        {
+          "text": "汤或厚朴麻黄汤",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S10",
+    "disease_id": "D003",
+    "syndrome_name": "风痰哮证喉中",
+    "symptoms": {
+      "full_text": "痰涎壅盛，声如拽锯，或鸣声如吹哨笛，喘急胸满，但坐不得卧，咳痰黏腻难出，或为白色泡沫痰液，无明显寒热倾向，面色青暗，起病多急，常倏忽来去，发前自觉鼻、咽、眼、耳发痒，喷嚏，鼻塞，流涕，胸部憋塞，随之迅即发作，舌苔厚浊，脉滑实。(",
+      "items": [
+        {
+          "text": "痰涎壅盛",
+          "is_key": true
+        },
+        {
+          "text": "声如拽锯",
+          "is_key": true
+        },
+        {
+          "text": "或鸣声如吹哨笛",
+          "is_key": true
+        },
+        {
+          "text": "喘急胸满",
+          "is_key": false
+        },
+        {
+          "text": "但坐不得卧",
+          "is_key": false
+        },
+        {
+          "text": "咳痰黏腻难出",
+          "is_key": false
+        },
+        {
+          "text": "或为白色泡沫痰液",
+          "is_key": false
+        },
+        {
+          "text": "无明显寒热倾向",
+          "is_key": false
+        },
+        {
+          "text": "面色青暗",
+          "is_key": false
+        },
+        {
+          "text": "起病多急",
+          "is_key": false
+        },
+        {
+          "text": "常倏忽来去",
+          "is_key": false
+        },
+        {
+          "text": "发前自觉鼻",
+          "is_key": false
+        },
+        {
+          "text": "咽",
+          "is_key": false
+        },
+        {
+          "text": "眼",
+          "is_key": false
+        },
+        {
+          "text": "耳发痒",
+          "is_key": false
+        },
+        {
+          "text": "喷嚏",
+          "is_key": false
+        },
+        {
+          "text": "鼻塞",
+          "is_key": false
+        },
+        {
+          "text": "流涕",
+          "is_key": false
+        },
+        {
+          "text": "胸部憋塞",
+          "is_key": false
+        },
+        {
+          "text": "随之迅即发作",
+          "is_key": false
+        },
+        {
+          "text": "舌苔厚浊",
+          "is_key": false
+        },
+        {
+          "text": "脉滑实",
+          "is_key": false
+        },
+        {
+          "text": "(",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "痰浊伏肺，风邪引触，肺气郁闭，升降失司。",
+    "treatment_method": "祛风涤痰，",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S11",
+    "disease_id": "D003",
+    "syndrome_name": "降气平喘",
+    "symptoms": {
+      "full_text": "三子养亲汤(微信",
+      "items": [
+        {
+          "text": "三子养亲汤(微信",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S12",
+    "disease_id": "D003",
+    "syndrome_name": "公众",
+    "symptoms": {
+      "full_text": "号：",
+      "items": [
+        {
+          "text": "号：",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S13",
+    "disease_id": "D003",
+    "syndrome_name": "虚哮证喉中",
+    "symptoms": {
+      "full_text": "哮鸣如鼾，声低，气短息促，动则喘甚，发作",
+      "items": [
+        {
+          "text": "哮鸣如鼾",
+          "is_key": true
+        },
+        {
+          "text": "声低",
+          "is_key": true
+        },
+        {
+          "text": "气短息促",
+          "is_key": true
+        },
+        {
+          "text": "动则喘甚",
+          "is_key": false
+        },
+        {
+          "text": "发作",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S14",
+    "disease_id": "D003",
+    "syndrome_name": "频繁",
+    "symptoms": {
+      "full_text": "，甚则持续喘哮，口唇、爪甲青紫，咳痰无力，痰涎清稀或质黏起沫，面色苍白或颧红唇紫，口不渴或咽干口渴，形寒肢冷或烦热，舌质淡或偏红，",
+      "items": [
+        {
+          "text": "甚则持续喘哮",
+          "is_key": true
+        },
+        {
+          "text": "口唇",
+          "is_key": true
+        },
+        {
+          "text": "爪甲青紫",
+          "is_key": true
+        },
+        {
+          "text": "咳痰无力",
+          "is_key": false
+        },
+        {
+          "text": "痰涎清稀或质黏起沫",
+          "is_key": false
+        },
+        {
+          "text": "面色苍白或颧红唇紫",
+          "is_key": false
+        },
+        {
+          "text": "口不渴或咽干口渴",
+          "is_key": false
+        },
+        {
+          "text": "形寒肢冷或烦热",
+          "is_key": false
+        },
+        {
+          "text": "舌质淡或偏红",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S15",
+    "disease_id": "D003",
+    "syndrome_name": "或紫暗",
+    "symptoms": {
+      "full_text": "，脉沉细或细数。",
+      "items": [
+        {
+          "text": "脉沉细或细数",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "(本虚的发作期)哮病久发，痰气瘀阻，肺肾两虚，摄纳失常。",
+    "treatment_method": "补肺纳肾，降气化痰",
+    "prescription": {
+      "primary": "平喘固本汤医心执考)",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S16",
+    "disease_id": "D003",
+    "syndrome_name": "缓解期",
+    "symptoms": {
+      "full_text": "肺虚",
+      "items": [
+        {
+          "text": "肺虚",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S17",
+    "disease_id": "D003",
+    "syndrome_name": "证",
+    "symptoms": {
+      "full_text": "喘促气短，",
+      "items": [
+        {
+          "text": "喘促气短",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S18",
+    "disease_id": "D003",
+    "syndrome_name": "语声低微",
+    "symptoms": {
+      "full_text": "，面色觥白，自汗畏风，咳痰清稀色白，多因气候变化而诱发，发前喷嚏频作，鼻塞流清涕，舌淡苔白，脉细弱或虚大。",
+      "items": [
+        {
+          "text": "面色觥白",
+          "is_key": true
+        },
+        {
+          "text": "自汗畏风",
+          "is_key": true
+        },
+        {
+          "text": "咳痰清稀色白",
+          "is_key": true
+        },
+        {
+          "text": "多因气候变化而诱发",
+          "is_key": false
+        },
+        {
+          "text": "发前喷嚏频作",
+          "is_key": false
+        },
+        {
+          "text": "鼻塞流清涕",
+          "is_key": false
+        },
+        {
+          "text": "舌淡苔白",
+          "is_key": false
+        },
+        {
+          "text": "脉细弱或虚大",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "肺卫不宣，肌表不固。",
+    "treatment_method": "补肺益气",
+    "prescription": {
+      "primary": "玉屏风散",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S19",
+    "disease_id": "D003",
+    "syndrome_name": "脾虚证",
+    "symptoms": {
+      "full_text": "倦怠无力，食少便溏，面色萎黄无华，痰多而黏，咳吐不爽，胸脘满闷，恶心纳呆，或食油腻易腹泻，每因饮食不当而诱发，舌质淡，苔白滑或腻，脉细弱。",
+      "items": [
+        {
+          "text": "倦怠无力",
+          "is_key": true
+        },
+        {
+          "text": "食少便溏",
+          "is_key": true
+        },
+        {
+          "text": "面色萎黄无华",
+          "is_key": true
+        },
+        {
+          "text": "痰多而黏",
+          "is_key": false
+        },
+        {
+          "text": "咳吐不爽",
+          "is_key": false
+        },
+        {
+          "text": "胸脘满闷",
+          "is_key": false
+        },
+        {
+          "text": "恶心纳呆",
+          "is_key": false
+        },
+        {
+          "text": "或食油腻易腹泻",
+          "is_key": false
+        },
+        {
+          "text": "每因饮食不当而诱发",
+          "is_key": false
+        },
+        {
+          "text": "舌质淡",
+          "is_key": false
+        },
+        {
+          "text": "苔白滑或腻",
+          "is_key": false
+        },
+        {
+          "text": "脉细弱",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "脾失健运，痰饮蕴肺，肺气上逆。",
+    "treatment_method": "健脾益气",
+    "prescription": {
+      "primary": "六君子汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S20",
+    "disease_id": "D003",
+    "syndrome_name": "肾虚证平素息促",
+    "symptoms": {
+      "full_text": "气短，动则为甚，呼多吸少，咳痰质",
+      "items": [
+        {
+          "text": "气短",
+          "is_key": true
+        },
+        {
+          "text": "动则为甚",
+          "is_key": true
+        },
+        {
+          "text": "呼多吸少",
+          "is_key": true
+        },
+        {
+          "text": "咳痰质",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S21",
+    "disease_id": "D003",
+    "syndrome_name": "黏起",
+    "symptoms": {
+      "full_text": "沫，脑转耳鸣，",
+      "items": [
+        {
+          "text": "沫",
+          "is_key": true
+        },
+        {
+          "text": "脑转耳鸣",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S22",
+    "disease_id": "D003",
+    "syndrome_name": "腰酸腿软",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S23",
+    "disease_id": "D003",
+    "syndrome_name": "心慌",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S24",
+    "disease_id": "D003",
+    "syndrome_name": "不耐劳累",
+    "symptoms": {
+      "full_text": "，或五心烦热，颧红，口干，或畏寒肢冷，面色苍白，舌淡苔白质胖，或舌红少苔，脉沉细或细数。",
+      "items": [
+        {
+          "text": "或五心烦热",
+          "is_key": true
+        },
+        {
+          "text": "颧红",
+          "is_key": true
+        },
+        {
+          "text": "口干",
+          "is_key": true
+        },
+        {
+          "text": "或畏寒肢冷",
+          "is_key": false
+        },
+        {
+          "text": "面色苍白",
+          "is_key": false
+        },
+        {
+          "text": "舌淡苔白质胖",
+          "is_key": false
+        },
+        {
+          "text": "或舌红少苔",
+          "is_key": false
+        },
+        {
+          "text": "脉沉细或细数",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "肾元亏损，肾失摄纳，肺气上逆。",
+    "treatment_method": "补肾纳气",
+    "prescription": {
+      "primary": "金匮肾气丸合七味都气丸",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S25",
+    "disease_id": "D003",
+    "syndrome_name": "考点4",
+    "symptoms": {
+      "full_text": "★★★",
+      "items": [
+        {
+          "text": "★★★",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S26",
+    "disease_id": "D003",
+    "syndrome_name": "喘证",
+    "symptoms": {
+      "full_text": "(呼吸困难，甚至张口抬肩，鼻翼扇动，不能平卧)",
+      "items": [
+        {
+          "text": "(呼吸困难",
+          "is_key": true
+        },
+        {
+          "text": "甚至张口抬肩",
+          "is_key": true
+        },
+        {
+          "text": "鼻翼扇动",
+          "is_key": true
+        },
+        {
+          "text": "不能平卧)",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S27",
+    "disease_id": "D003",
+    "syndrome_name": "风寒壅肺",
+    "symptoms": {
+      "full_text": "喘息咳逆，呼吸急促，胸部胀闷，",
+      "items": [
+        {
+          "text": "喘息咳逆",
+          "is_key": true
+        },
+        {
+          "text": "呼吸急促",
+          "is_key": true
+        },
+        {
+          "text": "胸部胀闷",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S28",
+    "disease_id": "D003",
+    "syndrome_name": "痰多稀薄而带泡沫",
+    "symptoms": {
+      "full_text": "，色白质黏，常有头痛，",
+      "items": [
+        {
+          "text": "色白质黏",
+          "is_key": true
+        },
+        {
+          "text": "常有头痛",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S29",
+    "disease_id": "D003",
+    "syndrome_name": "恶寒",
+    "symptoms": {
+      "full_text": "，或有发热，口不渴，无汗，舌苔薄白而滑，脉浮紧。",
+      "items": [
+        {
+          "text": "或有发热",
+          "is_key": true
+        },
+        {
+          "text": "口不渴",
+          "is_key": true
+        },
+        {
+          "text": "无汗",
+          "is_key": true
+        },
+        {
+          "text": "舌苔薄白而滑",
+          "is_key": false
+        },
+        {
+          "text": "脉浮紧",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "风寒上受，内舍于肺，邪实气壅，肺气不宣。",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "宣肺散寒麻黄汤合华盖散",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S30",
+    "disease_id": "D003",
+    "syndrome_name": "表寒肺热",
+    "symptoms": {
+      "full_text": "喘逆上气，胸胀或痛，息粗，鼻扇，咳而不爽，吐痰稠黏，伴形寒，身热，烦闷，身痛，有汗或无汗，口渴，舌苔薄白或黄，舌边红，脉浮数或",
+      "items": [
+        {
+          "text": "喘逆上气",
+          "is_key": true
+        },
+        {
+          "text": "胸胀或痛",
+          "is_key": true
+        },
+        {
+          "text": "息粗",
+          "is_key": true
+        },
+        {
+          "text": "鼻扇",
+          "is_key": false
+        },
+        {
+          "text": "咳而不爽",
+          "is_key": false
+        },
+        {
+          "text": "吐痰稠黏",
+          "is_key": false
+        },
+        {
+          "text": "伴形寒",
+          "is_key": false
+        },
+        {
+          "text": "身热",
+          "is_key": false
+        },
+        {
+          "text": "烦闷",
+          "is_key": false
+        },
+        {
+          "text": "身痛",
+          "is_key": false
+        },
+        {
+          "text": "有汗或无汗",
+          "is_key": false
+        },
+        {
+          "text": "口渴",
+          "is_key": false
+        },
+        {
+          "text": "舌苔薄白或黄",
+          "is_key": false
+        },
+        {
+          "text": "舌边红",
+          "is_key": false
+        },
+        {
+          "text": "脉浮数或",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S31",
+    "disease_id": "D003",
+    "syndrome_name": "滑",
+    "symptoms": {
+      "full_text": "。",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "寒邪束表，热郁于肺，肺气上逆。",
+    "treatment_method": "解表清里，化痰平喘",
+    "prescription": {
+      "primary": "麻杏石甘汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S32",
+    "disease_id": "D003",
+    "syndrome_name": "痰热郁肺",
+    "symptoms": {
+      "full_text": "喘促气涌，胸部胀痛，咳嗽痰多，",
+      "items": [
+        {
+          "text": "喘促气涌",
+          "is_key": true
+        },
+        {
+          "text": "胸部胀痛",
+          "is_key": true
+        },
+        {
+          "text": "咳嗽痰多",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S33",
+    "disease_id": "D003",
+    "syndrome_name": "质黏色黄",
+    "symptoms": {
+      "full_text": "，或兼有血色，伴胸中烦闷，身热，",
+      "items": [
+        {
+          "text": "或兼有血色",
+          "is_key": true
+        },
+        {
+          "text": "伴胸中烦闷",
+          "is_key": true
+        },
+        {
+          "text": "身热",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S34",
+    "disease_id": "D003",
+    "syndrome_name": "有汗",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S35",
+    "disease_id": "D003",
+    "syndrome_name": "口渴而喜",
+    "symptoms": {
+      "full_text": "冷饮，面赤，咽干，小便赤涩，大便或秘，舌质红，舌苔薄黄或腻，脉滑数。",
+      "items": [
+        {
+          "text": "冷饮",
+          "is_key": true
+        },
+        {
+          "text": "面赤",
+          "is_key": true
+        },
+        {
+          "text": "咽干",
+          "is_key": true
+        },
+        {
+          "text": "小便赤涩",
+          "is_key": false
+        },
+        {
+          "text": "大便或秘",
+          "is_key": false
+        },
+        {
+          "text": "舌质红",
+          "is_key": false
+        },
+        {
+          "text": "舌苔薄黄或腻",
+          "is_key": false
+        },
+        {
+          "text": "脉滑数",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "邪热蕴肺，蒸液成痰，痰热壅滞，肺失清肃。",
+    "treatment_method": "清热化痰、宣肺平喘",
+    "prescription": {
+      "primary": "桑白皮汤医心执考)",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S36",
+    "disease_id": "D003",
+    "syndrome_name": "痰浊阻肺",
+    "symptoms": {
+      "full_text": "喘而胸满闷塞，甚则胸盈仰息，咳嗽，",
+      "items": [
+        {
+          "text": "喘而胸满闷塞",
+          "is_key": true
+        },
+        {
+          "text": "甚则胸盈仰息",
+          "is_key": true
+        },
+        {
+          "text": "咳嗽",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S37",
+    "disease_id": "D003",
+    "syndrome_name": "痰多黏腻色白",
+    "symptoms": {
+      "full_text": "，咳吐不利，兼有呕恶，食少，口黏不渴，舌苔白腻，脉滑或濡。",
+      "items": [
+        {
+          "text": "咳吐不利",
+          "is_key": true
+        },
+        {
+          "text": "兼有呕恶",
+          "is_key": true
+        },
+        {
+          "text": "食少",
+          "is_key": true
+        },
+        {
+          "text": "口黏不渴",
+          "is_key": false
+        },
+        {
+          "text": "舌苔白腻",
+          "is_key": false
+        },
+        {
+          "text": "脉滑或濡",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "中阳不运，积湿生痰，痰浊壅肺，肺失肃降。",
+    "treatment_method": "祛痰降逆，宣肺平喘",
+    "prescription": {
+      "primary": "二陈汤合三子养亲汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S38",
+    "disease_id": "D003",
+    "syndrome_name": "肺气郁痹喘促症状",
+    "symptoms": {
+      "full_text": "每遇情志刺激而诱发，发时突然呼吸短促，息粗气憋，胸闷胸痛，咽中如窒，但喉中痰",
+      "items": [
+        {
+          "text": "每遇情志刺激而诱发",
+          "is_key": true
+        },
+        {
+          "text": "发时突然呼吸短促",
+          "is_key": true
+        },
+        {
+          "text": "息粗气憋",
+          "is_key": true
+        },
+        {
+          "text": "胸闷胸痛",
+          "is_key": false
+        },
+        {
+          "text": "咽中如窒",
+          "is_key": false
+        },
+        {
+          "text": "但喉中痰",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S39",
+    "disease_id": "D003",
+    "syndrome_name": "鸣不著",
+    "symptoms": {
+      "full_text": ",或无痰声。平素常多忧思抑郁，失眠，",
+      "items": [
+        {
+          "text": "或无痰声",
+          "is_key": true
+        },
+        {
+          "text": "平素常多忧思抑郁",
+          "is_key": true
+        },
+        {
+          "text": "失眠",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "心悸。苔薄，脉弦。",
+    "treatment_method": "肝郁气逆，上冲犯肺，肺气不降。",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S40",
+    "disease_id": "D003",
+    "syndrome_name": "开郁降气平喘",
+    "symptoms": {
+      "full_text": "五磨饮子医心执考)",
+      "items": [
+        {
+          "text": "五磨饮子医心执考)",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S41",
+    "disease_id": "D003",
+    "syndrome_name": "肺气虚耗",
+    "symptoms": {
+      "full_text": "喘促短气，气怯声低，喉有鼾声，咳声低弱，痰吐稀薄，自汗畏风，或见咳呛，痰少质黏，烦热而渴，咽喉不利，面颧潮红，舌质淡红或有苔剥，脉软弱或细数。",
+      "items": [
+        {
+          "text": "喘促短气",
+          "is_key": true
+        },
+        {
+          "text": "气怯声低",
+          "is_key": true
+        },
+        {
+          "text": "喉有鼾声",
+          "is_key": true
+        },
+        {
+          "text": "咳声低弱",
+          "is_key": false
+        },
+        {
+          "text": "痰吐稀薄",
+          "is_key": false
+        },
+        {
+          "text": "自汗畏风",
+          "is_key": false
+        },
+        {
+          "text": "或见咳呛",
+          "is_key": false
+        },
+        {
+          "text": "痰少质黏",
+          "is_key": false
+        },
+        {
+          "text": "烦热而渴",
+          "is_key": false
+        },
+        {
+          "text": "咽喉不利",
+          "is_key": false
+        },
+        {
+          "text": "面颧潮红",
+          "is_key": false
+        },
+        {
+          "text": "舌质淡红或有苔剥",
+          "is_key": false
+        },
+        {
+          "text": "脉软弱或细数",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "肺气亏虚，气失所主，或肺阴亏虚，虚火上炎，肺失清肃。",
+    "treatment_method": "补肺益气",
+    "prescription": {
+      "primary": "生脉散合补肺汤",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S42",
+    "disease_id": "D003",
+    "syndrome_name": "肾虚不纳",
+    "symptoms": {
+      "full_text": "喘促日久，动则喘甚，呼多吸少，气不得续，形瘦神惫，跗肿，汗出肢冷，面青唇紫，舌淡苔白或黑而润滑，脉微细或沉弱，或见喘咳，面红烦躁，口咽干燥，足冷，汗出如油，舌红少津，脉",
+      "items": [
+        {
+          "text": "喘促日久",
+          "is_key": true
+        },
+        {
+          "text": "动则喘甚",
+          "is_key": true
+        },
+        {
+          "text": "呼多吸少",
+          "is_key": true
+        },
+        {
+          "text": "气不得续",
+          "is_key": false
+        },
+        {
+          "text": "形瘦神惫",
+          "is_key": false
+        },
+        {
+          "text": "跗肿",
+          "is_key": false
+        },
+        {
+          "text": "汗出肢冷",
+          "is_key": false
+        },
+        {
+          "text": "面青唇紫",
+          "is_key": false
+        },
+        {
+          "text": "舌淡苔白或黑而润滑",
+          "is_key": false
+        },
+        {
+          "text": "脉微细或沉弱",
+          "is_key": false
+        },
+        {
+          "text": "或见喘咳",
+          "is_key": false
+        },
+        {
+          "text": "面红烦躁",
+          "is_key": false
+        },
+        {
+          "text": "口咽干燥",
+          "is_key": false
+        },
+        {
+          "text": "足冷",
+          "is_key": false
+        },
+        {
+          "text": "汗出如油",
+          "is_key": false
+        },
+        {
+          "text": "舌红少津",
+          "is_key": false
+        },
+        {
+          "text": "脉",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S43",
+    "disease_id": "D003",
+    "syndrome_name": "细数",
+    "symptoms": {
+      "full_text": "。",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "肺病及肾，肺肾俱虚，气失摄纳。",
+    "treatment_method": "补肾纳气",
+    "prescription": {
+      "primary": "金匮肾气丸合参蛤散",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S44",
+    "disease_id": "D003",
+    "syndrome_name": "正虚喘脱",
+    "symptoms": {
+      "full_text": "喘逆剧甚，张口抬肩，鼻扇气促，端坐不能平卧，",
+      "items": [
+        {
+          "text": "喘逆剧甚",
+          "is_key": true
+        },
+        {
+          "text": "张口抬肩",
+          "is_key": true
+        },
+        {
+          "text": "鼻扇气促",
+          "is_key": true
+        },
+        {
+          "text": "端坐不能平卧",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S45",
+    "disease_id": "D003",
+    "syndrome_name": "稍动则咳喘欲绝",
+    "symptoms": {
+      "full_text": "，或有痰鸣，心慌动悸，烦躁不安，面青唇紫，",
+      "items": [
+        {
+          "text": "或有痰鸣",
+          "is_key": true
+        },
+        {
+          "text": "心慌动悸",
+          "is_key": true
+        },
+        {
+          "text": "烦躁不安",
+          "is_key": true
+        },
+        {
+          "text": "面青唇紫",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S46",
+    "disease_id": "D003",
+    "syndrome_name": "汗出如珠",
+    "symptoms": {
+      "full_text": "，肢冷，脉浮大无根，或见歇止，或模糊不清。",
+      "items": [
+        {
+          "text": "肢冷",
+          "is_key": true
+        },
+        {
+          "text": "脉浮大无根",
+          "is_key": true
+        },
+        {
+          "text": "或见歇止",
+          "is_key": true
+        },
+        {
+          "text": "或模糊不清",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "肺气欲绝，心肾阳衰。",
+    "treatment_method": "扶阳固脱，",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S47",
+    "disease_id": "D003",
+    "syndrome_name": "镇摄肾气",
+    "symptoms": {
+      "full_text": "参附汤送服黑锡丹，配合蛤蚧",
+      "items": [
+        {
+          "text": "参附汤送服黑锡丹",
+          "is_key": true
+        },
+        {
+          "text": "配合蛤蚧",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S48",
+    "disease_id": "D003",
+    "syndrome_name": "粉考点",
+    "symptoms": {
+      "full_text": "5★",
+      "items": [
+        {
+          "text": "5★",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S49",
+    "disease_id": "D003",
+    "syndrome_name": "肺痨",
+    "symptoms": {
+      "full_text": "(四大证：咳嗽/咳血/潮热/盗汗+身体逐渐消瘦)",
+      "items": [
+        {
+          "text": "(四大证：咳嗽/咳血/潮热/盗汗+身体逐渐消瘦)",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S50",
+    "disease_id": "D003",
+    "syndrome_name": "肺阴亏损",
+    "symptoms": {
+      "full_text": "干咳，咳声短促，或咯少量黏痰，或",
+      "items": [
+        {
+          "text": "干咳",
+          "is_key": true
+        },
+        {
+          "text": "咳声短促",
+          "is_key": true
+        },
+        {
+          "text": "或咯少量黏痰",
+          "is_key": true
+        },
+        {
+          "text": "或",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S51",
+    "disease_id": "D003",
+    "syndrome_name": "痰中带有血",
+    "symptoms": {
+      "full_text": "丝，色鲜红，胸部隐隐闷痛，午后自觉手足心热，或见少量盗汗，皮肤干灼，口干咽燥，近期曾有与肺痨病人接触史。舌苔薄白，舌边尖红，脉细数。",
+      "items": [
+        {
+          "text": "丝",
+          "is_key": true
+        },
+        {
+          "text": "色鲜红",
+          "is_key": true
+        },
+        {
+          "text": "胸部隐隐闷痛",
+          "is_key": true
+        },
+        {
+          "text": "午后自觉手足心热",
+          "is_key": false
+        },
+        {
+          "text": "或见少量盗汗",
+          "is_key": false
+        },
+        {
+          "text": "皮肤干灼",
+          "is_key": false
+        },
+        {
+          "text": "口干咽燥",
+          "is_key": false
+        },
+        {
+          "text": "近期曾有与肺痨病人接触史",
+          "is_key": false
+        },
+        {
+          "text": "舌苔薄白",
+          "is_key": false
+        },
+        {
+          "text": "舌边尖红",
+          "is_key": false
+        },
+        {
+          "text": "脉细数",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "阴虚肺燥，肺失滋润，肺伤络损。",
+    "treatment_method": "滋阴润肺",
+    "prescription": {
+      "primary": "月华丸",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S52",
+    "disease_id": "D003",
+    "syndrome_name": "虚火灼肺呛咳气急",
+    "symptoms": {
+      "full_text": "，痰少质黏，或吐痰黄稠量多，",
+      "items": [
+        {
+          "text": "痰少质黏",
+          "is_key": true
+        },
+        {
+          "text": "或吐痰黄稠量多",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S53",
+    "disease_id": "D003",
+    "syndrome_name": "时时咯",
+    "symptoms": {
+      "full_text": "血，血色鲜红，混有泡沫痰涎，午后潮热，骨蒸颧红，五心烦热，盗汗量多，口渴心烦，失眠，性情急躁",
+      "items": [
+        {
+          "text": "血",
+          "is_key": true
+        },
+        {
+          "text": "血色鲜红",
+          "is_key": true
+        },
+        {
+          "text": "混有泡沫痰涎",
+          "is_key": true
+        },
+        {
+          "text": "午后潮热",
+          "is_key": false
+        },
+        {
+          "text": "骨蒸颧红",
+          "is_key": false
+        },
+        {
+          "text": "五心烦热",
+          "is_key": false
+        },
+        {
+          "text": "盗汗量多",
+          "is_key": false
+        },
+        {
+          "text": "口渴心烦",
+          "is_key": false
+        },
+        {
+          "text": "失眠",
+          "is_key": false
+        },
+        {
+          "text": "性情急躁",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S54",
+    "disease_id": "D003",
+    "syndrome_name": "易怒",
+    "symptoms": {
+      "full_text": "，或胸胁掣痛，男子可见遗精，女子月经不调，肺肾阴伤，水亏火旺，燥热内灼，络损血溢。",
+      "items": [
+        {
+          "text": "或胸胁掣痛",
+          "is_key": true
+        },
+        {
+          "text": "男子可见遗精",
+          "is_key": true
+        },
+        {
+          "text": "女子月经不调",
+          "is_key": true
+        },
+        {
+          "text": "肺肾阴伤",
+          "is_key": false
+        },
+        {
+          "text": "水亏火旺",
+          "is_key": false
+        },
+        {
+          "text": "燥热内灼",
+          "is_key": false
+        },
+        {
+          "text": "络损血溢",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "滋阴降火百合固金汤合秦艽鳖甲散形体日益消瘦，近期曾有与肺痨病人接触史，舌干而红，苔薄黄而剥，脉细数。",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S55",
+    "disease_id": "D003",
+    "syndrome_name": "气阴耗伤",
+    "symptoms": {
+      "full_text": "咳嗽无力，气短声低，咳痰清稀色白，量较多，偶或夹血，或咯血，血色淡红，午后潮热，伴有畏风，",
+      "items": [
+        {
+          "text": "咳嗽无力",
+          "is_key": true
+        },
+        {
+          "text": "气短声低",
+          "is_key": true
+        },
+        {
+          "text": "咳痰清稀色白",
+          "is_key": true
+        },
+        {
+          "text": "量较多",
+          "is_key": false
+        },
+        {
+          "text": "偶或夹血",
+          "is_key": false
+        },
+        {
+          "text": "或咯血",
+          "is_key": false
+        },
+        {
+          "text": "血色淡红",
+          "is_key": false
+        },
+        {
+          "text": "午后潮热",
+          "is_key": false
+        },
+        {
+          "text": "伴有畏风",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S56",
+    "disease_id": "D003",
+    "syndrome_name": "怕冷",
+    "symptoms": {
+      "full_text": "，",
+      "items": [
+        {
+          "text": "待补充",
+          "is_key": true
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S57",
+    "disease_id": "D003",
+    "syndrome_name": "自汗与盗汗可并见",
+    "symptoms": {
+      "full_text": "，纳少神疲，便溏，面白，颧红，近期曾有与肺痨病人接触史，舌质光淡，边有齿印，苔薄，脉细弱而数。",
+      "items": [
+        {
+          "text": "纳少神疲",
+          "is_key": true
+        },
+        {
+          "text": "便溏",
+          "is_key": true
+        },
+        {
+          "text": "面白",
+          "is_key": true
+        },
+        {
+          "text": "颧红",
+          "is_key": false
+        },
+        {
+          "text": "近期曾有与肺痨病人接触史",
+          "is_key": false
+        },
+        {
+          "text": "舌质光淡",
+          "is_key": false
+        },
+        {
+          "text": "边有齿印",
+          "is_key": false
+        },
+        {
+          "text": "苔薄",
+          "is_key": false
+        },
+        {
+          "text": "脉细弱而数",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "阴伤气耗，肺脾两虚，肺气不清，脾虚不健。",
+    "treatment_method": "益气养阴",
+    "prescription": {
+      "primary": "保真汤",
+      "alternative": "参苓白术散"
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S58",
+    "disease_id": "D003",
+    "syndrome_name": "阴阳两虚",
+    "symptoms": {
+      "full_text": "肺痨病日久，咳逆喘息，少气，咳痰色白有沫，或夹血丝，血色暗淡，潮热，自汗，盗汗，声嘶或失",
+      "items": [
+        {
+          "text": "肺痨病日久",
+          "is_key": true
+        },
+        {
+          "text": "咳逆喘息",
+          "is_key": true
+        },
+        {
+          "text": "少气",
+          "is_key": true
+        },
+        {
+          "text": "咳痰色白有沫",
+          "is_key": false
+        },
+        {
+          "text": "或夹血丝",
+          "is_key": false
+        },
+        {
+          "text": "血色暗淡",
+          "is_key": false
+        },
+        {
+          "text": "潮热",
+          "is_key": false
+        },
+        {
+          "text": "自汗",
+          "is_key": false
+        },
+        {
+          "text": "盗汗",
+          "is_key": false
+        },
+        {
+          "text": "声嘶或失",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S59",
+    "disease_id": "D003",
+    "syndrome_name": "音",
+    "symptoms": {
+      "full_text": "，面浮肢肿，心慌，唇紫，肢冷，形寒，或见五更泄泻，口舌生糜，大肉尽脱，男子遗精阳痿，女",
+      "items": [
+        {
+          "text": "面浮肢肿",
+          "is_key": true
+        },
+        {
+          "text": "心慌",
+          "is_key": true
+        },
+        {
+          "text": "唇紫",
+          "is_key": true
+        },
+        {
+          "text": "肢冷",
+          "is_key": false
+        },
+        {
+          "text": "形寒",
+          "is_key": false
+        },
+        {
+          "text": "或见五更泄泻",
+          "is_key": false
+        },
+        {
+          "text": "口舌生糜",
+          "is_key": false
+        },
+        {
+          "text": "大肉尽脱",
+          "is_key": false
+        },
+        {
+          "text": "男子遗精阳痿",
+          "is_key": false
+        },
+        {
+          "text": "女",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "待补充",
+    "treatment_method": "待补充",
+    "prescription": {
+      "primary": "待补充方药",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  },
+  {
+    "syndrome_id": "D003_S60",
+    "disease_id": "D003",
+    "syndrome_name": "子经闭",
+    "symptoms": {
+      "full_text": "，苔黄而剥，舌质光淡隐紫，少津，脉微细而数，或虚大无力。",
+      "items": [
+        {
+          "text": "苔黄而剥",
+          "is_key": true
+        },
+        {
+          "text": "舌质光淡隐紫",
+          "is_key": true
+        },
+        {
+          "text": "少津",
+          "is_key": true
+        },
+        {
+          "text": "脉微细而数",
+          "is_key": false
+        },
+        {
+          "text": "或虚大无力",
+          "is_key": false
+        }
+      ]
+    },
+    "pathogenesis": "阴伤及阳，精气虚竭，肺、脾、肾俱损。",
+    "treatment_method": "滋阴补阳",
+    "prescription": {
+      "primary": "补天大造丸",
+      "alternative": null
+    },
+    "key_symptom_analysis": []
+  }
+]
