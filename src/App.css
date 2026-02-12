@@ -1438,11 +1438,11 @@ button:disabled {
   }
 
   .quick_actions_primary {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .quick_actions_secondary {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .goal_edit_card .goal_form {
