@@ -586,8 +586,8 @@
     "pathogenesis": "肾元亏损，肾失摄纳，肺气上逆。",
     "treatment_method": "补肾纳气",
     "prescription": {
-      "primary": "金匮肾气丸",
-      "alternative": "七味都气丸"
+      "primary": "金匮肾气丸合七味都气丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "呼多吸少 -> 肾不纳气",
@@ -802,8 +802,8 @@
     "pathogenesis": "肺气欲绝，心肾阳衰。",
     "treatment_method": "扶阳固脱，镇摄肾气",
     "prescription": {
-      "primary": "参附汤送服黑锡丹",
-      "alternative": "配合蛤蚧粉"
+      "primary": "参附汤送服黑锡丹合蛤蚧粉",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "端坐呼吸、动则欲脱 -> 肺气将绝",
@@ -858,8 +858,8 @@
     "pathogenesis": "肺肾阴伤，水亏火旺，燥热内灼，络损血溢。",
     "treatment_method": "滋阴降火",
     "prescription": {
-      "primary": "百合固金汤",
-      "alternative": "秦艽鳖甲散"
+      "primary": "百合固金汤合秦艽鳖甲散",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "咯血鲜红、潮热骨蒸 -> 虚火内灼",
@@ -1051,8 +1051,8 @@
     "pathogenesis": "肺气壅滞，痰瘀互结。",
     "treatment_method": "涤痰祛瘀，泻肺平喘",
     "prescription": {
-      "primary": "葶苈大枣泻肺汤",
-      "alternative": "桂枝茯苓丸"
+      "primary": "葶苈大枣泻肺汤合桂枝茯苓丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "痰鸣喘卧不得 -> 痰阻肺络",
@@ -1107,8 +1107,8 @@
     "pathogenesis": "肺肾两虚，气失摄纳。",
     "treatment_method": "补肺纳肾，降气平喘",
     "prescription": {
-      "primary": "平喘固本汤",
-      "alternative": "补肺汤"
+      "primary": "平喘固本汤合补肺汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "短气难续、倚息而坐 -> 肺肾气虚",
@@ -1190,8 +1190,8 @@
     "pathogenesis": "心阳虚衰，心神失养。",
     "treatment_method": "温补心阳，安神定悸",
     "prescription": {
-      "primary": "桂枝甘草龙骨牡蛎汤",
-      "alternative": "参附汤"
+      "primary": "桂枝甘草龙骨牡蛎汤合参附汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "动则悸甚 -> 心阳鼓动无力",
@@ -1245,8 +1245,8 @@
     "pathogenesis": "肝肾阴虚，水不济火，心火内动，扰动心神。",
     "treatment_method": "滋阴清火，养心安神",
     "prescription": {
-      "primary": "天王补心丹",
-      "alternative": "朱砂安神丸"
+      "primary": "天王补心丹合朱砂安神丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "心悸心烦失眠 -> 心神受扰",
@@ -1382,8 +1382,8 @@
     "pathogenesis": "痰浊盘踞，胸阳失展，气机痹阻，脉络阻滞。",
     "treatment_method": "通阳泄浊，豁痰宣痹",
     "prescription": {
-      "primary": "瓜蒌薤白半夏汤",
-      "alternative": "涤痰汤"
+      "primary": "瓜蒌薤白半夏汤合涤痰汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "胸闷重痰多 -> 痰浊闭阻",
@@ -1409,8 +1409,8 @@
     "pathogenesis": "素体阳虚，阴寒凝滞，心脉痹阻，心阳不振。",
     "treatment_method": "辛温散寒，宣通心阳",
     "prescription": {
-      "primary": "枳实薤白桂枝汤",
-      "alternative": "当归四逆汤"
+      "primary": "枳实薤白桂枝汤合当归四逆汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "猝然绞痛、遇寒发作 -> 寒邪凝滞",
@@ -1436,8 +1436,8 @@
     "pathogenesis": "心气不足，阴血亏耗，血行瘀滞。",
     "treatment_method": "益气养阴，活血通脉",
     "prescription": {
-      "primary": "生脉散",
-      "alternative": "人参养荣汤"
+      "primary": "生脉散合人参养荣汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "动则气短心悸 -> 气虚失养",
@@ -1464,8 +1464,8 @@
     "pathogenesis": "水不济火，虚热内灼，心失所养，血脉不畅。",
     "treatment_method": "滋阴清火，养心和络",
     "prescription": {
-      "primary": "天王补心丹",
-      "alternative": "炙甘草汤"
+      "primary": "天王补心丹合炙甘草汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "心悸失眠盗汗 -> 心阴不足",
@@ -1492,8 +1492,8 @@
     "pathogenesis": "阳气虚衰，胸阳不振，气机痹阻，血行瘀滞。",
     "treatment_method": "温补阳气，振奋心阳",
     "prescription": {
-      "primary": "参附汤",
-      "alternative": "右归饮"
+      "primary": "参附汤合右归饮",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "胸闷心痛动则重 -> 阳虚气弱",
@@ -1602,8 +1602,8 @@
     "pathogenesis": "肾水亏虚，不能上济于心，心火炽盛，不能下交于肾。",
     "treatment_method": "滋阴降火，交通心肾",
     "prescription": {
-      "primary": "六味地黄丸",
-      "alternative": "交泰丸"
+      "primary": "六味地黄丸合交泰丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "不寐心烦 -> 心火偏亢",
@@ -1630,8 +1630,8 @@
     "pathogenesis": "心胆虚怯，心神失养，神魂不安。",
     "treatment_method": "益气镇惊，安神定志",
     "prescription": {
-      "primary": "安神定志丸",
-      "alternative": "酸枣仁汤"
+      "primary": "安神定志丸合酸枣仁汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "易惊胆怯 -> 心胆气虚",
@@ -1686,8 +1686,8 @@
     "pathogenesis": "寒痰湿浊，上蒙清窍，元神失控。",
     "treatment_method": "急以开窍醒神，继以温化痰涎，顺气定痫",
     "prescription": {
-      "primary": "五生饮",
-      "alternative": "二陈汤"
+      "primary": "五生饮合二陈汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "昏仆抽搐而声低 -> 寒痰内闭",
@@ -1713,8 +1713,8 @@
     "pathogenesis": "肝郁化火，痰火内盛，上扰元神。",
     "treatment_method": "清肝泻火，化痰宁心",
     "prescription": {
-      "primary": "龙胆泻肝汤",
-      "alternative": "涤痰汤"
+      "primary": "龙胆泻肝汤合涤痰汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "急躁面红 -> 肝火偏亢",
@@ -1959,8 +1959,8 @@
     "pathogenesis": "瘀停胃络，脉络壅滞。",
     "treatment_method": "化瘀通络，理气和胃",
     "prescription": {
-      "primary": "失笑散",
-      "alternative": "丹参饮"
+      "primary": "失笑散合丹参饮",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "刺痛定处、夜重 -> 瘀血阻络",
@@ -2095,8 +2095,8 @@
     "pathogenesis": "痰饮内停，中阳不振，胃气上逆。",
     "treatment_method": "温中化饮，和胃降逆",
     "prescription": {
-      "primary": "小半夏汤",
-      "alternative": "苓桂术甘汤"
+      "primary": "小半夏汤合苓桂术甘汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "清水痰涎上涌 -> 痰饮内停",
@@ -2121,8 +2121,8 @@
     "pathogenesis": "肝气不疏，横逆犯胃，胃失和降。",
     "treatment_method": "疏肝理气，和胃降逆",
     "prescription": {
-      "primary": "半夏厚朴汤",
-      "alternative": "左金丸"
+      "primary": "半夏厚朴汤合左金丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "吞酸嗳气 -> 肝胃不和",
@@ -2203,8 +2203,8 @@
     "pathogenesis": "寒邪凝滞，中阳被遏，脉络痹阻。",
     "treatment_method": "散寒温里，理气止痛",
     "prescription": {
-      "primary": "良附丸",
-      "alternative": "正气天香散"
+      "primary": "良附丸合正气天香散",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "遇寒加重得温缓 -> 寒凝腹痛",
@@ -2560,8 +2560,8 @@
     "pathogenesis": "疫邪热毒，壅盛肠道，燔灼气血，蒙蔽清窍。",
     "treatment_method": "清热解毒，凉血除积",
     "prescription": {
-      "primary": "白头翁汤",
-      "alternative": "芍药汤"
+      "primary": "白头翁汤合芍药汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "起病暴急高热 -> 疫毒炽盛",
@@ -2616,8 +2616,8 @@
     "pathogenesis": "阴虚湿热，肠络受损。",
     "treatment_method": "养阴和营，清肠化湿",
     "prescription": {
-      "primary": "黄连阿胶汤",
-      "alternative": "驻车丸"
+      "primary": "黄连阿胶汤合驻车丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "久痢不愈 -> 阴津受伤",
@@ -2644,8 +2644,8 @@
     "pathogenesis": "脾肾阳虚，寒湿内生，阻滞肠腑。",
     "treatment_method": "温补脾肾，收涩固脱",
     "prescription": {
-      "primary": "桃花汤",
-      "alternative": "真人养脏汤"
+      "primary": "桃花汤合真人养脏汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "清稀无臭、白冻 -> 虚寒下利",
@@ -3032,8 +3032,8 @@
     "pathogenesis": "湿遏热伏，困阻中焦，胆汁不循常道。",
     "treatment_method": "化湿利小便，佐以清热",
     "prescription": {
-      "primary": "茵陈五苓散",
-      "alternative": "甘露消毒丹"
+      "primary": "茵陈五苓散合甘露消毒丹",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "黄而晦暗 -> 湿偏重",
@@ -3225,8 +3225,8 @@
     "pathogenesis": "气滞血瘀，积块留着。",
     "treatment_method": "疏肝理气，活血化瘀",
     "prescription": {
-      "primary": "逍遥散",
-      "alternative": "鳖甲煎丸"
+      "primary": "逍遥散合鳖甲煎丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "胁下结块 -> 瘀血积聚",
@@ -3253,8 +3253,8 @@
     "pathogenesis": "肝郁气滞，脾运不健，湿浊中阻。",
     "treatment_method": "疏肝理气，运脾利湿",
     "prescription": {
-      "primary": "柴胡疏肝散",
-      "alternative": "胃苓汤"
+      "primary": "柴胡疏肝散合胃苓汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "胀满不坚 -> 气滞湿阻",
@@ -3393,8 +3393,8 @@
     "pathogenesis": "肝肾阴虚，津液失布，水湿内停。",
     "treatment_method": "滋肾柔肝，养阴利水",
     "prescription": {
-      "primary": "六味地黄丸",
-      "alternative": "一贯煎"
+      "primary": "六味地黄丸合一贯煎",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "胀满伴口燥失眠 -> 阴虚内热",
@@ -3445,8 +3445,8 @@
     "pathogenesis": "痰热内扰，蒙蔽心窍。",
     "treatment_method": "清热豁痰，开窍息风",
     "prescription": {
-      "primary": "安宫牛黄丸",
-      "alternative": "龙胆泻肝汤"
+      "primary": "安宫牛黄丸合龙胆泻肝汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "神昏狂躁 -> 痰热蒙窍",
@@ -3890,8 +3890,8 @@
     "pathogenesis": "脉络空虚，风痰夹虚入中，气血闭阻。",
     "treatment_method": "息风化痰，活血通络",
     "prescription": {
-      "primary": "半夏白术天麻汤",
-      "alternative": "桃仁红花煎"
+      "primary": "半夏白术天麻汤合桃仁红花煎",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "口舌歪斜半身不遂 -> 经络痹阻",
@@ -3973,8 +3973,8 @@
     "pathogenesis": "肝阳暴张，阳亢风动，痰火壅盛，清窍被扰。",
     "treatment_method": "清肝息风，豁痰开窍",
     "prescription": {
-      "primary": "羚角钩藤汤",
-      "alternative": "另服至宝丹或安宫牛黄丸"
+      "primary": "羚角钩藤汤另服至宝丹或安宫牛黄丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "昏仆闭证 -> 邪闭清窍",
@@ -4001,8 +4001,8 @@
     "pathogenesis": "痰浊偏盛，上壅清窍，内蒙心神，神机闭塞。",
     "treatment_method": "化痰息风，宣郁开窍",
     "prescription": {
-      "primary": "涤痰汤",
-      "alternative": "苏合香丸"
+      "primary": "涤痰汤合苏合香丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "闭证而静卧肢冷 -> 阴闭偏寒",
@@ -4028,8 +4028,8 @@
     "pathogenesis": "正不胜邪，元气衰微，阴阳欲绝。",
     "treatment_method": "回阳救阴，益气固脱",
     "prescription": {
-      "primary": "参附汤",
-      "alternative": "生脉散"
+      "primary": "参附汤合生脉散",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "汗出肢冷脉微 -> 阳气欲脱",
@@ -4110,8 +4110,8 @@
     "pathogenesis": "肝肾亏虚，阴血不足，筋脉失养。",
     "treatment_method": "滋养肝肾",
     "prescription": {
-      "primary": "左归丸",
-      "alternative": "地黄饮子"
+      "primary": "左归丸合地黄饮子",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "肢体挛缩萎废 -> 筋脉失养",
@@ -4334,8 +4334,8 @@
     "pathogenesis": "肝郁阳亢，化火生风，扰动筋脉。",
     "treatment_method": "镇肝息风，舒筋止颤",
     "prescription": {
-      "primary": "天麻钩藤饮",
-      "alternative": "镇肝熄风汤"
+      "primary": "天麻钩藤饮合镇肝熄风汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "颤动明显且粗大 -> 风阳上扰",
@@ -4362,8 +4362,8 @@
     "pathogenesis": "痰热内蕴，热极生风，筋脉失约。",
     "treatment_method": "清热化痰，平肝息风",
     "prescription": {
-      "primary": "导痰汤",
-      "alternative": "羚角钩藤汤"
+      "primary": "导痰汤合羚角钩藤汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "头摇震颤 -> 风动筋惕",
@@ -4418,8 +4418,8 @@
     "pathogenesis": "髓海不足，神机失养，肢体筋脉失主。",
     "treatment_method": "填精补髓，育阴息风",
     "prescription": {
-      "primary": "龟鹿二仙膏",
-      "alternative": "大定风珠"
+      "primary": "龟鹿二仙高膏合大定风珠",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "持物不稳 -> 筋脉失养",
@@ -4446,7 +4446,7 @@
     "pathogenesis": "阳气虚衰，失去温煦，筋脉不用。",
     "treatment_method": "补肾助阳，温煦筋脉",
     "prescription": {
-      "primary": "黄饮子",
+      "primary": "地黄饮子",
       "alternative": null
     },
     "key_symptom_analysis": [
@@ -4501,8 +4501,8 @@
     "pathogenesis": "疮毒内陷，肺脾失调，水湿内停。",
     "treatment_method": "宣肺解毒，利湿消肿",
     "prescription": {
-      "primary": "麻黄连翘赤小豆汤",
-      "alternative": "五味消毒饮"
+      "primary": "麻黄连翘赤小豆汤合五味消毒饮",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "浮肿伴疮毒 -> 湿毒浸淫",
@@ -4529,8 +4529,8 @@
     "pathogenesis": "水湿内侵，脾阳被困，泛滥肌肤。",
     "treatment_method": "运脾化湿，通阳利水",
     "prescription": {
-      "primary": "五皮饮",
-      "alternative": "胃苓汤"
+      "primary": "五皮饮合胃苓汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "病程久缓 -> 水湿浸渍",
@@ -4613,8 +4613,8 @@
     "pathogenesis": "脾肾阳虚，水寒内聚。",
     "treatment_method": "温肾助阳，化气行水",
     "prescription": {
-      "primary": "济生肾气丸",
-      "alternative": "真武汤"
+      "primary": "济生肾气丸合真武汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "久肿反复 -> 肾阳不化",
@@ -4641,8 +4641,8 @@
     "pathogenesis": "水停湿阻，气滞血瘀，三焦气化不利。",
     "treatment_method": "活血祛瘀，化气行水",
     "prescription": {
-      "primary": "桃红四物汤",
-      "alternative": "五苓散"
+      "primary": "桃红四物汤合五苓散",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "久肿不退兼瘀斑 -> 瘀水互结",
@@ -4976,8 +4976,8 @@
     "pathogenesis": "阴精亏虚，阴不涵阳。",
     "treatment_method": "滋养心肾",
     "prescription": {
-      "primary": "天王补心丹",
-      "alternative": "六味地黄丸"
+      "primary": "天王补心丹合六味地黄丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "心烦少寐 -> 心阴不足",
@@ -5096,7 +5096,7 @@
     },
     "pathogenesis": "肾阴不足，虚火上炎，络损血溢。",
     "treatment_method": "滋阴降火，凉血止血",
-    "prescription": { "primary": "六味地黄丸", "alternative": "茜根散" },
+    "prescription": { "primary": "六味地黄丸合茜根散", "alternative": null },
     "key_symptom_analysis": ["慢性反复 -> 阴虚本质", "齿摇 -> 肾阴不足", "舌红少苔 -> 虚火上炎"]
   },
   {
@@ -5134,7 +5134,7 @@
     },
     "pathogenesis": "木火刑金，肺失清肃，肺络受损。",
     "treatment_method": "清肝泻肺，凉血止血",
-    "prescription": { "primary": "泻白散", "alternative": "黛蛤散" },
+    "prescription": { "primary": "泻白散合黛蛤散", "alternative": null },
     "key_symptom_analysis": ["胸胁痛口苦 -> 肝火内炽", "咯血鲜红 -> 热迫血溢", "脉弦数 -> 肝火犯肺"]
   },
   {
@@ -5173,7 +5173,7 @@
     },
     "pathogenesis": "胃热内郁，热伤胃络。",
     "treatment_method": "清胃泻火，化瘀止血",
-    "prescription": { "primary": "泻心汤", "alternative": "十灰散" },
+    "prescription": { "primary": "泻心汤合十灰散", "alternative": null },
     "key_symptom_analysis": ["吐血夹食 -> 胃络受损", "口臭便秘 -> 胃热壅盛", "苔黄腻脉滑数 -> 实热"]
   },
   {
@@ -5231,7 +5231,7 @@
     },
     "pathogenesis": "湿热蕴结，脉络受损，血溢肠道。",
     "treatment_method": "清化湿热，凉血止血",
-    "prescription": { "primary": "地榆散", "alternative": "槐角丸" },
+    "prescription": { "primary": "地榆散合槐角丸", "alternative": null },
     "key_symptom_analysis": ["便血鲜红黏稠 -> 湿热下注", "口苦苔黄腻 -> 热湿内蕴", "脉濡数 -> 湿热并见"]
   },
   {
@@ -5251,7 +5251,7 @@
     },
     "pathogenesis": "胃热内郁，热伤胃络，血溢肠道。",
     "treatment_method": "清胃止血",
-    "prescription": { "primary": "泻心汤", "alternative": "十灰散" },
+    "prescription": { "primary": "泻心汤合十灰散", "alternative": null },
     "key_symptom_analysis": ["柏油便 -> 上消化道出血倾向", "胃脘痛口干 -> 胃热伤络", "舌红脉数 -> 热灼"]
   },
   {
@@ -5388,7 +5388,7 @@
     },
     "pathogenesis": "热壅经络，迫血妄行，血溢肌腠。",
     "treatment_method": "清热解毒，凉血止血",
-    "prescription": { "primary": "犀角地黄汤", "alternative": "十灰散" },
+    "prescription": { "primary": "犀角地黄汤合十灰散", "alternative": null },
     "key_symptom_analysis": ["紫斑伴出血 -> 血热妄行", "发热口渴 -> 热邪内炽", "舌红脉数 -> 热证"]
   },
   {
@@ -5632,8 +5632,8 @@
     "pathogenesis": "痰气交阻，气郁化火，壅结颈前。",
     "treatment_method": "清肝泻火，消瘿散结",
     "prescription": {
-      "primary": "栀子清肝汤",
-      "alternative": "消瘰丸"
+      "primary": "栀子清肝汤合消瘰丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "烦热易怒 -> 肝火旺盛",
@@ -5834,8 +5834,8 @@
     "pathogenesis": "痰湿内蕴，壅遏化热。",
     "treatment_method": "燥湿化痰，清热和中",
     "prescription": {
-      "primary": "黄连温胆汤",
-      "alternative": "中和汤或三仁汤"
+      "primary": "黄连温胆汤合中和汤或三仁汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "午后热甚 -> 郁热内生",
@@ -5889,8 +5889,8 @@
     "pathogenesis": "气机郁滞，痰瘀交阻。",
     "treatment_method": "行气解郁，化痰祛瘀",
     "prescription": {
-      "primary": "越鞠丸",
-      "alternative": "化积丸"
+      "primary": "越鞠丸合化积丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "痞闷胀痛 -> 气滞主导",
@@ -5917,8 +5917,8 @@
     "pathogenesis": "热毒炽盛，热阻血瘀。",
     "treatment_method": "清热凉血，解毒散瘀",
     "prescription": {
-      "primary": "犀角地黄汤",
-      "alternative": "犀黄丸"
+      "primary": "犀角地黄汤合犀黄丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "灼热痛伴高热 -> 热毒炽盛",
@@ -5945,8 +5945,8 @@
     "pathogenesis": "湿邪化热，湿热蕴毒。",
     "treatment_method": "清热利湿，解毒散结",
     "prescription": {
-      "primary": "龙胆泻肝汤",
-      "alternative": "五味消毒饮"
+      "primary": "龙胆泻肝汤合五味消毒饮",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "黄疸与便脓血并见 -> 湿热郁毒",
@@ -6334,8 +6334,8 @@
     "pathogenesis": "脾虚不健，生化乏源，气血亏虚，筋脉失养。",
     "treatment_method": "补中益气，健脾升清",
     "prescription": {
-      "primary": "参苓白术散",
-      "alternative": "补中益气汤"
+      "primary": "参苓白术散合补中益气汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "痿软渐进伴纳呆便溏 -> 脾胃亏虚",
@@ -6390,8 +6390,8 @@
     "pathogenesis": "气虚血瘀，阻滞经络，筋脉失养。",
     "treatment_method": "益气养营，活血行瘀",
     "prescription": {
-      "primary": "圣愈汤",
-      "alternative": "补阳还五汤"
+      "primary": "圣愈汤合补阳还五汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "久病痿弱与麻木 -> 经络瘀阻",
@@ -6585,8 +6585,8 @@
     "pathogenesis": "冲任失调，气血瘀滞，经脉阻塞。",
     "treatment_method": "调摄冲任",
     "prescription": {
-      "primary": "二仙汤",
-      "alternative": "四物汤"
+      "primary": "二仙汤合四物汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "经前加重经后减 -> 冲任失调特征",
@@ -6613,8 +6613,8 @@
     "pathogenesis": "湿热内生，浸淫肌肤。",
     "treatment_method": "清热利湿止痒",
     "prescription": {
-      "primary": "龙胆泻肝汤",
-      "alternative": "萆薢渗湿汤"
+      "primary": "龙胆泻肝汤合萆薢渗湿汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "潮红丘疱疹伴渗液 -> 湿热炽盛",
@@ -7086,8 +7086,8 @@
     "pathogenesis": "肠道功能失调，糟粕积滞，积结肠道，气血瘀滞。",
     "treatment_method": "行气活血，通腑泄热",
     "prescription": {
-      "primary": "大黄牡丹汤",
-      "alternative": "红藤煎剂"
+      "primary": "大黄牡丹汤合红藤煎剂",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "转移性右下腹痛 -> 肠痈初起关键表现",
@@ -7142,8 +7142,8 @@
     "pathogenesis": "肠内痞塞，气机不畅，食积痰凝，瘀结化热，热毒炽盛，渐入血分。",
     "treatment_method": "通腑排脓，养阴清热",
     "prescription": {
-      "primary": "大黄牡丹汤",
-      "alternative": "透脓散"
+      "primary": "大黄牡丹汤合透脓散",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "全腹压痛反跳与高热 -> 热毒炽盛",
@@ -7226,8 +7226,8 @@
     "pathogenesis": "耗伤精血，则肾阴虚损，阴虚内热，热伏冲任，迫血妄行。",
     "treatment_method": "滋肾益阴，止血调经",
     "prescription": {
-      "primary": "左归丸",
-      "alternative": "二至丸"
+      "primary": "左归丸合二至丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "崩漏日久伴腰膝酸软 -> 肾阴亏损",
@@ -7282,8 +7282,8 @@
     "pathogenesis": "脾气损伤，中气下陷，冲任不固，血失统摄，非时而下。",
     "treatment_method": "补气升阳，止血调经",
     "prescription": {
-      "primary": "举元煎",
-      "alternative": "安冲汤"
+      "primary": "举元煎合安冲汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "暴下继而淋漓 -> 脾虚失统",
@@ -7365,8 +7365,8 @@
     "pathogenesis": "气血化生之源不足，冲任气血不充。",
     "treatment_method": "补气养血调经",
     "prescription": {
-      "primary": "人参养荣汤",
-      "alternative": "圣愈汤"
+      "primary": "人参养荣汤或圣愈汤或八珍汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "经量渐少至闭经 -> 气血渐亏",
@@ -7560,8 +7560,8 @@
     "pathogenesis": "湿热内蕴，稽留胞宫，致气血凝滞不畅，不通则痛。",
     "treatment_method": "清热除湿，化瘀止痛",
     "prescription": {
-      "primary": "清热调血汤",
-      "alternative": "加红藤、败酱草、薏苡仁"
+      "primary": "清热调血汤加红藤、败酱草、薏苡仁",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "灼热痛与黄稠带下 -> 湿热下注胞宫",
@@ -7588,8 +7588,8 @@
     "pathogenesis": "气虚血少，胞脉失于濡养，不荣则痛。",
     "treatment_method": "益气养血，调经止痛",
     "prescription": {
-      "primary": "圣愈汤",
-      "alternative": "加香附、延胡索"
+      "primary": "圣愈汤加香附、延胡索",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "隐痛喜按 -> 虚性痛经",
@@ -7784,8 +7784,8 @@
     "pathogenesis": "肾阴不足，相火偏旺，损伤血络，复感湿邪，伤及任带二脉。",
     "treatment_method": "滋肾益阴，清热利湿",
     "prescription": {
-      "primary": "知柏地黄汤",
-      "alternative": "加芡实、金樱子"
+      "primary": "知柏地黄汤加芡实、金樱子",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "黄赤带下夹臭味 -> 湿热下注",
@@ -7896,8 +7896,8 @@
     "pathogenesis": "瘀血内停，瘀阻冲任，阴精津液不能运达阴窍，不能润泽阴窍。",
     "treatment_method": "补血益精，活血化瘀",
     "prescription": {
-      "primary": "小营煎",
-      "alternative": "加丹参、桃仁、牛膝"
+      "primary": "小营煎加丹参、桃仁、牛膝",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "带下过少兼经色紫暗 -> 瘀阻冲任",
@@ -8007,8 +8007,8 @@
     "pathogenesis": "孕后不慎，跌仆闪挫，气血紊乱，冲任失调，不能载胎养胎。",
     "treatment_method": "补气和血，安胎",
     "prescription": {
-      "primary": "圣愈汤",
-      "alternative": "寿胎丸"
+      "primary": "圣愈汤合寿胎丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "外伤后出现胎漏胎动 -> 伤胎关键线索",
@@ -8035,8 +8035,8 @@
     "pathogenesis": "孕妇宿有癥瘕，瘀阻胞脉，孕后冲任气血失调，血不归经，胎失摄养。",
     "treatment_method": "祛瘀消癥，固冲安胎",
     "prescription": {
-      "primary": "桂枝茯苓丸",
-      "alternative": "寿胎丸"
+      "primary": "桂枝茯苓丸合寿胎丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "宿有癥瘕且孕后下血 -> 瘀阻伤胎",
@@ -8063,8 +8063,8 @@
     "pathogenesis": "邪毒乘虚而入，稽留于冲任、胞脉，正邪交争发热。",
     "treatment_method": "清热解毒，凉血化瘀",
     "prescription": {
-      "primary": "五味消毒饮",
-      "alternative": "失笑散或解毒活血汤"
+      "primary": "五味消毒饮合失笑散或解毒活血汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "高热寒战伴恶露臭秽 -> 邪毒内陷胞脉",
@@ -8399,8 +8399,8 @@
     "pathogenesis": "湿浊内停，聚而为痰，痰湿下注冲任，阻滞胞络，痰血搏结，渐积成瘕。",
     "treatment_method": "化痰除湿，活血消瘤",
     "prescription": {
-      "primary": "苍附导痰丸",
-      "alternative": "桂枝茯苓丸"
+      "primary": "苍附导痰丸合桂枝茯苓丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "结块不坚且带下增多 -> 痰湿下注",
@@ -8484,8 +8484,8 @@
     "pathogenesis": "病程日久，反复流产，正气虚弱，耗损肾精，瘀血成块。",
     "treatment_method": "补肾活血，消癥散结",
     "prescription": {
-      "primary": "肾气丸",
-      "alternative": "桂枝茯苓丸"
+      "primary": "肾气丸合桂枝茯苓丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "久病结块伴经痛剧 -> 瘀阻胞宫",
@@ -8568,8 +8568,8 @@
     "pathogenesis": "痰热壅盛，郁闭肺气。",
     "treatment_method": "清热涤痰，开肺定喘",
     "prescription": {
-      "primary": "麻杏石甘汤",
-      "alternative": "葶苈大枣泻肺汤"
+      "primary": "麻杏石甘汤合葶苈大枣泻肺汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "壮热喘憋痰鸣 -> 痰热壅肺",
@@ -8596,8 +8596,8 @@
     "pathogenesis": "邪势炽盛，毒热内闭肺气，煎熬阴津。",
     "treatment_method": "清热解毒，泻肺开闭",
     "prescription": {
-      "primary": "黄连解毒汤",
-      "alternative": "麻杏石甘汤"
+      "primary": "黄连解毒汤合麻杏石甘汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "高热不退伴重喘 -> 毒热闭肺",
@@ -8708,8 +8708,8 @@
     "pathogenesis": "邪热炽盛，内陷厥阴。",
     "treatment_method": "平肝息风，清心开窍",
     "prescription": {
-      "primary": "羚角钩藤汤",
-      "alternative": "牛黄清心丸"
+      "primary": "羚角钩藤汤合牛黄清心丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "高热抽搐神昏 -> 邪热内陷厥阴",
@@ -8849,8 +8849,8 @@
     "pathogenesis": "久泻不止，脾肾阳虚，命门火衰，不能温煦脾土。",
     "treatment_method": "温补脾肾，固涩止泻",
     "prescription": {
-      "primary": "附子理中汤",
-      "alternative": "四神丸"
+      "primary": "附子理中汤合四神丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "久泻完谷不化 -> 脾肾阳衰",
@@ -8905,8 +8905,8 @@
     "pathogenesis": "暴泻或久泻不止，耗伤津液，阴损及阳，气随液脱。",
     "treatment_method": "回阳固脱",
     "prescription": {
-      "primary": "生脉散",
-      "alternative": "参附龙牡救逆汤"
+      "primary": "生脉散合参附龙牡救逆汤",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "四肢厥冷与面色青灰 -> 阳气欲脱",
@@ -8933,8 +8933,8 @@
     "pathogenesis": "乳食内积，脾胃受损，受纳运化失职。",
     "treatment_method": "消乳化食，和中导滞",
     "prescription": {
-      "primary": "消乳丸",
-      "alternative": "保和丸"
+      "primary": "乳积者，消乳丸；食积者，保和丸",
+      "alternative": null
     },
     "key_symptom_analysis": [
       "嗳腐酸馊呕吐宿食 -> 乳食停滞中焦",
