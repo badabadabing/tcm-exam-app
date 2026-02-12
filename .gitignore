@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# 构建时自动生成的加密产物
+public/data.enc
+src/data/keyParts.ts

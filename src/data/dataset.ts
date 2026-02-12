@@ -1,45 +1,31 @@
 import type { Disease, Syndrome } from '../types'
-
-export type DatasetSource = 'runtime' | 'chat_preview'
+import { decryptData } from './decrypt'
 
 export interface DatasetBundle {
-  source: DatasetSource
   diseases: Disease[]
   syndromes: Syndrome[]
 }
 
-const ACTIVE_DATASET_SOURCE: DatasetSource = 'chat_preview'
-const dataset_cache = new Map<DatasetSource, Promise<DatasetBundle>>()
+let dataset_cache: Promise<DatasetBundle> | null = null
 
-export function getActiveDatasetSource(): DatasetSource {
-  return ACTIVE_DATASET_SOURCE
-}
-
-function loadSource(source: DatasetSource): Promise<DatasetBundle> {
-  if (source === 'runtime') {
-    return Promise.all([import('./diseases.json'), import('./syndromes.json')]).then(([diseases_mod, syndromes_mod]) => ({
-      source,
-      diseases: diseases_mod.default as Disease[],
-      syndromes: syndromes_mod.default as Syndrome[],
-    }))
+/**
+ * 加载数据集：从加密文件 fetch → 解密 → 返回
+ */
+export async function loadDataset(): Promise<DatasetBundle> {
+  if (dataset_cache) {
+    return dataset_cache
   }
 
-  return Promise.all([
-    import('./imports/chat_preview/diseases.json'),
-    import('./imports/chat_preview/syndromes.json'),
-  ]).then(([diseases_mod, syndromes_mod]) => ({
-    source,
-    diseases: diseases_mod.default as Disease[],
-    syndromes: syndromes_mod.default as Syndrome[],
-  }))
-}
+  const task = (async () => {
+    const resp = await fetch('/data.enc')
+    if (!resp.ok) {
+      throw new Error(`数据加载失败: ${resp.status}`)
+    }
+    const encrypted = await resp.arrayBuffer()
+    const { diseases, syndromes } = await decryptData(encrypted)
+    return { diseases, syndromes } satisfies DatasetBundle
+  })()
 
-export async function loadDataset(source: DatasetSource = ACTIVE_DATASET_SOURCE): Promise<DatasetBundle> {
-  const cached = dataset_cache.get(source)
-  if (cached) {
-    return cached
-  }
-  const task = loadSource(source)
-  dataset_cache.set(source, task)
+  dataset_cache = task
   return task
 }

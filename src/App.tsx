@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import './App.css'
-import { getActiveDatasetSource, loadDataset, type DatasetBundle } from './data/dataset'
+import { loadDataset, type DatasetBundle } from './data/dataset'
 import { generateCasesByDisease, generateRandomCases } from './engine/caseGenerator'
 import { generateByDisease, generateQuestion, generateRandom } from './engine/questionEngine'
 import { getAnswerRecords, getBookmarks, saveAnswerRecord, toggleBookmark } from './storage/localStore'
@@ -443,7 +443,7 @@ function App() {
       setIsInitializing(true)
       setLoadingProgress(30)
       setLoadingText('正在重试加载题库')
-      const next_dataset = await loadDataset(getActiveDatasetSource())
+      const next_dataset = await loadDataset()
       setDatasetBundle(next_dataset)
       setPrefetchedRandomSession(null)
       setPrefetchedQ1Session(null)

@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "encrypt": "node ./scripts/encrypt-data.mjs",
+    "predev": "npm run encrypt",
     "dev": "vite",
+    "prebuild": "npm run encrypt",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
