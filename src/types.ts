@@ -109,10 +109,17 @@ export interface CaseQuestion {
 export type CaseSelfRating = 'mastered' | 'partial' | 'failed'
 
 export interface CaseAnswerRecord {
+  id: string
   case_id: string
   syndrome_id: string
   disease_id: string
   self_rating: CaseSelfRating
+  diagnosis_text: string
+  pathogenesis_text: string
+  treatment_text: string
+  prescription_text: string
+  mode: 'case_exam' | 'case_practice'
+  timestamp: number
 }
 
 export interface CaseExamSummary {

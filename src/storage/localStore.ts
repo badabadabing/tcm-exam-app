@@ -1,4 +1,4 @@
-import type { AnswerRecord, Bookmark } from '../types'
+import type { AnswerRecord, Bookmark, CaseAnswerRecord } from '../types'
 import { db } from './db'
 
 const ANSWER_RECORDS_KEY = 'tcm_answer_records'
@@ -83,6 +83,16 @@ export async function getUserId(): Promise<string> {
   const id = crypto.randomUUID()
   await db.meta.put({ key: 'user_id', value: id })
   return id
+}
+
+export async function getCaseAnswerRecords(): Promise<CaseAnswerRecord[]> {
+  await initStorage()
+  return db.case_answer_records.orderBy('timestamp').reverse().toArray()
+}
+
+export async function saveCaseAnswerRecord(record: CaseAnswerRecord): Promise<void> {
+  await initStorage()
+  await db.case_answer_records.put(record)
 }
 
 export async function toggleBookmark(bookmark: Bookmark): Promise<void> {

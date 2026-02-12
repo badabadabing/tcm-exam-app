@@ -3,8 +3,8 @@ import './App.css'
 import { loadDataset, type DatasetBundle } from './data/dataset'
 import { generateCasesByDisease, generateRandomCases } from './engine/caseGenerator'
 import { generateByDisease, generateQuestion, generateRandom } from './engine/questionEngine'
-import { getAnswerRecords, getBookmarks, saveAnswerRecord, toggleBookmark } from './storage/localStore'
-import type { AnswerRecord, Bookmark, CaseExamSummary, CaseQuestion, CaseSelfRating, Question, QuestionType } from './types'
+import { getAnswerRecords, getBookmarks, getCaseAnswerRecords, saveAnswerRecord, saveCaseAnswerRecord, toggleBookmark } from './storage/localStore'
+import type { AnswerRecord, Bookmark, CaseAnswerRecord, CaseExamSummary, CaseQuestion, CaseSelfRating, Question, QuestionType } from './types'
 import ShareCard, { type ShareCardData } from './components/ShareCard'
 import { trackEvent, EVENTS } from './utils/analytics'
 import { pickOne, randomInt, shuffle } from './utils/random'
@@ -42,6 +42,13 @@ interface PracticeSummary {
   used_seconds: number
 }
 
+interface CaseAnswerDraft {
+  diagnosis_text: string
+  pathogenesis_text: string
+  treatment_text: string
+  prescription_text: string
+}
+
 const PRACTICE_QUESTION_SECONDS = 5 * 60
 const CASE_EXAM_TOTAL_SECONDS = 60 * 60
 const CASE_EXAM_QUESTION_COUNT = 2
@@ -51,6 +58,12 @@ const CASE_EXAM_PROMPTS = [
   '3. 请写出治法。',
   '4. 请写出处方（方剂名称）。',
 ]
+const EMPTY_CASE_DRAFT: CaseAnswerDraft = {
+  diagnosis_text: '',
+  pathogenesis_text: '',
+  treatment_text: '',
+  prescription_text: '',
+}
 
 function getWeaknessStats(records: AnswerRecord[]) {
   const by_type = new Map<QuestionType, { correct: number; total: number }>()
@@ -103,6 +116,13 @@ function formatDuration(seconds: number): string {
 }
 
 function App() {
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('ui_theme')
+    if (saved === 'light' || saved === 'dark') {
+      return saved
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
   const [tab, setTab] = useState<Tab>('dashboard')
   const [search_text, setSearchText] = useState('')
   const [category_filter, setCategoryFilter] = useState<'全部' | '内科' | '外科' | '妇科' | '儿科' | '其他'>('全部')
@@ -135,6 +155,8 @@ function App() {
   const [case_questions, setCaseQuestions] = useState<CaseQuestion[]>([])
   const [case_index, setCaseIndex] = useState(0)
   const [case_answer_visible, setCaseAnswerVisible] = useState(false)
+  const [case_answer_drafts, setCaseAnswerDrafts] = useState<Record<string, CaseAnswerDraft>>({})
+  const [case_answer_records, setCaseAnswerRecords] = useState<CaseAnswerRecord[]>([])
   const [case_ratings, setCaseRatings] = useState<Record<string, CaseSelfRating>>({})
   const [case_exam_summary, setCaseExamSummary] = useState<CaseExamSummary | null>(null)
   const [practice_summary, setPracticeSummary] = useState<PracticeSummary | null>(null)
@@ -145,6 +167,7 @@ function App() {
 
   const current_question = questions[current_index]
   const current_case = case_questions[case_index] ?? null
+  const current_case_draft = current_case ? (case_answer_drafts[current_case.id] ?? EMPTY_CASE_DRAFT) : EMPTY_CASE_DRAFT
   const progress = questions.length ? `${current_index + 1}/${questions.length}` : '0/0'
   const case_progress = case_questions.length ? `${case_index + 1}/${case_questions.length}` : '0/0'
   const is_exam_running = (session_mode === 'exam' && exam_summary === null) || (session_mode === 'case_exam' && case_exam_summary === null)
@@ -363,6 +386,24 @@ function App() {
     return new Set(bookmarks.map((item) => item.question_id))
   }, [bookmarks])
 
+  const spaced_due_items = useMemo(() => {
+    const now = now_timestamp()
+    const three_days_ms = 3 * 24 * 60 * 60 * 1000
+    const latest_by_key = new Map<string, AnswerRecord>()
+    for (const item of records) {
+      const key = `${item.syndrome_id}__${item.question_type}`
+      if (!latest_by_key.has(key)) {
+        latest_by_key.set(key, item)
+      }
+    }
+    return [...latest_by_key.values()].filter((item) => !item.is_correct && now - item.timestamp >= three_days_ms)
+  }, [records])
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('ui_theme', theme)
+  }, [theme])
+
   useEffect(() => {
     let cancelled = false
 
@@ -371,7 +412,7 @@ function App() {
         setIsInitializing(true)
         setLoadingProgress(8)
         setLoadingText('正在连接本地存储')
-        const storage_task = Promise.all([getAnswerRecords(), getBookmarks()])
+        const storage_task = Promise.all([getAnswerRecords(), getBookmarks(), getCaseAnswerRecords()])
 
         setLoadingProgress(35)
         setLoadingText('正在加载完整题库')
@@ -382,7 +423,7 @@ function App() {
 
         setLoadingProgress(72)
         setLoadingText('正在同步学习记录')
-        const [next_records, next_bookmarks] = await storage_task
+        const [next_records, next_bookmarks, next_case_answer_records] = await storage_task
         if (cancelled) {
           return
         }
@@ -390,6 +431,7 @@ function App() {
         setDatasetBundle(next_dataset)
         setRecords(next_records)
         setBookmarks(next_bookmarks)
+        setCaseAnswerRecords(next_case_answer_records)
         setDatasetError(null)
         setLoadingProgress(100)
         setLoadingText('加载完成')
@@ -531,6 +573,14 @@ function App() {
     startSession(generateRandom(dataset_bundle, count, type_filter))
   }
 
+  function startMcqExamSession() {
+    if (!dataset_bundle) {
+      return
+    }
+    const questions = generateRandom(dataset_bundle, 50)
+    startSession(questions, { mode: 'exam', total_seconds: 50 * 60 })
+  }
+
   function startCaseExamSession() {
     if (!dataset_bundle) {
       return
@@ -539,6 +589,7 @@ function App() {
     setCaseQuestions(cases)
     setCaseIndex(0)
     setCaseAnswerVisible(false)
+    setCaseAnswerDrafts({})
     setCaseRatings({})
     setCaseExamSummary(null)
     setSessionMode('case_exam')
@@ -556,6 +607,7 @@ function App() {
     setCaseQuestions(cases)
     setCaseIndex(0)
     setCaseAnswerVisible(false)
+    setCaseAnswerDrafts({})
     setCaseRatings({})
     setCaseExamSummary(null)
     setSessionMode('case_practice')
@@ -742,23 +794,69 @@ function App() {
     setCaseAnswerVisible(true)
   }
 
+  function updateCaseDraft(field: keyof CaseAnswerDraft, value: string) {
+    if (!current_case) {
+      return
+    }
+    setCaseAnswerDrafts((prev) => ({
+      ...prev,
+      [current_case.id]: {
+        ...(prev[current_case.id] ?? EMPTY_CASE_DRAFT),
+        [field]: value,
+      },
+    }))
+  }
+
+  async function persistCaseAnswerForCase(case_item: CaseQuestion, rating: CaseSelfRating) {
+    const draft = case_answer_drafts[case_item.id] ?? EMPTY_CASE_DRAFT
+    await saveCaseAnswerRecord({
+      id: `${session_started_at}_${case_item.id}`,
+      case_id: case_item.id,
+      syndrome_id: case_item.syndrome_id,
+      disease_id: case_item.disease_id,
+      self_rating: rating,
+      diagnosis_text: draft.diagnosis_text.trim(),
+      pathogenesis_text: draft.pathogenesis_text.trim(),
+      treatment_text: draft.treatment_text.trim(),
+      prescription_text: draft.prescription_text.trim(),
+      mode: session_mode === 'case_exam' ? 'case_exam' : 'case_practice',
+      timestamp: now_timestamp(),
+    })
+    setCaseAnswerRecords(await getCaseAnswerRecords())
+  }
+
   function rateCaseAnswer(rating: CaseSelfRating) {
     if (!current_case) return
     setCaseRatings((prev) => ({ ...prev, [current_case.id]: rating }))
   }
 
   function nextCaseQuestion() {
+    if (!current_case) {
+      return
+    }
+    const next_ratings = case_ratings[current_case.id] ? case_ratings : { ...case_ratings, [current_case.id]: 'failed' as const }
+    if (!case_ratings[current_case.id]) {
+      setCaseRatings(next_ratings)
+    }
+    void persistCaseAnswerForCase(current_case, next_ratings[current_case.id] ?? 'failed')
     if (case_index + 1 >= case_questions.length) {
-      finishCaseExam('completed')
+      finishCaseExam('completed', next_ratings)
       return
     }
     setCaseIndex((i) => i + 1)
     setCaseAnswerVisible(false)
   }
 
-  function finishCaseExam(reason: 'completed' | 'manual_submit' | 'time_up') {
+  function finishCaseExam(
+    reason: 'completed' | 'manual_submit' | 'time_up',
+    ratings_source: Record<string, CaseSelfRating> = case_ratings,
+  ) {
+    for (const case_item of case_questions) {
+      const rating = ratings_source[case_item.id] ?? 'failed'
+      void persistCaseAnswerForCase(case_item, rating)
+    }
     const used_seconds = Math.max(0, Math.round((now_timestamp() - session_started_at) / 1000))
-    const rating_values = Object.values(case_ratings)
+    const rating_values = Object.values(ratings_source)
     const mastered = rating_values.filter((r) => r === 'mastered').length
     const partial = rating_values.filter((r) => r === 'partial').length
     const failed = rating_values.filter((r) => r === 'failed').length
@@ -772,17 +870,19 @@ function App() {
       used_seconds,
       finished_at: now_timestamp(),
       cases: case_questions,
-      ratings: case_ratings,
+      ratings: ratings_source,
     })
   }
 
   function submitCaseExamPaper() {
     if (session_mode !== 'case_exam' || case_exam_summary) return
-    // 如果当前题未评分，先标记为未作答
-    if (current_case && !case_ratings[current_case.id]) {
-      setCaseRatings((prev) => ({ ...prev, [current_case.id]: 'failed' }))
+    const next_ratings = current_case && !case_ratings[current_case.id]
+      ? { ...case_ratings, [current_case.id]: 'failed' as const }
+      : case_ratings
+    if (next_ratings !== case_ratings) {
+      setCaseRatings(next_ratings)
     }
-    finishCaseExam('manual_submit')
+    finishCaseExam('manual_submit', next_ratings)
   }
 
   function closeCaseExamSummary() {
@@ -791,6 +891,7 @@ function App() {
     setCaseQuestions([])
     setCaseIndex(0)
     setCaseAnswerVisible(false)
+    setCaseAnswerDrafts({})
     setCaseRatings({})
     setRemainingSeconds(PRACTICE_QUESTION_SECONDS)
     setTab('dashboard')
@@ -935,6 +1036,36 @@ function App() {
     startSession(shuffle(snapshots))
   }
 
+  function startWeakTypeSession(question_type: QuestionType) {
+    startRandomSession(30, [question_type])
+  }
+
+  function startSpacedReviewSession() {
+    if (!dataset_bundle || spaced_due_items.length === 0) {
+      return
+    }
+    const questions = shuffle(spaced_due_items)
+      .slice(0, 20)
+      .map((item) => generateQuestion(dataset_bundle, item.syndrome_id, item.question_type))
+    startSession(questions)
+  }
+
+  function startSmartRecommendationSession() {
+    if (spaced_due_items.length > 0) {
+      startSpacedReviewSession()
+      return
+    }
+    if (weak_types.length > 0) {
+      startWeakTypeSession(weak_types[0].question_type)
+      return
+    }
+    if (wrong_records.length > 0) {
+      startWrongReviewSession()
+      return
+    }
+    startRandomSession(20)
+  }
+
   function diseaseStatus(item: { progress: number; accuracy: number; total: number }): {
     text: string
     class_name: string
@@ -957,7 +1088,13 @@ function App() {
     <div className="app">
       <header className="top_bar">
         <div className="header_title_row">
-          <div className="header_placeholder" />
+          <button
+            className="icon_btn icon_btn_left"
+            onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+            aria-label={theme === 'dark' ? '切换浅色模式' : '切换深色模式'}
+          >
+            {theme === 'dark' ? '昼' : '夜'}
+          </button>
           <div className="header_title_center">
             <h1 className="title_main">中医执医实践技能<span className="title_accent">（第一站）</span>复习</h1>
             <p className="title_sub">病案分析 · 辨证论治专项训练</p>
@@ -1062,11 +1199,25 @@ function App() {
                 Q1 专项突破
               </button>
               <button
+                className="quick_btn quick_btn_mcq_exam"
+                onClick={startMcqExamSession}
+                disabled={!dataset_bundle || is_initializing}
+              >
+                模拟考试（选择题 · 50题 / 50分钟）
+              </button>
+              <button
                 className="quick_btn quick_btn_exam"
                 onClick={startCaseExamSession}
                 disabled={!dataset_bundle || is_initializing}
               >
                 模拟考试（病案论述 · 2题 / 60分钟）
+              </button>
+              <button
+                className="quick_btn quick_btn_recommend"
+                onClick={startSmartRecommendationSession}
+                disabled={!dataset_bundle || is_initializing}
+              >
+                智能推荐训练
               </button>
               <button
                 className="quick_btn quick_btn_exam"
@@ -1112,8 +1263,10 @@ function App() {
               {weak_types.length ? (
                 weak_types.map((item) => (
                   <div key={item.question_type} className="weak_item">
-                    <span>{item.question_type}</span>
-                    <span>{item.accuracy}%</span>
+                    <span>{item.question_type} · {item.accuracy}%</span>
+                    <button className="review_retry_btn" onClick={() => startWeakTypeSession(item.question_type)}>
+                      专项练习
+                    </button>
                   </div>
                 ))
               ) : (
@@ -1121,6 +1274,18 @@ function App() {
               )}
             </div>
           </article>
+
+          {spaced_due_items.length > 0 && (
+            <article className="card">
+              <h2 className="card_title">间隔复习提醒</h2>
+              <p className="hint_text">有 {spaced_due_items.length} 组题目超过 3 天未复习，建议现在巩固。</p>
+              <div className="action_row">
+                <button className="primary_btn" onClick={startSpacedReviewSession}>
+                  开始间隔复习
+                </button>
+              </div>
+            </article>
+          )}
 
           {records.length > 0 && (
             <button
@@ -1270,6 +1435,7 @@ function App() {
               <div className="case_review_list">
                 {case_exam_summary.cases.map((c, idx) => {
                   const rating = case_exam_summary.ratings[c.id]
+                  const draft = case_answer_drafts[c.id] ?? EMPTY_CASE_DRAFT
                   return (
                     <div key={c.id} className="case_review_item">
                       <h3 className="case_review_title">第 {idx + 1} 题</h3>
@@ -1302,6 +1468,25 @@ function App() {
                         <div className="case_answer_row">
                           <span className="case_answer_label">完整证候</span>
                           <span>{c.standard_answer.full_symptoms}</span>
+                        </div>
+                      </div>
+                      <div className="case_user_answer_card">
+                        <h4 className="case_answer_heading">我的作答</h4>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">诊断</span>
+                          <span>{draft.diagnosis_text || '未填写'}</span>
+                        </div>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">证机概要</span>
+                          <span>{draft.pathogenesis_text || '未填写'}</span>
+                        </div>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">治法</span>
+                          <span>{draft.treatment_text || '未填写'}</span>
+                        </div>
+                        <div className="case_answer_row">
+                          <span className="case_answer_label">处方</span>
+                          <span>{draft.prescription_text || '未填写'}</span>
                         </div>
                       </div>
                       {rating && (
@@ -1372,6 +1557,45 @@ function App() {
                   ))}
                 </div>
 
+                <div className="case_input_grid">
+                  <label className="case_input_label">
+                    1. 病名与证型诊断
+                    <textarea
+                      className="case_input"
+                      placeholder="例如：胃脘痛（肝胃不和证）"
+                      value={current_case_draft.diagnosis_text}
+                      onChange={(event) => updateCaseDraft('diagnosis_text', event.target.value)}
+                    />
+                  </label>
+                  <label className="case_input_label">
+                    2. 证机概要
+                    <textarea
+                      className="case_input"
+                      placeholder="简要写出病机关键点"
+                      value={current_case_draft.pathogenesis_text}
+                      onChange={(event) => updateCaseDraft('pathogenesis_text', event.target.value)}
+                    />
+                  </label>
+                  <label className="case_input_label">
+                    3. 治法
+                    <textarea
+                      className="case_input"
+                      placeholder="例如：疏肝和胃，理气止痛"
+                      value={current_case_draft.treatment_text}
+                      onChange={(event) => updateCaseDraft('treatment_text', event.target.value)}
+                    />
+                  </label>
+                  <label className="case_input_label">
+                    4. 处方（方剂名称）
+                    <textarea
+                      className="case_input"
+                      placeholder="例如：柴胡疏肝散"
+                      value={current_case_draft.prescription_text}
+                      onChange={(event) => updateCaseDraft('prescription_text', event.target.value)}
+                    />
+                  </label>
+                </div>
+
                 {/* 操作按钮 */}
                 {!case_answer_visible ? (
                   <div className="action_row">
@@ -1419,6 +1643,26 @@ function App() {
                       <div className="case_answer_section">
                         <span className="case_answer_label">完整证候</span>
                         <p className="case_full_symptoms">{current_case.standard_answer.full_symptoms}</p>
+                      </div>
+                    </div>
+
+                    <div className="case_user_answer_card">
+                      <h4 className="case_answer_heading">我的作答</h4>
+                      <div className="case_answer_row">
+                        <span className="case_answer_label">中医诊断</span>
+                        <span className="case_answer_value">{current_case_draft.diagnosis_text || '未填写'}</span>
+                      </div>
+                      <div className="case_answer_row">
+                        <span className="case_answer_label">证机概要</span>
+                        <span className="case_answer_value">{current_case_draft.pathogenesis_text || '未填写'}</span>
+                      </div>
+                      <div className="case_answer_row">
+                        <span className="case_answer_label">治法</span>
+                        <span className="case_answer_value">{current_case_draft.treatment_text || '未填写'}</span>
+                      </div>
+                      <div className="case_answer_row">
+                        <span className="case_answer_label">处方</span>
+                        <span className="case_answer_value">{current_case_draft.prescription_text || '未填写'}</span>
                       </div>
                     </div>
 
@@ -1764,6 +2008,38 @@ function App() {
                     <span>{item.question_snapshot.question_type}</span>
                     <span>{item.question_snapshot.explanation.correct_answer}</span>
                   </button>
+                ))}
+              </div>
+            )}
+          </article>
+
+          <article className="card">
+            <h2 className="card_title">病案作答记录（{case_answer_records.length}）</h2>
+            {case_answer_records.length === 0 ? (
+              <p className="hint_text">暂无病案作答记录。</p>
+            ) : (
+              <div className="case_history_list">
+                {case_answer_records.slice(0, 20).map((item) => (
+                  <div key={item.id} className="case_history_item">
+                    <div className="review_item_head">
+                      <span>{disease_name_by_id.get(item.disease_id) ?? '未知病种'}</span>
+                      <span className={`case_rating_tag case_rating_${item.self_rating}`}>
+                        {item.self_rating === 'mastered' ? '掌握' : item.self_rating === 'partial' ? '部分掌握' : '未掌握'}
+                      </span>
+                    </div>
+                    <p className="review_item_text">诊断：{item.diagnosis_text || '未填写'}</p>
+                    <p className="review_item_text">治法：{item.treatment_text || '未填写'}</p>
+                    <div className="review_item_footer">
+                      <p className="review_item_time">{new Date(item.timestamp).toLocaleString()}</p>
+                      <button
+                        className="review_retry_btn"
+                        onClick={() => startCasePracticeByDisease(item.disease_id)}
+                        disabled={!dataset_bundle || is_initializing}
+                      >
+                        再练病案
+                      </button>
+                    </div>
+                  </div>
                 ))}
               </div>
             )}

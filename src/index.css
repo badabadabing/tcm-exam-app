@@ -33,3 +33,49 @@ body {
 #root {
   min-height: 100vh;
 }
+
+:root[data-theme='dark'] {
+  color: #e8d8cf;
+  background: #1f1917;
+  color-scheme: dark;
+}
+
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at 24px 24px, rgb(255 155 182 / 10%) 2px, transparent 0),
+    radial-gradient(circle at 8px 8px, rgb(180 145 255 / 10%) 2px, transparent 0),
+    #1f1917;
+}
+
+/* 深色模式：滚动条 */
+:root[data-theme='dark'] ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+:root[data-theme='dark'] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:root[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #4a3e39;
+  border-radius: 3px;
+}
+
+/* 深色模式：文本选中 */
+:root[data-theme='dark'] ::selection {
+  background: rgb(255 143 171 / 30%);
+  color: #fff;
+}
+
+/* 深色模式：placeholder */
+:root[data-theme='dark'] input::placeholder,
+:root[data-theme='dark'] textarea::placeholder {
+  color: #6b5f59;
+}
+
+/* 深色模式：autofill 背景覆盖 */
+:root[data-theme='dark'] input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 100px #261f1c inset;
+  -webkit-text-fill-color: #e8d8cf;
+}

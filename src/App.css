@@ -64,6 +64,10 @@
   justify-self: end;
 }
 
+.icon_btn_left {
+  justify-self: start;
+}
+
 .panel {
   margin-top: 12px;
   display: grid;
@@ -256,6 +260,18 @@
   border-color: #e7defe;
 }
 
+.quick_btn_mcq_exam {
+  background: #ffe8dc;
+  color: #9a3412;
+  border-color: #fdba74;
+}
+
+.quick_btn_recommend {
+  background: #f3e8ff;
+  color: #7e22ce;
+  border-color: #d8b4fe;
+}
+
 .weak_list {
   display: grid;
   gap: 8px;
@@ -264,6 +280,7 @@
 .weak_item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 10px 12px;
   border-radius: 12px;
   background: #fff5f7;
@@ -1221,6 +1238,38 @@ button:disabled {
   font-weight: 600;
 }
 
+.case_input_grid {
+  display: grid;
+  gap: 10px;
+}
+
+.case_input_label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #5c524d;
+}
+
+.case_input {
+  width: 100%;
+  min-height: 76px;
+  resize: vertical;
+  border-radius: 12px;
+  border: 1px solid #e8d8cf;
+  background: #fff;
+  color: #3f3733;
+  padding: 10px 12px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.case_input:focus {
+  outline: none;
+  border-color: #d8cef8;
+  box-shadow: 0 0 0 3px rgb(216 206 248 / 25%);
+}
+
 /* 标准答案卡片 */
 .case_answer_card {
   padding: 16px;
@@ -1229,6 +1278,15 @@ button:disabled {
   border: 1px solid #bbf7d0;
   display: grid;
   gap: 12px;
+}
+
+.case_user_answer_card {
+  padding: 14px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid #eadfd8;
+  display: grid;
+  gap: 10px;
 }
 
 .case_answer_heading {
@@ -1353,6 +1411,18 @@ button:disabled {
 .case_review_list {
   display: grid;
   gap: 16px;
+}
+
+.case_history_list {
+  display: grid;
+  gap: 10px;
+}
+
+.case_history_item {
+  border: 1px solid #f0e5df;
+  border-radius: 14px;
+  background: #fff;
+  padding: 10px 12px;
 }
 
 .case_review_item {
@@ -1571,5 +1641,556 @@ button:disabled {
 @media (max-width: 420px) {
   .share_actions {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ══════════════════════════════════════
+   深色模式 — 完整覆盖
+   ══════════════════════════════════════ */
+
+/* ── 布局骨架 ── */
+
+:root[data-theme='dark'] .top_bar {
+  background: rgb(35 29 26 / 88%);
+  border-bottom-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .bottom_nav {
+  background: rgb(29 24 22 / 92%);
+  border-top-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .nav_btn {
+  color: #bfaea3;
+}
+
+:root[data-theme='dark'] .nav_btn.active {
+  background: #4a313a;
+  color: #ff9bb6;
+}
+
+:root[data-theme='dark'] .icon_btn,
+:root[data-theme='dark'] .share_close_btn {
+  background: #2c2320;
+  border-color: #4a3e39;
+  color: #ff9bb6;
+}
+
+/* ── 卡片容器统一 ── */
+
+:root[data-theme='dark'] .card,
+:root[data-theme='dark'] .metric_card,
+:root[data-theme='dark'] .practice_head,
+:root[data-theme='dark'] .analysis_block,
+:root[data-theme='dark'] .exam_answer_item,
+:root[data-theme='dark'] .review_item_card,
+:root[data-theme='dark'] .disease_card,
+:root[data-theme='dark'] .case_user_answer_card,
+:root[data-theme='dark'] .case_history_item,
+:root[data-theme='dark'] .case_review_item,
+:root[data-theme='dark'] .recent_card,
+:root[data-theme='dark'] .bookmark_btn {
+  background: #2a221f;
+  border-color: #4a3e39;
+  box-shadow: none;
+}
+
+:root[data-theme='dark'] .hero_card {
+  border-color: #5b4d47;
+  background: linear-gradient(135deg, #2f2623 0%, #3a2f2b 60%, #332925 100%);
+  box-shadow: none;
+}
+
+/* ── 主要文本色 ── */
+
+:root[data-theme='dark'] .title_main,
+:root[data-theme='dark'] .hero_title,
+:root[data-theme='dark'] .metric_value,
+:root[data-theme='dark'] .card_title,
+:root[data-theme='dark'] .question .stem,
+:root[data-theme='dark'] .analysis_block p,
+:root[data-theme='dark'] .analysis_block ul,
+:root[data-theme='dark'] .review_item_head,
+:root[data-theme='dark'] .top3_name,
+:root[data-theme='dark'] .case_answer_value,
+:root[data-theme='dark'] .disease_header h3,
+:root[data-theme='dark'] .recent_name,
+:root[data-theme='dark'] .case_review_title,
+:root[data-theme='dark'] .case_key_list {
+  color: #f3e7df;
+}
+
+:root[data-theme='dark'] .title_accent {
+  color: #ff8fab;
+}
+
+/* ── 次要文本色 ── */
+
+:root[data-theme='dark'] .title_sub,
+:root[data-theme='dark'] .hero_subtitle,
+:root[data-theme='dark'] .hero_desc,
+:root[data-theme='dark'] .metric_label,
+:root[data-theme='dark'] .hint_text,
+:root[data-theme='dark'] .review_item_text,
+:root[data-theme='dark'] .review_item_time,
+:root[data-theme='dark'] .case_prompt_item,
+:root[data-theme='dark'] .case_input_label,
+:root[data-theme='dark'] .recent_meta,
+:root[data-theme='dark'] .recent_time,
+:root[data-theme='dark'] .disease_meta,
+:root[data-theme='dark'] .progress_row,
+:root[data-theme='dark'] .analysis_title,
+:root[data-theme='dark'] .exam_answer_title,
+:root[data-theme='dark'] .exam_answer_text,
+:root[data-theme='dark'] .record_item,
+:root[data-theme='dark'] .trend_count,
+:root[data-theme='dark'] .trend_day,
+:root[data-theme='dark'] .trend_accuracy_row,
+:root[data-theme='dark'] .case_card_title,
+:root[data-theme='dark'] .case_rating_label,
+:root[data-theme='dark'] .case_full_symptoms {
+  color: #c9b8ae;
+}
+
+/* ── 表单输入 ── */
+
+:root[data-theme='dark'] .search_input,
+:root[data-theme='dark'] .sort_select,
+:root[data-theme='dark'] .chip,
+:root[data-theme='dark'] .case_input {
+  background: #221c19;
+  border-color: #4a3e39;
+  color: #e8d8cf;
+}
+
+:root[data-theme='dark'] .search_input:focus,
+:root[data-theme='dark'] .case_input:focus {
+  border-color: #8b7acd;
+}
+
+:root[data-theme='dark'] .chip_active {
+  background: #d63369;
+  border-color: #d63369;
+  color: #fff;
+}
+
+/* ── 选择题选项 ── */
+
+:root[data-theme='dark'] .option {
+  background: #261f1c;
+  border-color: #4a3e39;
+  color: #e8d8cf;
+}
+
+:root[data-theme='dark'] .option_key {
+  background: #3a312c;
+  color: #dac8bd;
+}
+
+:root[data-theme='dark'] .option.selected {
+  border-color: #ff8fab;
+  background: #3d2630;
+}
+
+:root[data-theme='dark'] .option.selected .option_key {
+  background: #ff8fab;
+  color: #fff;
+}
+
+:root[data-theme='dark'] .option.correct {
+  border-color: #22c55e;
+  background: #1a3326;
+}
+
+:root[data-theme='dark'] .option.correct .option_key {
+  background: #22c55e;
+  color: #fff;
+}
+
+:root[data-theme='dark'] .option.wrong {
+  border-color: #ef4444;
+  background: #3a1a1a;
+}
+
+:root[data-theme='dark'] .option.wrong .option_key {
+  background: #ef4444;
+  color: #fff;
+}
+
+/* ── 按钮 ── */
+
+:root[data-theme='dark'] .secondary_btn {
+  background: #2c2320;
+  color: #c4b5fd;
+  border-color: #4a3e5a;
+}
+
+:root[data-theme='dark'] .start_btn {
+  background: #1a3326;
+  color: #6ee7a0;
+  border-color: #2a5a3e;
+}
+
+:root[data-theme='dark'] .start_btn_case {
+  background: #2a2440;
+  color: #c4b5fd;
+  border-color: #4a3e5a;
+}
+
+:root[data-theme='dark'] .review_retry_btn {
+  background: #2a2440;
+  color: #c4b5fd;
+  border-color: #4a3e5a;
+}
+
+:root[data-theme='dark'] .top3_action {
+  background: #3a2230;
+  color: #ff9bb6;
+  border-color: #5b3a4a;
+}
+
+/* ── 快捷训练按钮 ── */
+
+:root[data-theme='dark'] .quick_btn_random {
+  background: #1a3326;
+  color: #6ee7a0;
+  border-color: #2a5a3e;
+}
+
+:root[data-theme='dark'] .quick_btn_disease {
+  background: #2a2440;
+  color: #c4b5fd;
+  border-color: #4a3e5a;
+}
+
+:root[data-theme='dark'] .quick_btn_focus {
+  background: #3a2e1a;
+  color: #fbbf24;
+  border-color: #5a4a2a;
+}
+
+:root[data-theme='dark'] .quick_btn_exam {
+  background: #3a1a1a;
+  color: #fca5a5;
+  border-color: #5a2a2a;
+}
+
+:root[data-theme='dark'] .quick_btn_mcq_exam {
+  background: #3a2a1a;
+  color: #fdba74;
+  border-color: #5a3a2a;
+}
+
+:root[data-theme='dark'] .quick_btn_recommend {
+  background: #2e1a3a;
+  color: #d8b4fe;
+  border-color: #4a2e5a;
+}
+
+:root[data-theme='dark'] .quick_btn_bookmark {
+  background: #2a2440;
+  color: #c4b5fd;
+  border-color: #4a3e5a;
+}
+
+/* ── 进度条与趋势 ── */
+
+:root[data-theme='dark'] .progress_track {
+  background: #3a302b;
+}
+
+:root[data-theme='dark'] .trend_bar_wrap {
+  background: #3a302b;
+}
+
+:root[data-theme='dark'] .trend_mode_tabs {
+  background: #2a221f;
+  border-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .trend_mode_btn {
+  color: #bfaea3;
+}
+
+:root[data-theme='dark'] .trend_mode_btn.active {
+  background: #3a312c;
+  border-color: #4a3e39;
+  color: #f3e7df;
+}
+
+/* ── 状态标签 ── */
+
+:root[data-theme='dark'] .status_mastered {
+  background: #1a3326;
+  color: #6ee7a0;
+  border-color: #2a5a3e;
+}
+
+:root[data-theme='dark'] .status_weak {
+  background: #3a1a1a;
+  color: #fca5a5;
+  border-color: #5a2a2a;
+}
+
+:root[data-theme='dark'] .status_new {
+  background: #2a221f;
+  color: #bfaea3;
+  border-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .status_active {
+  background: #2a2440;
+  color: #c4b5fd;
+  border-color: #4a3e5a;
+}
+
+/* ── 分类标签 ── */
+
+:root[data-theme='dark'] .cat_in {
+  background: #1a2a3a;
+  color: #7dd3fc;
+  border-color: #2a4a5a;
+}
+
+:root[data-theme='dark'] .cat_out {
+  background: #2a2440;
+  color: #c4b5fd;
+  border-color: #4a3e5a;
+}
+
+:root[data-theme='dark'] .cat_woman {
+  background: #3a2230;
+  color: #ff9bb6;
+  border-color: #5b3a4a;
+}
+
+:root[data-theme='dark'] .cat_child {
+  background: #3a2e1a;
+  color: #fbbf24;
+  border-color: #5a4a2a;
+}
+
+:root[data-theme='dark'] .cat_other {
+  background: #1a3326;
+  color: #6ee7a0;
+  border-color: #2a5a3e;
+}
+
+/* ── 薄弱项 / 排名 ── */
+
+:root[data-theme='dark'] .weak_item {
+  background: #3a2230;
+  border-color: #5b3a4a;
+  color: #ff9bb6;
+}
+
+:root[data-theme='dark'] .top3_item {
+  border-bottom-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .top3_rank {
+  background: #3a2230;
+  border-color: #5b3a4a;
+  color: #ff9bb6;
+}
+
+:root[data-theme='dark'] .top3_score {
+  color: #fca5a5;
+}
+
+:root[data-theme='dark'] .record_item {
+  border-bottom-color: #4a3e39;
+}
+
+/* ── 答题反馈 ── */
+
+:root[data-theme='dark'] .result_ok {
+  background: #1a3326;
+  border-color: #2a5a3e;
+  color: #6ee7a0;
+}
+
+:root[data-theme='dark'] .result_bad {
+  background: #3a1a1a;
+  border-color: #5a2a2a;
+  color: #fca5a5;
+}
+
+/* ── 徽章与计时 ── */
+
+:root[data-theme='dark'] .badge {
+  background: #1a3326;
+  color: #6ee7a0;
+  border-color: #2a5a3e;
+}
+
+:root[data-theme='dark'] .timer_badge {
+  background: #2a2440;
+  color: #c4b5fd;
+  border-color: #4a3e5a;
+}
+
+:root[data-theme='dark'] .timer_badge_warning {
+  background: #3a1a1a;
+  color: #fca5a5;
+  border-color: #5a2a2a;
+}
+
+:root[data-theme='dark'] .review_type_chip {
+  background: #3a2230;
+  color: #ff9bb6;
+  border-color: #5b3a4a;
+}
+
+/* ── 每日分享提示 ── */
+
+:root[data-theme='dark'] .daily_share_hint {
+  background: linear-gradient(135deg, #2f2623 0%, #3a2a2e 100%);
+  border-color: #5b3a4a;
+}
+
+:root[data-theme='dark'] .daily_share_text {
+  color: #c9b8ae;
+}
+
+/* ── 病案论述题 ── */
+
+:root[data-theme='dark'] .case_text_block {
+  background: #261f1c;
+  border-color: #4a3e39;
+  border-left-color: #ff8fab;
+  color: #e8d8cf;
+}
+
+:root[data-theme='dark'] .case_prompt_block {
+  background: #2a2440;
+  border-color: #4a3e5a;
+}
+
+:root[data-theme='dark'] .case_prompt_title {
+  color: #c4b5fd;
+}
+
+:root[data-theme='dark'] .case_answer_card {
+  background: linear-gradient(135deg, #1a3326 0%, #1e3a2d 50%, #1a3326 100%);
+  border-color: #2a5a3e;
+}
+
+:root[data-theme='dark'] .case_answer_heading {
+  color: #6ee7a0;
+}
+
+:root[data-theme='dark'] .case_answer_label {
+  color: #6ee7a0;
+}
+
+:root[data-theme='dark'] .case_full_symptoms {
+  background: rgb(26 51 38 / 40%);
+  border-color: #2a5a3e;
+}
+
+/* ── 病案评分按钮 ── */
+
+:root[data-theme='dark'] .case_rating_btn_mastered {
+  background: #1a3326;
+  color: #6ee7a0;
+  border-color: #2a5a3e;
+}
+
+:root[data-theme='dark'] .case_rating_btn_partial {
+  background: #3a2e1a;
+  color: #fbbf24;
+  border-color: #5a4a2a;
+}
+
+:root[data-theme='dark'] .case_rating_btn_failed {
+  background: #3a1a1a;
+  color: #fca5a5;
+  border-color: #5a2a2a;
+}
+
+/* active 状态保持原色覆盖文字 */
+
+/* ── 病案评分标签 ── */
+
+:root[data-theme='dark'] .case_rating_mastered {
+  background: #1a3326;
+  color: #6ee7a0;
+  border-color: #2a5a3e;
+}
+
+:root[data-theme='dark'] .case_rating_partial {
+  background: #3a2e1a;
+  color: #fbbf24;
+  border-color: #5a4a2a;
+}
+
+:root[data-theme='dark'] .case_rating_failed {
+  background: #3a1a1a;
+  color: #fca5a5;
+  border-color: #5a2a2a;
+}
+
+/* ── Metric 颜色变体 ── */
+
+:root[data-theme='dark'] .metric_card_green {
+  background: #1a3326;
+  border-color: #2a5a3e;
+}
+
+:root[data-theme='dark'] .metric_card_green .metric_value {
+  color: #6ee7a0;
+}
+
+:root[data-theme='dark'] .metric_card_yellow {
+  background: #3a2e1a;
+  border-color: #5a4a2a;
+}
+
+:root[data-theme='dark'] .metric_card_yellow .metric_value {
+  color: #fbbf24;
+}
+
+:root[data-theme='dark'] .metric_card_red {
+  background: #3a1a1a;
+  border-color: #5a2a2a;
+}
+
+:root[data-theme='dark'] .metric_card_red .metric_value {
+  color: #fca5a5;
+}
+
+/* ── 分享弹层 ── */
+
+:root[data-theme='dark'] .share_panel {
+  background: #2a221f;
+}
+
+:root[data-theme='dark'] .share_canvas_wrap {
+  background: #261f1c;
+  border-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .share_loading {
+  background: rgb(34 28 25 / 80%);
+  color: #c9b8ae;
+}
+
+/* ── 收藏按钮 ── */
+
+:root[data-theme='dark'] .bookmark_btn {
+  color: #c4b5fd;
+}
+
+:root[data-theme='dark'] .bookmark_btn span:first-child {
+  opacity: 0.7;
+}
+
+/* ── hover 效果 ── */
+
+@media (hover: hover) {
+  :root[data-theme='dark'] .option:hover {
+    border-color: #6b5a6a;
+    box-shadow: 0 4px 12px -6px rgb(255 143 171 / 20%);
   }
 }
