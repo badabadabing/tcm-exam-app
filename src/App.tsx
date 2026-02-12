@@ -5,6 +5,8 @@ import { generateCasesByDisease, generateRandomCases } from './engine/caseGenera
 import { generateByDisease, generateQuestion, generateRandom } from './engine/questionEngine'
 import { getAnswerRecords, getBookmarks, saveAnswerRecord, toggleBookmark } from './storage/localStore'
 import type { AnswerRecord, Bookmark, CaseExamSummary, CaseQuestion, CaseSelfRating, Question, QuestionType } from './types'
+import ShareCard, { type ShareCardData } from './components/ShareCard'
+import { trackEvent, EVENTS } from './utils/analytics'
 import { pickOne, randomInt } from './utils/random'
 
 type Tab = 'dashboard' | 'library' | 'practice' | 'review' | 'stats'
@@ -31,6 +33,13 @@ interface ExamSummary {
   used_seconds: number
   finished_at: number
   answers: SessionAnswerSummary[]
+}
+
+interface PracticeSummary {
+  total: number
+  correct: number
+  accuracy: number
+  used_seconds: number
 }
 
 const PRACTICE_QUESTION_SECONDS = 5 * 60
@@ -128,6 +137,8 @@ function App() {
   const [case_answer_visible, setCaseAnswerVisible] = useState(false)
   const [case_ratings, setCaseRatings] = useState<Record<string, CaseSelfRating>>({})
   const [case_exam_summary, setCaseExamSummary] = useState<CaseExamSummary | null>(null)
+  const [practice_summary, setPracticeSummary] = useState<PracticeSummary | null>(null)
+  const [share_card_data, setShareCardData] = useState<ShareCardData | null>(null)
 
   const diseases = useMemo(() => dataset_bundle?.diseases ?? [], [dataset_bundle])
   const syndromes = useMemo(() => dataset_bundle?.syndromes ?? [], [dataset_bundle])
@@ -160,6 +171,40 @@ function App() {
       covered_syndromes: covered_syndrome_set.size,
       accuracy: records.length ? Math.round((correct_total / records.length) * 100) : 0,
     }
+  }, [records])
+
+  const today_stats = useMemo(() => {
+    const today_key = getDateKey(Date.now())
+    let count = 0
+    let correct = 0
+    for (const item of records) {
+      if (getDateKey(item.timestamp) === today_key) {
+        count += 1
+        if (item.is_correct) correct += 1
+      }
+    }
+    return { count, correct, accuracy: count ? Math.round((correct / count) * 100) : 0 }
+  }, [records])
+
+  const streak_days = useMemo(() => {
+    if (records.length === 0) return 0
+    const day_set = new Set<string>()
+    for (const item of records) {
+      day_set.add(getDateKey(item.timestamp))
+    }
+    let streak = 0
+    const d = new Date()
+    // 从今天往回数连续天数
+    while (true) {
+      const key = getDateKey(d.getTime())
+      if (day_set.has(key)) {
+        streak += 1
+        d.setDate(d.getDate() - 1)
+      } else {
+        break
+      }
+    }
+    return streak
   }, [records])
 
   const type_stats = useMemo(() => getWeaknessStats(records), [records])
@@ -349,6 +394,7 @@ function App() {
         setLoadingProgress(100)
         setLoadingText('加载完成')
         setIsInitializing(false)
+        trackEvent(EVENTS.APP_OPEN)
       } catch (error) {
         console.error('初始化应用数据失败', error)
         if (!cancelled) {
@@ -401,7 +447,7 @@ function App() {
     if ('requestIdleCallback' in window) {
       idle_id = window.requestIdleCallback(run_prefetch, { timeout: 1200 })
     } else {
-      timeout_id = setTimeout(run_prefetch, 150)
+      timeout_id = setTimeout(run_prefetch, 150) as unknown as number
     }
 
     return () => {
@@ -430,11 +476,13 @@ function App() {
     setSubmitted(false)
     setSessionMode(mode)
     setExamSummary(null)
+    setPracticeSummary(null)
     setSessionAnswers({})
     setSessionStartedAt(now)
     setStartedAt(now)
     setRemainingSeconds(options.total_seconds ?? PRACTICE_QUESTION_SECONDS)
     setTab('practice')
+    trackEvent(EVENTS.SESSION_START, { mode, count: next_questions.length })
   }
 
   async function retryDatasetLoad() {
@@ -497,6 +545,7 @@ function App() {
     setSessionStartedAt(now_timestamp())
     setRemainingSeconds(CASE_EXAM_TOTAL_SECONDS)
     setTab('practice')
+    trackEvent(EVENTS.SESSION_START, { mode: 'case_exam', count: CASE_EXAM_QUESTION_COUNT })
   }
 
   function startCasePracticeByDisease(disease_id: string) {
@@ -512,6 +561,7 @@ function App() {
     setSessionMode('case_practice')
     setRemainingSeconds(0)
     setTab('practice')
+    trackEvent(EVENTS.SESSION_START, { mode: 'case_practice', count: cases.length })
   }
 
   function startDiseaseSession(disease_id: string, count: number) {
@@ -590,8 +640,10 @@ function App() {
     reason: ExamFinishReason,
     used_seconds_override?: number,
   ) => {
-    setExamSummary(buildExamSummary(answers, reason, used_seconds_override))
+    const summary = buildExamSummary(answers, reason, used_seconds_override)
+    setExamSummary(summary)
     setSubmitted(true)
+    trackEvent(EVENTS.SESSION_COMPLETE, { mode: 'exam', accuracy: summary.accuracy, total: summary.total })
   }, [buildExamSummary])
 
   async function submitAnswer(answer_index: number | null = selected_index) {
@@ -615,7 +667,19 @@ function App() {
       if (session_mode === 'exam') {
         finishExam(session_answers, 'completed')
       } else {
-        setTab('dashboard')
+        // 练习模式完成 → 显示总结页
+        const answer_list = Object.values(session_answers)
+        const correct = answer_list.filter((a) => a.is_correct).length
+        const total = questions.length
+        const used = Math.max(0, Math.round((now_timestamp() - session_started_at) / 1000))
+        const summary: PracticeSummary = {
+          total,
+          correct,
+          accuracy: total ? Math.round((correct / total) * 100) : 0,
+          used_seconds: used,
+        }
+        setPracticeSummary(summary)
+        trackEvent(EVENTS.SESSION_COMPLETE, { mode: 'practice', accuracy: summary.accuracy, total })
       }
       return
     }
@@ -652,6 +716,17 @@ function App() {
   function closeExamSummary() {
     setSessionMode('practice')
     setExamSummary(null)
+    setQuestions([])
+    setCurrentIndex(0)
+    setSelectedIndex(null)
+    setSubmitted(false)
+    setSessionAnswers({})
+    setRemainingSeconds(PRACTICE_QUESTION_SECONDS)
+    setTab('dashboard')
+  }
+
+  function closePracticeSummary() {
+    setPracticeSummary(null)
     setQuestions([])
     setCurrentIndex(0)
     setSelectedIndex(null)
@@ -726,6 +801,7 @@ function App() {
       return
     }
     setTab(next_tab)
+    trackEvent(EVENTS.TAB_SWITCH, { tab: next_tab })
   }
 
   useEffect(() => {
@@ -799,6 +875,7 @@ function App() {
       created_at: now_timestamp(),
     })
     setBookmarks(await getBookmarks())
+    trackEvent(EVENTS.BOOKMARK_TOGGLE, { question_type: current_question.question_type })
   }
 
   function categoryClass(category: string): string {
@@ -891,8 +968,14 @@ function App() {
         <section className="panel">
           <article className="hero_card">
             <div>
-              <p className="hero_subtitle">今日概览</p>
-              <h2 className="hero_title">继续完成病种覆盖</h2>
+              <p className="hero_subtitle">
+                {streak_days > 0 ? `连续学习 ${streak_days} 天` : '今日概览'}
+              </p>
+              <h2 className="hero_title">
+                {today_stats.count > 0
+                  ? `今日已练 ${today_stats.count} 题`
+                  : '今天还没开始练习'}
+              </h2>
               <p className="hero_desc">覆盖 {overview_stats.covered_syndromes} / {syndromes.length} 个证型</p>
               {is_prefetching_sessions && <p className="hero_subtitle">正在后台预热练习题</p>}
             </div>
@@ -903,12 +986,24 @@ function App() {
 
           <div className="metric_grid">
             <article className="metric_card">
+              <span className="metric_label">今日答题</span>
+              <span className="metric_value">{today_stats.count}</span>
+            </article>
+            <article className="metric_card">
+              <span className="metric_label">今日正确率</span>
+              <span className="metric_value">{today_stats.count > 0 ? `${today_stats.accuracy}%` : '--'}</span>
+            </article>
+            <article className="metric_card">
               <span className="metric_label">总答题</span>
               <span className="metric_value">{records.length}</span>
             </article>
             <article className="metric_card">
               <span className="metric_label">总体正确率</span>
               <span className="metric_value">{overview_stats.accuracy}%</span>
+            </article>
+            <article className="metric_card">
+              <span className="metric_label">证型覆盖</span>
+              <span className="metric_value">{overview_stats.covered_syndromes}</span>
             </article>
             <article className="metric_card">
               <span className="metric_label">收藏题目</span>
@@ -982,6 +1077,23 @@ function App() {
               )}
             </div>
           </article>
+
+          {records.length > 0 && (
+            <button
+              className="quick_btn quick_btn_random full_btn"
+              onClick={() => setShareCardData({
+                type: 'progress',
+                total_answered: records.length,
+                accuracy: overview_stats.accuracy,
+                streak_days,
+                covered_syndromes: overview_stats.covered_syndromes,
+                total_syndromes: syndromes.length,
+                today_count: today_stats.count,
+              })}
+            >
+              分享我的学习进度
+            </button>
+          )}
         </section>
       )}
 
@@ -1159,7 +1271,21 @@ function App() {
               </div>
 
               <div className="action_row">
-                <button className="primary_btn" onClick={closeCaseExamSummary}>返回首页</button>
+                <button
+                  className="primary_btn"
+                  onClick={() => setShareCardData({
+                    type: 'case',
+                    mastered: case_exam_summary.mastered,
+                    partial: case_exam_summary.partial,
+                    failed: case_exam_summary.failed,
+                    total: case_exam_summary.total,
+                    used_seconds: case_exam_summary.used_seconds,
+                    mode: session_mode as 'case_exam' | 'case_practice',
+                  })}
+                >
+                  分享成绩
+                </button>
+                <button className="secondary_btn" onClick={closeCaseExamSummary}>返回首页</button>
               </div>
             </article>
 
@@ -1329,8 +1455,72 @@ function App() {
                 ))}
               </div>
               <div className="action_row">
-                <button className="primary_btn" onClick={closeExamSummary}>返回首页</button>
+                <button
+                  className="primary_btn"
+                  onClick={() => setShareCardData({
+                    type: 'mcq',
+                    accuracy: exam_summary.accuracy,
+                    correct: exam_summary.correct,
+                    total: exam_summary.total,
+                    used_seconds: exam_summary.used_seconds,
+                    mode: 'exam',
+                  })}
+                >
+                  分享成绩
+                </button>
+                <button className="secondary_btn" onClick={closeExamSummary}>返回首页</button>
                 <button className="secondary_btn" onClick={() => navigateTab('stats')}>查看统计</button>
+              </div>
+            </article>
+          ) : practice_summary ? (
+            <article className="card exam_summary_card">
+              <h2 className="card_title">练习已完成</h2>
+              <div className="exam_summary_grid">
+                <div className="metric_card">
+                  <span className="metric_label">完成题数</span>
+                  <span className="metric_value">{practice_summary.total}</span>
+                </div>
+                <div className="metric_card">
+                  <span className="metric_label">答对题数</span>
+                  <span className="metric_value">{practice_summary.correct}</span>
+                </div>
+                <div className={`metric_card ${practice_summary.accuracy >= 60 ? 'metric_card_green' : 'metric_card_red'}`}>
+                  <span className="metric_label">正确率</span>
+                  <span className="metric_value">{practice_summary.accuracy}%</span>
+                </div>
+                <div className="metric_card">
+                  <span className="metric_label">用时</span>
+                  <span className="metric_value">{formatDuration(practice_summary.used_seconds)}</span>
+                </div>
+              </div>
+
+              {/* 每日练习里程碑提示 */}
+              <div className="daily_share_hint">
+                <p className="daily_share_text">
+                  {streak_days >= 3
+                    ? `已连续学习 ${streak_days} 天，分享给同学一起备考吧`
+                    : today_stats.count >= 50
+                      ? `今日已练 ${today_stats.count} 题，分享打卡记录吧`
+                      : '把成绩分享给备考的同学，一起进步'}
+                </p>
+              </div>
+
+              <div className="action_row">
+                <button
+                  className="primary_btn"
+                  onClick={() => setShareCardData({
+                    type: 'mcq',
+                    accuracy: practice_summary.accuracy,
+                    correct: practice_summary.correct,
+                    total: practice_summary.total,
+                    used_seconds: practice_summary.used_seconds,
+                    mode: 'practice',
+                  })}
+                >
+                  分享成绩
+                </button>
+                <button className="secondary_btn" onClick={closePracticeSummary}>返回首页</button>
+                <button className="secondary_btn" onClick={() => { closePracticeSummary(); navigateTab('stats') }}>查看统计</button>
               </div>
             </article>
           ) : !current_question ? (
@@ -1663,6 +1853,15 @@ function App() {
           统计
         </button>
       </nav>
+
+      {share_card_data && (
+        <ShareCard
+          data={share_card_data}
+          app_url={window.location.origin}
+          visible={share_card_data !== null}
+          onClose={() => setShareCardData(null)}
+        />
+      )}
     </div>
   )
 }

@@ -74,6 +74,17 @@ export async function getBookmarks(): Promise<Bookmark[]> {
   return db.bookmarks.orderBy('created_at').reverse().toArray()
 }
 
+export async function getUserId(): Promise<string> {
+  await initStorage()
+  const entry = await db.meta.get('user_id')
+  if (entry) {
+    return entry.value
+  }
+  const id = crypto.randomUUID()
+  await db.meta.put({ key: 'user_id', value: id })
+  return id
+}
+
 export async function toggleBookmark(bookmark: Bookmark): Promise<void> {
   await initStorage()
   const normalized = toBookmarkWithQuestionId(bookmark)
