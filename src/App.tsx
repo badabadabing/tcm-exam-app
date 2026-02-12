@@ -850,8 +850,9 @@ function App() {
     <div className="app">
       <header className="top_bar">
         <div className="header_title_row">
-          <div>
-            <h1 className="title_main">中医第一站复习</h1>
+          <div className="header_placeholder" />
+          <div className="header_title_center">
+            <h1 className="title_main">中医执医实践技能<span className="title_accent">（第一站）</span>复习</h1>
             <p className="title_sub">病案分析 · 辨证论治专项训练</p>
           </div>
           <button className="icon_btn" onClick={() => navigateTab('stats')} disabled={is_exam_running}>

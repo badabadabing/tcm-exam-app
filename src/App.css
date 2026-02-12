@@ -1,7 +1,9 @@
 .app {
   max-width: 920px;
+  width: 100%;
   margin: 0 auto;
   padding: 12px 12px calc(94px + env(safe-area-inset-bottom, 0));
+  overflow-x: hidden;
 }
 
 .top_bar {
@@ -15,24 +17,40 @@
 }
 
 .header_title_row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
   align-items: center;
-  justify-content: space-between;
+}
+
+.header_title_center {
+  text-align: center;
 }
 
 .title_main {
   margin: 0;
-  font-size: 24px;
-  font-weight: 800;
-  color: #4a403a;
-  letter-spacing: -0.02em;
+  font-size: 19px;
+  font-weight: 900;
+  color: #3a302a;
+  letter-spacing: 0.04em;
+  font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', 'STSong', 'FangSong', serif;
+  line-height: 1.4;
+}
+
+.title_accent {
+  color: #d63369;
+  font-weight: 900;
 }
 
 .title_sub {
   margin: 4px 0 0;
   color: #7a6f67;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.header_placeholder {
+  width: 44px;
 }
 
 .icon_btn {
@@ -43,6 +61,7 @@
   background: #fff;
   color: #ff6b8b;
   font-weight: 700;
+  justify-self: end;
 }
 
 .panel {
@@ -1002,11 +1021,11 @@ button:disabled {
 
 @media (max-width: 640px) {
   .title_main {
-    font-size: 22px;
+    font-size: 16px;
   }
 
   .title_sub {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .hero_card {
@@ -1073,6 +1092,19 @@ button:disabled {
 @media (max-width: 420px) {
   .app {
     padding-inline: 10px;
+  }
+
+  .title_main {
+    font-size: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  .header_title_row {
+    grid-template-columns: 40px 1fr 40px;
+  }
+
+  .header_placeholder {
+    width: 40px;
   }
 
   .card {
