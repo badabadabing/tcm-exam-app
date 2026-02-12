@@ -228,6 +228,12 @@
   gap: 8px;
 }
 
+.quick_actions_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
 .quick_btn_large {
   min-height: 56px;
   font-size: 15px;
@@ -1442,6 +1448,10 @@ button:disabled {
   }
 
   .quick_actions_secondary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .quick_actions_grid {
     grid-template-columns: repeat(2, 1fr);
   }
 

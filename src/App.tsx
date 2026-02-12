@@ -1679,32 +1679,29 @@ function App() {
             </div>
           )}
 
-          {/* ═══ 3. 快捷训练（分主次两层） ═══ */}
-          <div className="quick_actions_primary">
+          {/* ═══ 3. 快捷训练（两列对齐） ═══ */}
+          <div className="quick_actions_grid">
             <button
-              className="quick_btn quick_btn_recommend quick_btn_large"
+              className="quick_btn quick_btn_recommend"
               onClick={startSmartRecommendationSession}
               disabled={!dataset_bundle || is_initializing}
             >
               智能推荐训练
             </button>
             <button
-              className="quick_btn quick_btn_random quick_btn_large"
+              className="quick_btn quick_btn_random"
               onClick={() => startRandomSession(50)}
               disabled={!dataset_bundle || is_initializing}
             >
               随机刷题
             </button>
             <button
-              className="quick_btn quick_btn_mcq_exam quick_btn_large"
+              className="quick_btn quick_btn_mcq_exam"
               onClick={startMcqExamSession}
               disabled={!dataset_bundle || is_initializing}
             >
               模拟考试（选择题）
             </button>
-          </div>
-
-          <div className="quick_actions_secondary">
             <button className="quick_btn quick_btn_disease" onClick={() => navigateTab('library')} disabled={is_exam_running}>
               按病种练习
             </button>
