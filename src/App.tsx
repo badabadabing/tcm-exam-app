@@ -1,15 +1,40 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 import { loadDataset, type DatasetBundle } from './data/dataset'
 import { generateCasesByDisease, generateRandomCases } from './engine/caseGenerator'
 import { generateByDisease, generateQuestion, generateRandom } from './engine/questionEngine'
-import { getAnswerRecords, getBookmarks, getCaseAnswerRecords, saveAnswerRecord, saveCaseAnswerRecord, toggleBookmark } from './storage/localStore'
-import type { AnswerRecord, Bookmark, CaseAnswerRecord, CaseExamSummary, CaseQuestion, CaseSelfRating, Question, QuestionType } from './types'
+import { createInitialSm2State, getNextSm2State, getReviewQuality } from './engine/spacedRepetition'
+import {
+  getAnswerRecords,
+  getBookmarks,
+  getCaseAnswerRecords,
+  getMetaJson,
+  getNotes,
+  saveAnswerRecord,
+  saveCaseAnswerRecord,
+  saveNote,
+  setMetaJson,
+  toggleBookmark,
+} from './storage/localStore'
+import type {
+  Achievement,
+  AchievementId,
+  AnswerRecord,
+  Bookmark,
+  CaseAnswerRecord,
+  CaseExamSummary,
+  CaseQuestion,
+  CaseSelfRating,
+  LearningGoals,
+  NoteEntry,
+  Question,
+  QuestionType,
+} from './types'
 import ShareCard, { type ShareCardData } from './components/ShareCard'
 import { trackEvent, EVENTS } from './utils/analytics'
 import { pickOne, randomInt, shuffle } from './utils/random'
 
-type Tab = 'dashboard' | 'library' | 'practice' | 'review' | 'stats'
+type Tab = 'dashboard' | 'library' | 'practice' | 'review' | 'stats' | 'notes'
 type SessionMode = 'practice' | 'exam' | 'case_exam' | 'case_practice'
 type ExamFinishReason = 'completed' | 'manual_submit' | 'time_up'
 
@@ -52,12 +77,33 @@ interface CaseAnswerDraft {
 const PRACTICE_QUESTION_SECONDS = 5 * 60
 const CASE_EXAM_TOTAL_SECONDS = 60 * 60
 const CASE_EXAM_QUESTION_COUNT = 2
+const WRONG_MASTERED_TARGET = 2
+const DEFAULT_GOALS: LearningGoals = {
+  daily_goal: 30,
+  weekly_goal: 0,
+  monthly_goal: 0,
+}
+const ACHIEVEMENT_TEMPLATES: Record<AchievementId, { title: string; description: string }> = {
+  first_practice: { title: '初出茅庐', description: '完成首次练习' },
+  hundred_correct: { title: '百题达人', description: '累计答对 100 题' },
+  disease_master: { title: '病种通关', description: '某病种正确率达 80% 且覆盖全部证型' },
+  seven_day_streak: { title: '连续七天', description: '连续学习 7 天' },
+  night_owl: { title: '夜猫子', description: '22:00 后完成练习' },
+}
 const CASE_EXAM_PROMPTS = [
   '1. 请写出中医病名诊断与证型诊断。',
   '2. 请写出证机概要。',
   '3. 请写出治法。',
   '4. 请写出处方（方剂名称）。',
 ]
+const QUESTION_TYPE_HINTS: Record<QuestionType, string> = {
+  Q1: '辨证分型',
+  Q2: '治法判断',
+  Q3: '方剂选择',
+  Q4: '证机概要',
+  Q5: '方证对应',
+  Q6: '治法-方剂匹配',
+}
 const EMPTY_CASE_DRAFT: CaseAnswerDraft = {
   diagnosis_text: '',
   pathogenesis_text: '',
@@ -115,6 +161,41 @@ function formatDuration(seconds: number): string {
   return `${String(minutes).padStart(2, '0')}:${String(remain_seconds).padStart(2, '0')}`
 }
 
+function getWeekKey(timestamp: number): string {
+  const date = new Date(timestamp)
+  const day = date.getDay() || 7
+  date.setDate(date.getDate() + 4 - day)
+  const year_start = new Date(date.getFullYear(), 0, 1)
+  const week_no = Math.ceil((((date.getTime() - year_start.getTime()) / 86400000) + 1) / 7)
+  return `${date.getFullYear()}-W${String(week_no).padStart(2, '0')}`
+}
+
+function getMonthKey(timestamp: number): string {
+  const date = new Date(timestamp)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  return `${year}-${month}`
+}
+
+function getLongestStreak(records: AnswerRecord[]): number {
+  if (records.length === 0) return 0
+  const days = [...new Set(records.map((item) => getDateKey(item.timestamp)))].sort()
+  if (days.length === 0) return 0
+  let longest = 1
+  let current = 1
+  for (let index = 1; index < days.length; index += 1) {
+    const prev = new Date(days[index - 1]).getTime()
+    const next = new Date(days[index]).getTime()
+    if (next - prev === 24 * 60 * 60 * 1000) {
+      current += 1
+      longest = Math.max(longest, current)
+    } else {
+      current = 1
+    }
+  }
+  return longest
+}
+
 function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('ui_theme')
@@ -150,6 +231,19 @@ function App() {
   const [library_sort, setLibrarySort] = useState<'default' | 'accuracy_desc' | 'accuracy_asc' | 'progress_desc' | 'progress_asc'>('default')
   const [review_type_filter, setReviewTypeFilter] = useState<'全部' | QuestionType>('全部')
   const [review_disease_filter, setReviewDiseaseFilter] = useState<'全部' | string>('全部')
+  const [learning_goals, setLearningGoals] = useState<LearningGoals>(DEFAULT_GOALS)
+  const [achievements, setAchievements] = useState<Achievement[]>([])
+  const [goal_edit_visible, setGoalEditVisible] = useState(false)
+  const [achievement_wall_expanded, setAchievementWallExpanded] = useState(false)
+  const [review_sub_tab, setReviewSubTab] = useState<'wrong' | 'pattern' | 'bookmarks' | 'cases'>('wrong')
+  const [stats_disease_expanded, setStatsDiseaseExpanded] = useState(false)
+  const [notes, setNotes] = useState<NoteEntry[]>([])
+  const [notes_search_text, setNotesSearchText] = useState('')
+  const [note_input_text, setNoteInputText] = useState('')
+  const [visible_wrong_count, setVisibleWrongCount] = useState(20)
+  const [dismissed_wrong_keys, setDismissedWrongKeys] = useState<string[]>([])
+  const [celebration_text, setCelebrationText] = useState('')
+  const review_load_more_ref = useRef<HTMLDivElement | null>(null)
 
   // ── 病案论述题状态 ──
   const [case_questions, setCaseQuestions] = useState<CaseQuestion[]>([])
@@ -230,11 +324,61 @@ function App() {
     return streak
   }, [records])
 
+  const longest_streak_days = useMemo(() => getLongestStreak(records), [records])
+
+  const current_week_key = getWeekKey(Date.now())
+  const current_month_key = getMonthKey(Date.now())
+
+  const weekly_stats = useMemo(() => {
+    let total = 0
+    for (const item of records) {
+      if (getWeekKey(item.timestamp) === current_week_key) {
+        total += 1
+      }
+    }
+    return total
+  }, [current_week_key, records])
+
+  const monthly_stats = useMemo(() => {
+    let total = 0
+    for (const item of records) {
+      if (getMonthKey(item.timestamp) === current_month_key) {
+        total += 1
+      }
+    }
+    return total
+  }, [current_month_key, records])
+
   const type_stats = useMemo(() => getWeaknessStats(records), [records])
   const weak_types = useMemo(() => {
     return type_stats.filter((item) => item.total > 0 && item.accuracy < 60)
   }, [type_stats])
-  const wrong_records = overview_stats.wrong_records
+
+  const latest_record_by_key = useMemo(() => {
+    const map = new Map<string, AnswerRecord>()
+    for (const item of records) {
+      const key = `${item.syndrome_id}__${item.question_type}`
+      if (!map.has(key)) {
+        map.set(key, item)
+      }
+    }
+    return map
+  }, [records])
+
+  const wrong_records = useMemo(() => {
+    const result: AnswerRecord[] = []
+    for (const [key, item] of latest_record_by_key) {
+      if (dismissed_wrong_keys.includes(key)) {
+        continue
+      }
+      const wrong_streak = item.wrong_streak ?? (item.is_correct ? 0 : 1)
+      const mastered_streak = item.mastered_streak ?? (item.is_correct ? 1 : 0)
+      if (wrong_streak > 0 && mastered_streak < WRONG_MASTERED_TARGET) {
+        result.push(item)
+      }
+    }
+    return result.sort((left, right) => right.timestamp - left.timestamp)
+  }, [dismissed_wrong_keys, latest_record_by_key])
 
   const daily_trend = useMemo(() => {
     const today = new Date()
@@ -328,7 +472,7 @@ function App() {
     return wrong_records
       .map((item) => {
         const disease_name = disease_name_by_id.get(item.disease_id) ?? '未知病种'
-        return { ...item, disease_name }
+        return { ...item, disease_name, wrong_key: `${item.syndrome_id}__${item.question_type}` }
       })
   }, [disease_name_by_id, wrong_records])
 
@@ -336,8 +480,8 @@ function App() {
     return review_wrong_items
       .filter((item) => (review_type_filter === '全部' ? true : item.question_type === review_type_filter))
       .filter((item) => (review_disease_filter === '全部' ? true : item.disease_id === review_disease_filter))
-      .slice(0, 50)
-  }, [review_disease_filter, review_type_filter, review_wrong_items])
+      .slice(0, visible_wrong_count)
+  }, [review_disease_filter, review_type_filter, review_wrong_items, visible_wrong_count])
 
   const recent_practice_rows = useMemo(() => {
     const latest_records = [...records].sort((left, right) => right.timestamp - left.timestamp)
@@ -382,22 +526,156 @@ function App() {
       .slice(0, 3)
   }, [disease_accuracy])
 
+  const achievement_metrics = useMemo(() => {
+    const unlocked_set = new Set(achievements.map((item) => item.id))
+    const correct_total = records.filter((item) => item.is_correct).length
+    const disease_master_count = disease_accuracy.filter((item) => item.progress >= 100 && item.accuracy >= 80 && item.total > 0).length
+    const night_owl_count = records.filter((item) => new Date(item.timestamp).getHours() >= 22).length
+    return {
+      unlocked_set,
+      correct_total,
+      disease_master_count,
+      night_owl_count,
+    }
+  }, [achievements, disease_accuracy, records])
+
+  const achievement_progress_items = useMemo(() => {
+    const configs: Array<{
+      id: AchievementId
+      current: number
+      target: number
+      progress_text: string
+    }> = [
+      {
+        id: 'first_practice',
+        current: Math.min(records.length, 1),
+        target: 1,
+        progress_text: `${Math.min(records.length, 1)}/1 次练习`,
+      },
+      {
+        id: 'hundred_correct',
+        current: Math.min(achievement_metrics.correct_total, 100),
+        target: 100,
+        progress_text: `${achievement_metrics.correct_total}/100 题答对`,
+      },
+      {
+        id: 'disease_master',
+        current: Math.min(achievement_metrics.disease_master_count, 1),
+        target: 1,
+        progress_text: achievement_metrics.disease_master_count > 0 ? '已达成病种通关条件' : '任一病种达成 80% 且全覆盖',
+      },
+      {
+        id: 'seven_day_streak',
+        current: Math.min(streak_days, 7),
+        target: 7,
+        progress_text: `${streak_days}/7 天连续打卡`,
+      },
+      {
+        id: 'night_owl',
+        current: Math.min(achievement_metrics.night_owl_count, 1),
+        target: 1,
+        progress_text: achievement_metrics.night_owl_count > 0 ? '已完成夜间练习' : '22:00 后完成 1 次练习',
+      },
+    ]
+
+    return configs.map((item) => {
+      const template = ACHIEVEMENT_TEMPLATES[item.id]
+      const unlocked = achievement_metrics.unlocked_set.has(item.id)
+      const percent = Math.min(100, Math.round((item.current / item.target) * 100))
+      return {
+        ...item,
+        title: template.title,
+        description: template.description,
+        unlocked,
+        percent,
+      }
+    })
+  }, [achievement_metrics, records.length, streak_days])
+
   const bookmark_question_id_set = useMemo(() => {
     return new Set(bookmarks.map((item) => item.question_id))
   }, [bookmarks])
 
   const spaced_due_items = useMemo(() => {
     const now = now_timestamp()
-    const three_days_ms = 3 * 24 * 60 * 60 * 1000
-    const latest_by_key = new Map<string, AnswerRecord>()
-    for (const item of records) {
-      const key = `${item.syndrome_id}__${item.question_type}`
-      if (!latest_by_key.has(key)) {
-        latest_by_key.set(key, item)
+    return [...latest_record_by_key.values()].filter((item) => {
+      if (!item.next_review_date) {
+        return false
+      }
+      return item.next_review_date <= now
+    })
+  }, [latest_record_by_key])
+
+  const mastered_wrong_items = useMemo(() => {
+    return [...latest_record_by_key.entries()]
+      .filter(([, item]) => (item.wrong_streak ?? 0) > 0 && (item.mastered_streak ?? 0) >= WRONG_MASTERED_TARGET)
+      .map(([key, item]) => ({ ...item, wrong_key: key }))
+  }, [latest_record_by_key])
+
+  const learning_goal_progress = useMemo(() => {
+    const daily_percent = Math.min(100, Math.round((today_stats.count / Math.max(learning_goals.daily_goal, 1)) * 100))
+    const weekly_percent = learning_goals.weekly_goal && learning_goals.weekly_goal > 0
+      ? Math.min(100, Math.round((weekly_stats / learning_goals.weekly_goal) * 100))
+      : null
+    const monthly_percent = learning_goals.monthly_goal && learning_goals.monthly_goal > 0
+      ? Math.min(100, Math.round((monthly_stats / learning_goals.monthly_goal) * 100))
+      : null
+    return { daily_percent, weekly_percent, monthly_percent }
+  }, [learning_goals.daily_goal, learning_goals.monthly_goal, learning_goals.weekly_goal, monthly_stats, today_stats.count, weekly_stats])
+
+  const notes_filtered_items = useMemo(() => {
+    const search = notes_search_text.trim()
+    if (!search) {
+      return notes
+    }
+    return notes.filter((item) => item.content.includes(search))
+  }, [notes, notes_search_text])
+
+  const error_pattern_by_type = useMemo(() => {
+    const map = new Map<QuestionType, { wrong: number; total: number }>()
+    for (const t of ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'] as QuestionType[]) {
+      map.set(t, { wrong: 0, total: 0 })
+    }
+    for (const record of records) {
+      const current = map.get(record.question_type)
+      if (!current) continue
+      current.total += 1
+      if (!record.is_correct) {
+        current.wrong += 1
       }
     }
-    return [...latest_by_key.values()].filter((item) => !item.is_correct && now - item.timestamp >= three_days_ms)
+    return [...map.entries()].map(([question_type, metric]) => ({
+      question_type,
+      wrong_rate: metric.total > 0 ? Math.round((metric.wrong / metric.total) * 100) : 0,
+      total: metric.total,
+    }))
   }, [records])
+
+  const error_pattern_top_disease = useMemo(() => {
+    const map = new Map<string, { wrong: number; total: number }>()
+    for (const record of records) {
+      const current = map.get(record.disease_id) ?? { wrong: 0, total: 0 }
+      current.total += 1
+      if (!record.is_correct) {
+        current.wrong += 1
+      }
+      map.set(record.disease_id, current)
+    }
+    return [...map.entries()]
+      .map(([disease_id, metric]) => ({
+        disease_id,
+        disease_name: disease_name_by_id.get(disease_id) ?? '未知病种',
+        wrong_rate: metric.total > 0 ? Math.round((metric.wrong / metric.total) * 100) : 0,
+        total: metric.total,
+      }))
+      .filter((item) => item.total >= 3)
+      .sort((left, right) => right.wrong_rate - left.wrong_rate)
+      .slice(0, 5)
+  }, [disease_name_by_id, records])
+
+  const stats_disease_rows = useMemo(() => {
+    return stats_disease_expanded ? disease_accuracy : disease_accuracy.slice(0, 10)
+  }, [disease_accuracy, stats_disease_expanded])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
@@ -412,7 +690,15 @@ function App() {
         setIsInitializing(true)
         setLoadingProgress(8)
         setLoadingText('正在连接本地存储')
-        const storage_task = Promise.all([getAnswerRecords(), getBookmarks(), getCaseAnswerRecords()])
+        const storage_task = Promise.all([
+          getAnswerRecords(),
+          getBookmarks(),
+          getCaseAnswerRecords(),
+          getNotes(),
+          getMetaJson<LearningGoals>('learning_goals', DEFAULT_GOALS),
+          getMetaJson<Achievement[]>('achievements', []),
+          getMetaJson<string[]>('dismissed_wrong_keys', []),
+        ])
 
         setLoadingProgress(35)
         setLoadingText('正在加载完整题库')
@@ -423,7 +709,15 @@ function App() {
 
         setLoadingProgress(72)
         setLoadingText('正在同步学习记录')
-        const [next_records, next_bookmarks, next_case_answer_records] = await storage_task
+        const [
+          next_records,
+          next_bookmarks,
+          next_case_answer_records,
+          next_notes,
+          next_goals,
+          next_achievements,
+          next_dismissed_wrong_keys,
+        ] = await storage_task
         if (cancelled) {
           return
         }
@@ -432,6 +726,10 @@ function App() {
         setRecords(next_records)
         setBookmarks(next_bookmarks)
         setCaseAnswerRecords(next_case_answer_records)
+        setNotes(next_notes)
+        setLearningGoals(next_goals)
+        setAchievements(next_achievements)
+        setDismissedWrongKeys(next_dismissed_wrong_keys)
         setDatasetError(null)
         setLoadingProgress(100)
         setLoadingText('加载完成')
@@ -502,6 +800,77 @@ function App() {
       }
     }
   }, [dataset_bundle, prefetched_q1_session, prefetched_random_session])
+
+  useEffect(() => {
+    void setMetaJson('learning_goals', learning_goals)
+  }, [learning_goals])
+
+  useEffect(() => {
+    void setMetaJson('dismissed_wrong_keys', dismissed_wrong_keys)
+  }, [dismissed_wrong_keys])
+
+  useEffect(() => {
+    const unlocked = achievement_metrics.unlocked_set
+    const next_ids: AchievementId[] = []
+    const correct_total = achievement_metrics.correct_total
+    const has_disease_master = achievement_metrics.disease_master_count > 0
+    const has_night_owl = achievement_metrics.night_owl_count > 0
+    if (records.length > 0 && !unlocked.has('first_practice')) next_ids.push('first_practice')
+    if (correct_total >= 100 && !unlocked.has('hundred_correct')) next_ids.push('hundred_correct')
+    if (has_disease_master && !unlocked.has('disease_master')) next_ids.push('disease_master')
+    if (streak_days >= 7 && !unlocked.has('seven_day_streak')) next_ids.push('seven_day_streak')
+    if (has_night_owl && !unlocked.has('night_owl')) next_ids.push('night_owl')
+    if (next_ids.length === 0) {
+      return
+    }
+    const new_items = next_ids.map((id) => ({
+      id,
+      title: ACHIEVEMENT_TEMPLATES[id].title,
+      description: ACHIEVEMENT_TEMPLATES[id].description,
+      unlocked_at: now_timestamp(),
+    }))
+    const merged = [...achievements, ...new_items]
+    setAchievements(merged)
+    void setMetaJson('achievements', merged)
+    setCelebrationText(`恭喜达成：${new_items.map((item) => item.title).join('、')}`)
+    const timer = window.setTimeout(() => setCelebrationText(''), 2800)
+    return () => window.clearTimeout(timer)
+  }, [achievement_metrics, achievements, records.length, streak_days])
+
+  useEffect(() => {
+    if (review_filtered_items.length <= visible_wrong_count) {
+      return undefined
+    }
+    const target = review_load_more_ref.current
+    if (!target) {
+      return undefined
+    }
+    const observer = new IntersectionObserver((entries) => {
+      const first = entries[0]
+      if (!first?.isIntersecting) {
+        return
+      }
+      setVisibleWrongCount((value) => value + 20)
+    }, { threshold: 0.2 })
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [review_filtered_items.length, visible_wrong_count])
+
+  useEffect(() => {
+    setVisibleWrongCount(20)
+  }, [review_type_filter, review_disease_filter])
+
+  useEffect(() => {
+    if (learning_goal_progress.daily_percent < 100) {
+      return
+    }
+    if (today_stats.count === 0) {
+      return
+    }
+    setCelebrationText(`今日目标达成！已完成 ${today_stats.count} 题，快去分享一下吧`)
+    const timer = window.setTimeout(() => setCelebrationText(''), 2600)
+    return () => window.clearTimeout(timer)
+  }, [learning_goal_progress.daily_percent, today_stats.count])
 
   function startSession(
     next_questions: Question[],
@@ -658,6 +1027,23 @@ function App() {
     const user_answer = answer_index === null ? '' : (question.options[answer_index]?.text ?? '')
     const is_correct = answer_index === question.correct_index
     try {
+      const key = `${question.syndrome_id}__${question.question_type}`
+      const previous = latest_record_by_key.get(key)
+      const previous_sm2 = previous
+        ? {
+          easiness_factor: previous.easiness_factor ?? createInitialSm2State().easiness_factor,
+          interval: previous.interval ?? createInitialSm2State().interval,
+          repetition: previous.repetition ?? 0,
+          next_review_date: previous.next_review_date ?? createInitialSm2State().next_review_date,
+        }
+        : null
+      const duration_ms = submit_time - started_at
+      const quality = getReviewQuality(is_correct, duration_ms)
+      const sm2 = getNextSm2State(previous_sm2, quality, submit_time)
+      const previous_wrong_streak = previous?.wrong_streak ?? (previous && !previous.is_correct ? 1 : 0)
+      const previous_mastered_streak = previous?.mastered_streak ?? (previous?.is_correct ? 1 : 0)
+      const wrong_streak = is_correct ? previous_wrong_streak : previous_wrong_streak + 1
+      const mastered_streak = is_correct ? previous_mastered_streak + 1 : 0
       await saveAnswerRecord({
         id: create_record_id(),
         question_id: question.id,
@@ -667,7 +1053,13 @@ function App() {
         user_answer,
         is_correct,
         timestamp: submit_time,
-        duration_ms: submit_time - started_at,
+        duration_ms,
+        easiness_factor: sm2.easiness_factor,
+        interval: sm2.interval,
+        repetition: sm2.repetition,
+        next_review_date: sm2.next_review_date,
+        wrong_streak,
+        mastered_streak,
       })
       setRecords(await getAnswerRecords())
       return {
@@ -685,7 +1077,7 @@ function App() {
       setSubmitted(false)
       return null
     }
-  }, [started_at])
+  }, [latest_record_by_key, started_at])
 
   const finishExam = useCallback((
     answers: Record<string, SessionAnswerSummary>,
@@ -1082,6 +1474,56 @@ function App() {
     return { text: '进行中', class_name: 'status_tag status_active' }
   }
 
+  function updateLearningGoal(field: keyof LearningGoals, value: number) {
+    setLearningGoals((current) => ({
+      ...current,
+      [field]: Number.isNaN(value) ? 0 : Math.max(0, value),
+    }))
+  }
+
+  async function saveQuestionNote() {
+    if (!current_question) {
+      return
+    }
+    const content = note_input_text.trim()
+    if (!content) {
+      return
+    }
+    const note: NoteEntry = {
+      id: create_record_id(),
+      target_type: 'question',
+      target_id: current_question.id,
+      content,
+      timestamp: now_timestamp(),
+    }
+    await saveNote(note)
+    setNotes(await getNotes())
+    setNoteInputText('')
+  }
+
+  async function saveSyndromeNote(syndrome_id: string) {
+    const content = window.prompt('请输入证型笔记内容')
+    if (!content || !content.trim()) {
+      return
+    }
+    await saveNote({
+      id: create_record_id(),
+      target_type: 'syndrome',
+      target_id: syndrome_id,
+      content: content.trim(),
+      timestamp: now_timestamp(),
+    })
+    setNotes(await getNotes())
+  }
+
+  function clearMasteredWrongItems() {
+    const mastered_keys = mastered_wrong_items.map((item) => item.wrong_key)
+    if (mastered_keys.length === 0) {
+      return
+    }
+    setDismissedWrongKeys((current) => [...new Set([...current, ...mastered_keys])])
+  }
+
   const timer_text = formatDuration(remaining_seconds)
 
   return (
@@ -1104,6 +1546,10 @@ function App() {
           </button>
         </div>
       </header>
+
+      {celebration_text && (
+        <div className="celebration_toast">{celebration_text}</div>
+      )}
 
       {!dataset_bundle && (
         <section className="panel">
@@ -1133,8 +1579,9 @@ function App() {
 
       {tab === 'dashboard' && (
         <section className="panel">
+          {/* ═══ 1. Hero + 目标进度环（合并） ═══ */}
           <article className="hero_card">
-            <div>
+            <div className="hero_text">
               <p className="hero_subtitle">
                 {streak_days > 0 ? `连续学习 ${streak_days} 天` : '今日概览'}
               </p>
@@ -1143,14 +1590,175 @@ function App() {
                   ? `今日已练 ${today_stats.count} 题`
                   : '今天还没开始练习'}
               </h2>
-              <p className="hero_desc">覆盖 {overview_stats.covered_syndromes} / {syndromes.length} 个证型</p>
-              {is_prefetching_sessions && <p className="hero_subtitle">正在后台预热练习题</p>}
+              <p className="hero_desc">
+                {today_stats.count}/{learning_goals.daily_goal} · 覆盖 {overview_stats.covered_syndromes}/{syndromes.length} 证型
+              </p>
+              <p className="hero_desc">
+                周 {weekly_stats}/{learning_goals.weekly_goal || '--'}
+                {' · '}
+                月 {monthly_stats}/{learning_goals.monthly_goal || '--'}
+                {is_prefetching_sessions ? ' · 预热中...' : ''}
+              </p>
+              <button
+                className="goal_edit_toggle"
+                onClick={() => setGoalEditVisible((v) => !v)}
+              >
+                {goal_edit_visible ? '收起目标设置' : '调整目标'}
+              </button>
             </div>
-            <button className="hero_button" onClick={() => startRandomSession(50)} disabled={!dataset_bundle || is_initializing}>
-              随机刷题
-            </button>
+            <div
+              className="goal_ring"
+              style={{ background: `conic-gradient(#ff7f9d ${learning_goal_progress.daily_percent * 3.6}deg, #f5e6e0 0deg)` }}
+            >
+              <div className="goal_ring_inner">
+                <strong>{learning_goal_progress.daily_percent}%</strong>
+                <span>{today_stats.count}/{learning_goals.daily_goal}</span>
+              </div>
+            </div>
           </article>
 
+          {goal_edit_visible && (
+            <article className="card goal_edit_card">
+              <div className="goal_form">
+                <label>
+                  日目标
+                  <input
+                    className="search_input"
+                    type="number"
+                    min={1}
+                    value={learning_goals.daily_goal}
+                    onChange={(event) => updateLearningGoal('daily_goal', Number(event.target.value))}
+                  />
+                </label>
+                <label>
+                  周目标（可选）
+                  <input
+                    className="search_input"
+                    type="number"
+                    min={0}
+                    value={learning_goals.weekly_goal ?? 0}
+                    onChange={(event) => updateLearningGoal('weekly_goal', Number(event.target.value))}
+                  />
+                </label>
+                <label>
+                  月目标（可选）
+                  <input
+                    className="search_input"
+                    type="number"
+                    min={0}
+                    value={learning_goals.monthly_goal ?? 0}
+                    onChange={(event) => updateLearningGoal('monthly_goal', Number(event.target.value))}
+                  />
+                </label>
+              </div>
+            </article>
+          )}
+
+          {/* ═══ 2. 智能提醒横幅 ═══ */}
+          {spaced_due_items.length > 0 && (
+            <div className="nudge_banner nudge_banner_spaced">
+              <div className="nudge_banner_text">
+                <strong>间隔复习</strong>
+                <span>{spaced_due_items.length} 组题目已到复习时间</span>
+              </div>
+              <button className="nudge_banner_btn" onClick={startSpacedReviewSession}>
+                开始复习
+              </button>
+            </div>
+          )}
+
+          {weak_types.length > 0 && (
+            <div className="nudge_banner nudge_banner_weak">
+              <div className="nudge_banner_text">
+                <strong>薄弱题型</strong>
+                <span>{weak_types.map((t) => `${t.question_type} ${t.accuracy}%`).join('、')}</span>
+              </div>
+              <button className="nudge_banner_btn" onClick={() => startWeakTypeSession(weak_types[0].question_type)}>
+                去突破
+              </button>
+            </div>
+          )}
+
+          {/* ═══ 3. 快捷训练（分主次两层） ═══ */}
+          <div className="quick_actions_primary">
+            <button
+              className="quick_btn quick_btn_recommend quick_btn_large"
+              onClick={startSmartRecommendationSession}
+              disabled={!dataset_bundle || is_initializing}
+            >
+              智能推荐训练
+            </button>
+            <button
+              className="quick_btn quick_btn_random quick_btn_large"
+              onClick={() => startRandomSession(50)}
+              disabled={!dataset_bundle || is_initializing}
+            >
+              随机刷题
+            </button>
+            <button
+              className="quick_btn quick_btn_mcq_exam quick_btn_large"
+              onClick={startMcqExamSession}
+              disabled={!dataset_bundle || is_initializing}
+            >
+              模拟考试（选择题）
+            </button>
+          </div>
+
+          <div className="quick_actions_secondary">
+            <button className="quick_btn quick_btn_disease" onClick={() => navigateTab('library')} disabled={is_exam_running}>
+              按病种练习
+            </button>
+            <button
+              className="quick_btn quick_btn_focus"
+              onClick={() => startRandomSession(50, ['Q1'])}
+              disabled={!dataset_bundle || is_initializing}
+            >
+              Q1 专项突破
+            </button>
+            <button
+              className="quick_btn quick_btn_exam"
+              onClick={startCaseExamSession}
+              disabled={!dataset_bundle || is_initializing}
+            >
+              病案模拟考试
+            </button>
+            <button
+              className="quick_btn quick_btn_exam"
+              onClick={startWrongReviewSession}
+              disabled={!dataset_bundle || is_initializing || wrong_records.length === 0}
+            >
+              错题重练（{wrong_records.length}）
+            </button>
+            <button
+              className="quick_btn quick_btn_bookmark"
+              onClick={startBookmarkReviewSession}
+              disabled={bookmarks.length === 0}
+            >
+              收藏练习（{bookmarks.length}）
+            </button>
+          </div>
+
+          {/* ═══ 4. 最近练习病种 ═══ */}
+          {recent_practice_rows.length > 0 && (
+            <article className="card">
+              <h2 className="card_title">最近练习病种</h2>
+              <div className="recent_row">
+                {recent_practice_rows.map((item) => (
+                  <button
+                    key={item.disease_id}
+                    className="recent_card"
+                    onClick={() => startDiseaseSession(item.disease_id, item.syndrome_count)}
+                  >
+                    <span className="recent_name">{item.disease_name}</span>
+                    <span className="recent_meta">覆盖 {item.progress}% · 正确率 {item.accuracy}%</span>
+                    <span className="recent_time">{new Date(item.last_time).toLocaleDateString()}</span>
+                  </button>
+                ))}
+              </div>
+            </article>
+          )}
+
+          {/* ═══ 5. 精简数据 + 热力日历 ═══ */}
           <div className="metric_grid">
             <article className="metric_card">
               <span className="metric_label">今日答题</span>
@@ -1168,125 +1776,43 @@ function App() {
               <span className="metric_label">总体正确率</span>
               <span className="metric_value">{overview_stats.accuracy}%</span>
             </article>
-            <article className="metric_card">
-              <span className="metric_label">证型覆盖</span>
-              <span className="metric_value">{overview_stats.covered_syndromes}</span>
-            </article>
-            <article className="metric_card">
-              <span className="metric_label">收藏题目</span>
-              <span className="metric_value">{bookmarks.length}</span>
-            </article>
           </div>
 
+          {/* ═══ 6. 成就勋章墙（折叠态） ═══ */}
           <article className="card">
-            <h2 className="card_title">快捷训练</h2>
-            <div className="quick_actions">
+            <div className="card_title_row">
+              <h2 className="card_title">成就勋章墙</h2>
               <button
-                className="quick_btn quick_btn_random"
-                onClick={() => startRandomSession(50)}
-                disabled={!dataset_bundle || is_initializing}
+                className="goal_edit_toggle"
+                onClick={() => setAchievementWallExpanded((v) => !v)}
               >
-                随机刷题
-              </button>
-              <button className="quick_btn quick_btn_disease" onClick={() => navigateTab('library')} disabled={is_exam_running}>
-                按病种练习
-              </button>
-              <button
-                className="quick_btn quick_btn_focus"
-                onClick={() => startRandomSession(50, ['Q1'])}
-                disabled={!dataset_bundle || is_initializing}
-              >
-                Q1 专项突破
-              </button>
-              <button
-                className="quick_btn quick_btn_mcq_exam"
-                onClick={startMcqExamSession}
-                disabled={!dataset_bundle || is_initializing}
-              >
-                模拟考试（选择题 · 50题 / 50分钟）
-              </button>
-              <button
-                className="quick_btn quick_btn_exam"
-                onClick={startCaseExamSession}
-                disabled={!dataset_bundle || is_initializing}
-              >
-                模拟考试（病案论述 · 2题 / 60分钟）
-              </button>
-              <button
-                className="quick_btn quick_btn_recommend"
-                onClick={startSmartRecommendationSession}
-                disabled={!dataset_bundle || is_initializing}
-              >
-                智能推荐训练
-              </button>
-              <button
-                className="quick_btn quick_btn_exam"
-                onClick={startWrongReviewSession}
-                disabled={!dataset_bundle || is_initializing || wrong_records.length === 0}
-              >
-                错题重练（{wrong_records.length}题）
-              </button>
-              <button
-                className="quick_btn quick_btn_bookmark"
-                onClick={startBookmarkReviewSession}
-                disabled={bookmarks.length === 0}
-              >
-                收藏题练习（{bookmarks.length}题）
+                {achievement_wall_expanded ? '收起' : `全部 ${achievement_progress_items.length} 枚`}
               </button>
             </div>
-          </article>
-
-          <article className="card">
-            <h2 className="card_title">最近练习病种</h2>
-            {recent_practice_rows.length === 0 ? (
-              <p className="hint_text">暂无最近练习记录。</p>
-            ) : (
-              <div className="recent_row">
-                {recent_practice_rows.map((item) => (
-                  <button
-                    key={item.disease_id}
-                    className="recent_card"
-                    onClick={() => startDiseaseSession(item.disease_id, item.syndrome_count)}
-                  >
-                    <span className="recent_name">{item.disease_name}</span>
-                    <span className="recent_meta">覆盖 {item.progress}% · 正确率 {item.accuracy}%</span>
-                    <span className="recent_time">{new Date(item.last_time).toLocaleDateString()}</span>
-                  </button>
-                ))}
-              </div>
-            )}
-          </article>
-
-          <article className="card">
-            <h2 className="card_title">薄弱题型提醒</h2>
-            <div className="weak_list">
-              {weak_types.length ? (
-                weak_types.map((item) => (
-                  <div key={item.question_type} className="weak_item">
-                    <span>{item.question_type} · {item.accuracy}%</span>
-                    <button className="review_retry_btn" onClick={() => startWeakTypeSession(item.question_type)}>
-                      专项练习
-                    </button>
+            <div className="achievement_wall">
+              {(achievement_wall_expanded
+                ? achievement_progress_items
+                : achievement_progress_items
+                    .slice()
+                    .sort((a, b) => {
+                      if (a.unlocked !== b.unlocked) return a.unlocked ? -1 : 1
+                      return b.percent - a.percent
+                    })
+                    .slice(0, 3)
+              ).map((item) => (
+                <div key={item.id} className={item.unlocked ? 'achievement_badge' : 'achievement_badge achievement_badge_locked'}>
+                  <strong>{item.title}{item.unlocked ? ' · 已解锁' : ''}</strong>
+                  <span>{item.description}</span>
+                  <p className="achievement_progress_text">{item.progress_text}</p>
+                  <div className="achievement_progress_track">
+                    <div className="achievement_progress_fill" style={{ width: `${item.percent}%` }} />
                   </div>
-                ))
-              ) : (
-                <p className="hint_text">暂无低于 60% 的题型，继续保持。</p>
-              )}
+                </div>
+              ))}
             </div>
           </article>
 
-          {spaced_due_items.length > 0 && (
-            <article className="card">
-              <h2 className="card_title">间隔复习提醒</h2>
-              <p className="hint_text">有 {spaced_due_items.length} 组题目超过 3 天未复习，建议现在巩固。</p>
-              <div className="action_row">
-                <button className="primary_btn" onClick={startSpacedReviewSession}>
-                  开始间隔复习
-                </button>
-              </div>
-            </article>
-          )}
-
+          {/* ═══ 7. 分享按钮 ═══ */}
           {records.length > 0 && (
             <button
               className="quick_btn quick_btn_random full_btn"
@@ -1343,44 +1869,47 @@ function App() {
             </div>
           </article>
 
-          {library_rows.map((item) => (
-            <article key={item.disease_id} className="disease_card">
-              <div className="disease_header">
-                <div>
-                  <h3>{item.disease_name}</h3>
-                  <div className="disease_meta">
+          <article className="card disease_list_card">
+            {library_rows.map((item) => (
+              <div key={item.disease_id} className="disease_row">
+                <div className="disease_row_left">
+                  <h3 className="disease_row_title">{item.disease_name}</h3>
+                  <div className="disease_row_meta">
                     <span className={categoryClass(item.category)}>{item.category}</span>
                     <span>{item.syndrome_count} 证型</span>
                   </div>
                 </div>
-                <span className={diseaseStatus(item).class_name}>{diseaseStatus(item).text}</span>
-                <button
-                  className="start_btn"
-                  onClick={() => startDiseaseSession(item.disease_id, item.syndrome_count)}
-                  disabled={!dataset_bundle || is_initializing}
-                >
-                  选择题
-                </button>
-                <button
-                  className="start_btn start_btn_case"
-                  onClick={() => startCasePracticeByDisease(item.disease_id)}
-                  disabled={!dataset_bundle || is_initializing}
-                >
-                  病案题
-                </button>
+                <div className="disease_row_mid">
+                  <div className="disease_inline_progress">
+                    <div
+                      className={item.total > 0 && item.accuracy < 60 ? 'progress_fill progress_fill_weak' : 'progress_fill'}
+                      style={{ width: `${item.progress}%` }}
+                    />
+                  </div>
+                  <span className="disease_row_accuracy">{item.accuracy}%</span>
+                </div>
+                <div className="disease_row_right">
+                  <span className={diseaseStatus(item).class_name}>{diseaseStatus(item).text}</span>
+                  <div className="disease_row_actions">
+                    <button
+                      className="start_btn start_btn_compact"
+                      onClick={() => startDiseaseSession(item.disease_id, item.syndrome_count)}
+                      disabled={!dataset_bundle || is_initializing}
+                    >
+                      选择题
+                    </button>
+                    <button
+                      className="start_btn start_btn_case start_btn_compact"
+                      onClick={() => startCasePracticeByDisease(item.disease_id)}
+                      disabled={!dataset_bundle || is_initializing}
+                    >
+                      病案题
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="progress_row">
-                <span>覆盖度 {item.progress}%</span>
-                <span>正确率 {item.accuracy}%</span>
-              </div>
-              <div className="progress_track">
-                <div
-                  className={item.total > 0 && item.accuracy < 60 ? 'progress_fill progress_fill_weak' : 'progress_fill'}
-                  style={{ width: `${item.progress}%` }}
-                />
-              </div>
-            </article>
-          ))}
+            ))}
+          </article>
         </section>
       )}
 
@@ -1916,6 +2445,23 @@ function App() {
                     <p className="analysis_title">完整证候</p>
                     <p>{current_question.explanation.full_symptoms}</p>
                   </div>
+                  <div className="analysis_block">
+                    <p className="analysis_title">学习笔记</p>
+                    <textarea
+                      className="case_input"
+                      placeholder="记录本题易错点、辨证思路..."
+                      value={note_input_text}
+                      onChange={(event) => setNoteInputText(event.target.value)}
+                    />
+                    <div className="action_row">
+                      <button className="secondary_btn" onClick={() => void saveQuestionNote()}>
+                        保存本题笔记
+                      </button>
+                      <button className="secondary_btn" onClick={() => void saveSyndromeNote(current_question.syndrome_id)}>
+                        保存证型笔记
+                      </button>
+                    </div>
+                  </div>
                   <button className="primary_btn full_btn" onClick={nextQuestion}>
                     {current_index + 1 >= questions.length ? '完成本轮练习' : '下一题'}
                   </button>
@@ -1943,105 +2489,183 @@ function App() {
       {tab === 'review' && (
         <section className="panel">
           <article className="card">
-            <h2 className="card_title">错题记录（{wrong_records.length}）</h2>
-            <div className="review_filter_row">
-              <select
-                className="sort_select"
-                value={review_type_filter}
-                onChange={(event) => setReviewTypeFilter(event.target.value as typeof review_type_filter)}
-              >
-                <option value="全部">全部题型</option>
-                <option value="Q1">Q1</option>
-                <option value="Q2">Q2</option>
-                <option value="Q3">Q3</option>
-                <option value="Q4">Q4</option>
-                <option value="Q5">Q5</option>
-                <option value="Q6">Q6</option>
-              </select>
-              <select
-                className="sort_select"
-                value={review_disease_filter}
-                onChange={(event) => setReviewDiseaseFilter(event.target.value)}
-              >
-                <option value="全部">全部病种</option>
-                {diseases.map((disease) => (
-                  <option key={disease.disease_id} value={disease.disease_id}>
-                    {disease.disease_name}
-                  </option>
-                ))}
-              </select>
+            <div className="card_title_row">
+              <h2 className="card_title">复盘中心</h2>
             </div>
-            {review_filtered_items.length === 0 ? (
-              <p className="hint_text">暂无错题。</p>
-            ) : (
-              review_filtered_items.map((item) => (
-                <div key={item.id} className="review_item_card">
-                  <div className="review_item_head">
-                    <span>{item.disease_name}</span>
-                    <span className="review_type_chip">{item.question_type}</span>
-                  </div>
-                  <p className="review_item_text">{item.user_answer || '超时未作答'}</p>
-                  <div className="review_item_footer">
-                    <p className="review_item_time">{new Date(item.timestamp).toLocaleString()}</p>
-                    <button className="review_retry_btn" onClick={() => retrainWrongItem(item)}>
-                      换题型重练
-                    </button>
-                  </div>
-                </div>
-              ))
-            )}
-          </article>
-          <article className="card">
-            <h2 className="card_title">收藏夹（{bookmarks.length}）</h2>
-            {bookmarks.length === 0 ? (
-              <p className="hint_text">暂无收藏题。</p>
-            ) : (
-              <div className="button_group">
-                {bookmarks.map((item) => (
+            <div className="review_sub_tabs">
+              <button
+                className={review_sub_tab === 'wrong' ? 'review_sub_tab_btn active' : 'review_sub_tab_btn'}
+                onClick={() => setReviewSubTab('wrong')}
+              >
+                错题（{wrong_records.length}）
+              </button>
+              <button
+                className={review_sub_tab === 'pattern' ? 'review_sub_tab_btn active' : 'review_sub_tab_btn'}
+                onClick={() => setReviewSubTab('pattern')}
+              >
+                模式分析
+              </button>
+              <button
+                className={review_sub_tab === 'bookmarks' ? 'review_sub_tab_btn active' : 'review_sub_tab_btn'}
+                onClick={() => setReviewSubTab('bookmarks')}
+              >
+                收藏（{bookmarks.length}）
+              </button>
+              <button
+                className={review_sub_tab === 'cases' ? 'review_sub_tab_btn active' : 'review_sub_tab_btn'}
+                onClick={() => setReviewSubTab('cases')}
+              >
+                病案（{case_answer_records.length}）
+              </button>
+            </div>
+            {review_sub_tab === 'wrong' && (
+              <>
+                <div className="action_row">
                   <button
-                    key={item.id}
-                    className="bookmark_btn"
-                    onClick={() => {
-                      startSession([item.question_snapshot])
-                    }}
+                    className="secondary_btn"
+                    onClick={clearMasteredWrongItems}
+                    disabled={mastered_wrong_items.length === 0}
                   >
-                    <span>{item.question_snapshot.question_type}</span>
-                    <span>{item.question_snapshot.explanation.correct_answer}</span>
+                    批量移除已掌握（{mastered_wrong_items.length}）
                   </button>
-                ))}
-              </div>
+                </div>
+                <div className="review_filter_row">
+                  <select
+                    className="sort_select"
+                    value={review_type_filter}
+                    onChange={(event) => setReviewTypeFilter(event.target.value as typeof review_type_filter)}
+                  >
+                    <option value="全部">全部题型</option>
+                    <option value="Q1">Q1</option>
+                    <option value="Q2">Q2</option>
+                    <option value="Q3">Q3</option>
+                    <option value="Q4">Q4</option>
+                    <option value="Q5">Q5</option>
+                    <option value="Q6">Q6</option>
+                  </select>
+                  <select
+                    className="sort_select"
+                    value={review_disease_filter}
+                    onChange={(event) => setReviewDiseaseFilter(event.target.value)}
+                  >
+                    <option value="全部">全部病种</option>
+                    {diseases.map((disease) => (
+                      <option key={disease.disease_id} value={disease.disease_id}>
+                        {disease.disease_name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {review_filtered_items.length === 0 ? (
+                  <p className="hint_text">暂无错题。</p>
+                ) : (
+                  review_filtered_items.map((item) => (
+                    <div key={item.id} className="review_item_card">
+                      <div className="review_item_head">
+                        <span>{item.disease_name}</span>
+                        <span className="review_type_chip">{item.question_type}</span>
+                      </div>
+                      <p className="review_item_text">{item.user_answer || '超时未作答'}</p>
+                      <div className="review_item_footer">
+                        <p className="review_item_time">{new Date(item.timestamp).toLocaleString()}</p>
+                        <div className="review_action_group">
+                          <span className="review_progress_chip">
+                            连续答对 {(item.mastered_streak ?? 0)}/{WRONG_MASTERED_TARGET}
+                          </span>
+                          <button className="review_retry_btn" onClick={() => void saveSyndromeNote(item.syndrome_id)}>
+                            记笔记
+                          </button>
+                          <button className="review_retry_btn" onClick={() => retrainWrongItem(item)}>
+                            换题型重练
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+                <div ref={review_load_more_ref} className="review_load_more_hint">
+                  {review_filtered_items.length < wrong_records.length ? '下滑自动加载更多...' : ''}
+                </div>
+              </>
             )}
-          </article>
-
-          <article className="card">
-            <h2 className="card_title">病案作答记录（{case_answer_records.length}）</h2>
-            {case_answer_records.length === 0 ? (
-              <p className="hint_text">暂无病案作答记录。</p>
-            ) : (
-              <div className="case_history_list">
-                {case_answer_records.slice(0, 20).map((item) => (
-                  <div key={item.id} className="case_history_item">
-                    <div className="review_item_head">
-                      <span>{disease_name_by_id.get(item.disease_id) ?? '未知病种'}</span>
-                      <span className={`case_rating_tag case_rating_${item.self_rating}`}>
-                        {item.self_rating === 'mastered' ? '掌握' : item.self_rating === 'partial' ? '部分掌握' : '未掌握'}
-                      </span>
-                    </div>
-                    <p className="review_item_text">诊断：{item.diagnosis_text || '未填写'}</p>
-                    <p className="review_item_text">治法：{item.treatment_text || '未填写'}</p>
-                    <div className="review_item_footer">
-                      <p className="review_item_time">{new Date(item.timestamp).toLocaleString()}</p>
-                      <button
-                        className="review_retry_btn"
-                        onClick={() => startCasePracticeByDisease(item.disease_id)}
-                        disabled={!dataset_bundle || is_initializing}
-                      >
-                        再练病案
-                      </button>
-                    </div>
+            {review_sub_tab === 'pattern' && (
+              <>
+                <h3 className="analysis_title">错误模式分析</h3>
+                <div className="record_item"><span>题型</span><span>错误率</span><span>样本量</span></div>
+                {error_pattern_by_type.map((item) => (
+                  <div key={item.question_type} className="record_item">
+                    <span>{item.question_type}（{QUESTION_TYPE_HINTS[item.question_type]}）</span>
+                    <span>{item.wrong_rate}%</span>
+                    <span>{item.total}</span>
                   </div>
                 ))}
-              </div>
+                <h3 className="analysis_title">高风险病种</h3>
+                {error_pattern_top_disease.length === 0 ? (
+                  <p className="hint_text">样本不足，继续练习后可查看。</p>
+                ) : (
+                  error_pattern_top_disease.map((item) => (
+                    <div key={item.disease_id} className="record_item">
+                      <span>{item.disease_name}</span>
+                      <span>{item.wrong_rate}%</span>
+                      <span>{item.total}题</span>
+                    </div>
+                  ))
+                )}
+              </>
+            )}
+            {review_sub_tab === 'bookmarks' && (
+              <>
+                {bookmarks.length === 0 ? (
+                  <p className="hint_text">暂无收藏题。</p>
+                ) : (
+                  <div className="button_group">
+                    {bookmarks.map((item) => (
+                      <button
+                        key={item.id}
+                        className="bookmark_btn"
+                        onClick={() => {
+                          startSession([item.question_snapshot])
+                        }}
+                      >
+                        <span>{item.question_snapshot.question_type}</span>
+                        <span>{item.question_snapshot.explanation.correct_answer}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+            {review_sub_tab === 'cases' && (
+              <>
+                {case_answer_records.length === 0 ? (
+                  <p className="hint_text">暂无病案作答记录。</p>
+                ) : (
+                  <div className="case_history_list">
+                    {case_answer_records.slice(0, 20).map((item) => (
+                      <div key={item.id} className="case_history_item">
+                        <div className="review_item_head">
+                          <span>{disease_name_by_id.get(item.disease_id) ?? '未知病种'}</span>
+                          <span className={`case_rating_tag case_rating_${item.self_rating}`}>
+                            {item.self_rating === 'mastered' ? '掌握' : item.self_rating === 'partial' ? '部分掌握' : '未掌握'}
+                          </span>
+                        </div>
+                        <p className="review_item_text">诊断：{item.diagnosis_text || '未填写'}</p>
+                        <p className="review_item_text">治法：{item.treatment_text || '未填写'}</p>
+                        <div className="review_item_footer">
+                          <p className="review_item_time">{new Date(item.timestamp).toLocaleString()}</p>
+                          <button
+                            className="review_retry_btn"
+                            onClick={() => startCasePracticeByDisease(item.disease_id)}
+                            disabled={!dataset_bundle || is_initializing}
+                          >
+                            再练病案
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </article>
         </section>
@@ -2093,20 +2717,31 @@ function App() {
                 </span>
               ))}
             </div>
+            <p className="hint_text trend_summary_line">
+              连续 {streak_days} 天 · 最长连续 {longest_streak_days} 天 · 本月累计 {monthly_stats} 题
+            </p>
           </article>
 
           <article className="card">
             <h2 className="card_title">按病种正确率</h2>
-            {disease_accuracy.map((item) => (
+            {stats_disease_rows.map((item) => (
               <div key={item.disease_id} className="record_item">
                 <span>{item.disease_name}</span>
                 <span>{item.accuracy}%</span>
                 <span>{item.total}题</span>
               </div>
             ))}
+            {disease_accuracy.length > 10 && (
+              <button
+                className="secondary_btn stats_expand_btn"
+                onClick={() => setStatsDiseaseExpanded((value) => !value)}
+              >
+                {stats_disease_expanded ? '收起病种列表' : `查看全部 ${disease_accuracy.length} 个病种`}
+              </button>
+            )}
           </article>
           <article className="card">
-            <h2 className="card_title">按题型正确率</h2>
+            <h2 className="card_title">题型与薄弱病种</h2>
             {type_stats.map((item) => (
               <div key={item.question_type} className="record_item">
                 <span>{item.question_type}</span>
@@ -2114,10 +2749,7 @@ function App() {
                 <span>{item.total}题</span>
               </div>
             ))}
-          </article>
-
-          <article className="card">
-            <h2 className="card_title">薄弱病种 Top3</h2>
+            <h3 className="analysis_title">薄弱病种 Top3</h3>
             {weak_disease_top3.length === 0 ? (
               <p className="hint_text">暂无低于 60% 的病种。</p>
             ) : (
@@ -2135,6 +2767,36 @@ function App() {
                   </button>
                 </div>
               ))
+            )}
+          </article>
+        </section>
+      )}
+
+      {tab === 'notes' && (
+        <section className="panel">
+          <article className="card">
+            <h2 className="card_title">学习笔记（{notes.length}）</h2>
+            <input
+              className="search_input"
+              placeholder="搜索笔记内容"
+              value={notes_search_text}
+              onChange={(event) => setNotesSearchText(event.target.value)}
+            />
+            {notes_filtered_items.length === 0 ? (
+              <p className="hint_text">暂无匹配笔记。</p>
+            ) : (
+              <div className="button_group">
+                {notes_filtered_items.map((item) => (
+                  <div key={item.id} className="review_item_card">
+                    <div className="review_item_head">
+                      <span>{item.target_type === 'question' ? '题目笔记' : '证型笔记'}</span>
+                      <span className="review_type_chip">{item.target_id}</span>
+                    </div>
+                    <p className="review_item_text">{item.content}</p>
+                    <p className="review_item_time">{new Date(item.timestamp).toLocaleString()}</p>
+                  </div>
+                ))}
+              </div>
             )}
           </article>
         </section>
@@ -2171,6 +2833,13 @@ function App() {
           disabled={is_exam_running}
         >
           统计
+        </button>
+        <button
+          className={tab === 'notes' ? 'nav_btn active' : 'nav_btn'}
+          onClick={() => navigateTab('notes')}
+          disabled={is_exam_running}
+        >
+          笔记
         </button>
       </nav>
 

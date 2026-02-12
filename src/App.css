@@ -71,7 +71,7 @@
 .panel {
   margin-top: 12px;
   display: grid;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
 }
 
@@ -113,19 +113,132 @@
   color: #5e544d;
 }
 
-.hero_button {
-  min-height: 44px;
+.hero_text {
+  flex: 1;
+  min-width: 0;
+}
+
+.goal_edit_toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  margin-top: 6px;
+  border-radius: 999px;
+  border: 1px solid #fbd3dc;
+  background: rgb(255 255 255 / 70%);
+  color: #d63369;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0 12px;
+}
+
+.goal_edit_card {
+  padding: 12px 14px;
+}
+
+.goal_edit_card .goal_form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.card_title_row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card_title_row .card_title {
+  margin-bottom: 0;
+}
+
+.nudge_banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
   border-radius: 14px;
-  border: 1px solid #ff8fab;
-  background: #ff8fab;
+  border-left: 4px solid;
+}
+
+.nudge_banner_text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.nudge_banner_text strong {
+  font-size: 14px;
+}
+
+.nudge_banner_text span {
+  font-size: 12px;
+  color: #6b615b;
+}
+
+.nudge_banner_btn {
+  min-height: 34px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0 14px;
+  white-space: nowrap;
+}
+
+.nudge_banner_spaced {
+  background: #f0fdf4;
+  border-left-color: #22c55e;
+}
+
+.nudge_banner_spaced strong {
+  color: #127449;
+}
+
+.nudge_banner_spaced .nudge_banner_btn {
+  background: #22c55e;
   color: #fff;
+}
+
+.nudge_banner_weak {
+  background: #fff5f7;
+  border-left-color: #ff7f9d;
+}
+
+.nudge_banner_weak strong {
+  color: #9f274f;
+}
+
+.nudge_banner_weak .nudge_banner_btn {
+  background: #ff7f9d;
+  color: #fff;
+}
+
+.quick_actions_primary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.quick_actions_secondary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.quick_btn_large {
+  min-height: 56px;
+  font-size: 15px;
   font-weight: 800;
-  padding: 0 16px;
+  border-radius: 16px;
+  text-align: center;
 }
 
 .metric_grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
@@ -155,14 +268,14 @@
   background: #fff;
   border: 1px solid #f3e6e0;
   border-radius: 20px;
-  padding: 14px;
+  padding: 12px;
   box-shadow: 0 4px 18px -10px rgb(35 24 12 / 14%);
   min-width: 0;
   overflow: hidden;
 }
 
 .card_title {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-size: 18px;
   font-weight: 800;
   color: #403833;
@@ -355,35 +468,119 @@
   color: #fff;
 }
 
-.disease_card {
-  background: #fff;
-  border: 1px solid #f3e7e1;
-  border-radius: 18px;
-  padding: 14px;
+.disease_list_card {
+  padding: 0;
 }
 
-.disease_header {
+.disease_row {
   display: flex;
   justify-content: space-between;
-  align-items: start;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.disease_header h3 {
-  margin: 0;
-  font-size: 20px;
-  color: #3e3631;
-}
-
-.disease_meta {
-  margin-top: 6px;
-  display: flex;
-  gap: 8px;
   align-items: center;
-  font-size: 12px;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f3e7e1;
+}
+
+.disease_row:last-child {
+  border-bottom: 0;
+}
+
+.disease_row:hover {
+  background: #fff7f4;
+}
+
+.disease_row_title {
+  margin: 0;
+  font-size: 15px;
+  color: #3e3631;
+  line-height: 1.4;
+}
+
+.disease_row_left {
+  min-width: 0;
+  flex: 1.2;
+  display: grid;
+  gap: 4px;
+}
+
+.disease_row_meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 11px;
   color: #7f756f;
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.disease_row_mid {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+  flex: 0.9;
+}
+
+.disease_inline_progress {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: #f4ece8;
+  overflow: hidden;
+}
+
+.disease_row_accuracy {
+  font-size: 12px;
+  color: #6f645f;
+  font-weight: 700;
+  min-width: 38px;
+}
+
+.disease_row_right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.disease_row_actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.start_btn_compact {
+  min-height: 30px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.review_sub_tabs {
+  margin-bottom: 10px;
+  display: inline-grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 6px;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid #eadfd8;
+  background: #fbf4f0;
+}
+
+.review_sub_tab_btn {
+  min-height: 32px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #746862;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 0 10px;
+}
+
+.review_sub_tab_btn.active {
+  background: #fff;
+  border-color: #f0e2db;
+  color: #4c433e;
 }
 
 .cat {
@@ -789,7 +986,7 @@ button:disabled {
   grid-template-columns: 1fr auto auto;
   gap: 8px;
   font-size: 13px;
-  padding: 8px 0;
+  padding: 6px 0;
   border-bottom: 1px dashed #eee0d9;
   color: #6b5f59;
 }
@@ -827,7 +1024,7 @@ button:disabled {
 .review_item_card {
   border: 1px solid #f3e7e1;
   border-radius: 14px;
-  padding: 10px 12px;
+  padding: 8px 10px;
   background: #fff;
 }
 
@@ -889,7 +1086,7 @@ button:disabled {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
-  height: 150px;
+  height: 120px;
   align-items: end;
 }
 
@@ -928,12 +1125,20 @@ button:disabled {
 
 .trend_bar_wrap {
   width: 100%;
-  height: 98px;
+  height: 76px;
   border-radius: 10px;
   background: #f6ede9;
   display: flex;
   align-items: end;
   overflow: hidden;
+}
+
+.trend_summary_line {
+  margin-top: 8px;
+}
+
+.stats_expand_btn {
+  margin-top: 8px;
 }
 
 .trend_bar {
@@ -1029,10 +1234,146 @@ button:disabled {
   backdrop-filter: blur(8px);
   border-top: 1px solid #f4e7df;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 4px;
   padding: 8px 10px calc(10px + env(safe-area-inset-bottom, 0));
   z-index: 40;
+}
+
+.celebration_toast {
+  margin-top: 10px;
+  background: #fff7d8;
+  border: 1px solid #f3dc8f;
+  color: #8a5a00;
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 700;
+}
+
+.goal_card_row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.goal_ring {
+  width: 112px;
+  height: 112px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+}
+
+.goal_ring_inner {
+  width: 86px;
+  height: 86px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #f3e6e0;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  color: #8a7a70;
+}
+
+.goal_ring_inner strong {
+  font-size: 18px;
+  color: #3d3530;
+}
+
+.goal_form {
+  flex: 1;
+  min-width: 240px;
+  display: grid;
+  gap: 8px;
+}
+
+.goal_form label {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: #7a6f67;
+  font-weight: 700;
+}
+
+.achievement_wall {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.achievement_badge {
+  border: 1px solid #f5d4df;
+  border-radius: 12px;
+  background: #fff5f8;
+  padding: 10px;
+  display: grid;
+  gap: 4px;
+}
+
+.achievement_badge strong {
+  color: #a4264f;
+}
+
+.achievement_badge span {
+  font-size: 12px;
+  color: #7a6f67;
+}
+
+.achievement_badge_locked {
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+}
+
+.achievement_badge_locked strong,
+.achievement_badge_locked span {
+  color: #9a9a9a;
+}
+
+.achievement_progress_text {
+  margin: 0;
+  font-size: 12px;
+  color: #7a6f67;
+  font-weight: 600;
+}
+
+.achievement_progress_track {
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: #e9dfe3;
+  overflow: hidden;
+}
+
+.achievement_progress_fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff8fab 0%, #d63369 100%);
+}
+
+.review_action_group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.review_progress_chip {
+  border-radius: 999px;
+  border: 1px solid #d9cef8;
+  background: #f7f2ff;
+  color: #5f48b0;
+  font-size: 12px;
+  padding: 3px 8px;
+  font-weight: 700;
+}
+
+.review_load_more_hint {
+  text-align: center;
+  color: #9c9088;
+  font-size: 12px;
+  margin-top: 10px;
 }
 
 .nav_btn {
@@ -1060,12 +1401,16 @@ button:disabled {
 }
 
 @media (min-width: 768px) {
-  .quick_actions {
-    grid-template-columns: repeat(4, 1fr);
+  .quick_actions_secondary {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .analysis_grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .goal_edit_card .goal_form {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1081,18 +1426,33 @@ button:disabled {
   .hero_card {
     flex-direction: column;
     align-items: stretch;
+    text-align: center;
   }
 
-  .hero_button {
-    width: 100%;
+  .hero_card .goal_ring {
+    margin: 0 auto;
   }
 
-  .metric_grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .hero_card .goal_edit_toggle {
+    margin: 6px auto 0;
   }
 
-  .metric_card:last-child {
-    grid-column: 1 / -1;
+  .quick_actions_primary {
+    grid-template-columns: 1fr;
+  }
+
+  .quick_actions_secondary {
+    grid-template-columns: 1fr;
+  }
+
+  .goal_edit_card .goal_form {
+    grid-template-columns: 1fr;
+  }
+
+  .nudge_banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
   }
 
   .action_row {
@@ -1168,6 +1528,32 @@ button:disabled {
 
   .review_filter_row {
     grid-template-columns: 1fr;
+  }
+
+  .review_sub_tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .disease_row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    align-items: start;
+  }
+
+  .disease_row_mid {
+    min-width: 0;
+  }
+
+  .disease_row_right {
+    justify-content: space-between;
+  }
+
+  .disease_row_actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
   }
 
   .trend_grid {
@@ -1684,7 +2070,7 @@ button:disabled {
 :root[data-theme='dark'] .analysis_block,
 :root[data-theme='dark'] .exam_answer_item,
 :root[data-theme='dark'] .review_item_card,
-:root[data-theme='dark'] .disease_card,
+:root[data-theme='dark'] .disease_list_card,
 :root[data-theme='dark'] .case_user_answer_card,
 :root[data-theme='dark'] .case_history_item,
 :root[data-theme='dark'] .case_review_item,
@@ -1713,7 +2099,7 @@ button:disabled {
 :root[data-theme='dark'] .review_item_head,
 :root[data-theme='dark'] .top3_name,
 :root[data-theme='dark'] .case_answer_value,
-:root[data-theme='dark'] .disease_header h3,
+:root[data-theme='dark'] .disease_row_title,
 :root[data-theme='dark'] .recent_name,
 :root[data-theme='dark'] .case_review_title,
 :root[data-theme='dark'] .case_key_list {
@@ -1737,8 +2123,8 @@ button:disabled {
 :root[data-theme='dark'] .case_input_label,
 :root[data-theme='dark'] .recent_meta,
 :root[data-theme='dark'] .recent_time,
-:root[data-theme='dark'] .disease_meta,
-:root[data-theme='dark'] .progress_row,
+:root[data-theme='dark'] .disease_row_meta,
+:root[data-theme='dark'] .disease_row_accuracy,
 :root[data-theme='dark'] .analysis_title,
 :root[data-theme='dark'] .exam_answer_title,
 :root[data-theme='dark'] .exam_answer_text,
@@ -2002,6 +2388,33 @@ button:disabled {
   border-bottom-color: #4a3e39;
 }
 
+:root[data-theme='dark'] .disease_row {
+  border-bottom-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .disease_row:hover {
+  background: #322925;
+}
+
+:root[data-theme='dark'] .disease_inline_progress {
+  background: #3a312c;
+}
+
+:root[data-theme='dark'] .review_sub_tabs {
+  border-color: #4a3e39;
+  background: #312824;
+}
+
+:root[data-theme='dark'] .review_sub_tab_btn {
+  color: #c9b8ae;
+}
+
+:root[data-theme='dark'] .review_sub_tab_btn.active {
+  background: #2a221f;
+  border-color: #4a3e39;
+  color: #f3e7df;
+}
+
 /* ── 答题反馈 ── */
 
 :root[data-theme='dark'] .result_ok {
@@ -2182,8 +2595,97 @@ button:disabled {
   color: #c4b5fd;
 }
 
+:root[data-theme='dark'] .achievement_badge {
+  background: #3a2230;
+  border-color: #5b3a4a;
+}
+
+:root[data-theme='dark'] .achievement_badge strong {
+  color: #ff9bb6;
+}
+
+:root[data-theme='dark'] .achievement_badge span,
+:root[data-theme='dark'] .achievement_progress_text {
+  color: #c9b8ae;
+}
+
+:root[data-theme='dark'] .achievement_badge_locked {
+  background: #2b2726;
+  border-color: #44403f;
+}
+
+:root[data-theme='dark'] .achievement_badge_locked strong,
+:root[data-theme='dark'] .achievement_badge_locked span,
+:root[data-theme='dark'] .achievement_badge_locked .achievement_progress_text {
+  color: #8b8380;
+}
+
+:root[data-theme='dark'] .achievement_progress_track {
+  background: #4a3e39;
+}
+
 :root[data-theme='dark'] .bookmark_btn span:first-child {
   opacity: 0.7;
+}
+
+/* ── 新增组件深色模式 ── */
+
+:root[data-theme='dark'] .goal_edit_toggle {
+  background: rgb(42 34 31 / 70%);
+  border-color: #5b3a4a;
+  color: #ff9bb6;
+}
+
+:root[data-theme='dark'] .goal_edit_card {
+  background: #2a221f;
+  border-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .nudge_banner_spaced {
+  background: #1a3326;
+  border-left-color: #22c55e;
+}
+
+:root[data-theme='dark'] .nudge_banner_spaced strong {
+  color: #6ee7a0;
+}
+
+:root[data-theme='dark'] .nudge_banner_spaced .nudge_banner_btn {
+  background: #22c55e;
+  color: #fff;
+}
+
+:root[data-theme='dark'] .nudge_banner_weak {
+  background: #3a2230;
+  border-left-color: #ff8fab;
+}
+
+:root[data-theme='dark'] .nudge_banner_weak strong {
+  color: #ff9bb6;
+}
+
+:root[data-theme='dark'] .nudge_banner_weak .nudge_banner_btn {
+  background: #ff8fab;
+  color: #fff;
+}
+
+:root[data-theme='dark'] .nudge_banner_text span {
+  color: #c9b8ae;
+}
+
+:root[data-theme='dark'] .card_title_row .goal_edit_toggle {
+  background: #3a312c;
+  border-color: #4a3e39;
+  color: #c9b8ae;
+}
+
+:root[data-theme='dark'] .goal_ring_inner {
+  background: #2a221f;
+  border-color: #4a3e39;
+}
+
+:root[data-theme='dark'] .goal_ring_inner strong {
+  color: #f3e7df;
 }
 
 /* ── hover 效果 ── */

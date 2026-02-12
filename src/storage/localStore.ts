@@ -1,4 +1,4 @@
-import type { AnswerRecord, Bookmark, CaseAnswerRecord } from '../types'
+import type { AnswerRecord, Bookmark, CaseAnswerRecord, NoteEntry } from '../types'
 import { db } from './db'
 
 const ANSWER_RECORDS_KEY = 'tcm_answer_records'
@@ -95,6 +95,21 @@ export async function saveCaseAnswerRecord(record: CaseAnswerRecord): Promise<vo
   await db.case_answer_records.put(record)
 }
 
+export async function getNotes(): Promise<NoteEntry[]> {
+  await initStorage()
+  return db.notes.orderBy('timestamp').reverse().toArray()
+}
+
+export async function saveNote(note: NoteEntry): Promise<void> {
+  await initStorage()
+  await db.notes.put(note)
+}
+
+export async function deleteNote(note_id: string): Promise<void> {
+  await initStorage()
+  await db.notes.delete(note_id)
+}
+
 export async function toggleBookmark(bookmark: Bookmark): Promise<void> {
   await initStorage()
   const normalized = toBookmarkWithQuestionId(bookmark)
@@ -104,4 +119,22 @@ export async function toggleBookmark(bookmark: Bookmark): Promise<void> {
     return
   }
   await db.bookmarks.put(normalized)
+}
+
+export async function setMetaJson<T>(key: string, value: T): Promise<void> {
+  await initStorage()
+  await db.meta.put({ key, value: JSON.stringify(value) })
+}
+
+export async function getMetaJson<T>(key: string, fallback: T): Promise<T> {
+  await initStorage()
+  const item = await db.meta.get(key)
+  if (!item) {
+    return fallback
+  }
+  try {
+    return JSON.parse(item.value) as T
+  } catch {
+    return fallback
+  }
 }

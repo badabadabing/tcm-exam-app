@@ -74,6 +74,12 @@ export interface AnswerRecord {
   is_correct: boolean
   timestamp: number
   duration_ms: number
+  easiness_factor?: number
+  interval?: number
+  repetition?: number
+  next_review_date?: number
+  wrong_streak?: number
+  mastered_streak?: number
 }
 
 export interface Bookmark {
@@ -133,4 +139,34 @@ export interface CaseExamSummary {
   finished_at: number
   cases: CaseQuestion[]
   ratings: Record<string, CaseSelfRating>
+}
+
+export interface LearningGoals {
+  daily_goal: number
+  weekly_goal?: number
+  monthly_goal?: number
+}
+
+export type AchievementId =
+  | 'first_practice'
+  | 'hundred_correct'
+  | 'disease_master'
+  | 'seven_day_streak'
+  | 'night_owl'
+
+export interface Achievement {
+  id: AchievementId
+  title: string
+  description: string
+  unlocked_at: number
+}
+
+export type NoteTargetType = 'question' | 'syndrome'
+
+export interface NoteEntry {
+  id: string
+  target_type: NoteTargetType
+  target_id: string
+  content: string
+  timestamp: number
 }
