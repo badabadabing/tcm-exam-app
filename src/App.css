@@ -250,6 +250,12 @@
   border-color: #fecdd3;
 }
 
+.quick_btn_bookmark {
+  background: #f7f4ff;
+  color: #5f48b0;
+  border-color: #e7defe;
+}
+
 .weak_list {
   display: grid;
   gap: 8px;

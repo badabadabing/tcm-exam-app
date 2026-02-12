@@ -7,7 +7,7 @@ import { getAnswerRecords, getBookmarks, saveAnswerRecord, toggleBookmark } from
 import type { AnswerRecord, Bookmark, CaseExamSummary, CaseQuestion, CaseSelfRating, Question, QuestionType } from './types'
 import ShareCard, { type ShareCardData } from './components/ShareCard'
 import { trackEvent, EVENTS } from './utils/analytics'
-import { pickOne, randomInt } from './utils/random'
+import { pickOne, randomInt, shuffle } from './utils/random'
 
 type Tab = 'dashboard' | 'library' | 'practice' | 'review' | 'stats'
 type SessionMode = 'practice' | 'exam' | 'case_exam' | 'case_practice'
@@ -905,6 +905,36 @@ function App() {
     startSession([question])
   }
 
+  function startWrongReviewSession() {
+    if (!dataset_bundle || wrong_records.length === 0) {
+      return
+    }
+    // 按 syndrome_id + question_type 去重
+    const seen = new Set<string>()
+    const unique: { syndrome_id: string; question_type: QuestionType }[] = []
+    for (const item of wrong_records) {
+      const key = `${item.syndrome_id}__${item.question_type}`
+      if (!seen.has(key)) {
+        seen.add(key)
+        unique.push({ syndrome_id: item.syndrome_id, question_type: item.question_type })
+      }
+    }
+    // 随机打乱后取最多 20 题
+    const picked = shuffle(unique).slice(0, 20)
+    const questions = picked.map((item) =>
+      generateQuestion(dataset_bundle, item.syndrome_id, item.question_type),
+    )
+    startSession(questions)
+  }
+
+  function startBookmarkReviewSession() {
+    if (bookmarks.length === 0) {
+      return
+    }
+    const snapshots = bookmarks.map((item) => item.question_snapshot)
+    startSession(shuffle(snapshots))
+  }
+
   function diseaseStatus(item: { progress: number; accuracy: number; total: number }): {
     text: string
     class_name: string
@@ -1037,6 +1067,20 @@ function App() {
                 disabled={!dataset_bundle || is_initializing}
               >
                 模拟考试（病案论述 · 2题 / 60分钟）
+              </button>
+              <button
+                className="quick_btn quick_btn_exam"
+                onClick={startWrongReviewSession}
+                disabled={!dataset_bundle || is_initializing || wrong_records.length === 0}
+              >
+                错题重练（{wrong_records.length}题）
+              </button>
+              <button
+                className="quick_btn quick_btn_bookmark"
+                onClick={startBookmarkReviewSession}
+                disabled={bookmarks.length === 0}
+              >
+                收藏题练习（{bookmarks.length}题）
               </button>
             </div>
           </article>
