@@ -8,13 +8,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['vite.svg'],
+      includeAssets: ['app-icon.svg', 'apple-touch-icon.png', 'pwa-192x192.png'],
       manifest: {
         name: '中医辨证练习',
         short_name: '中医练习',
         description: '中医辨证论治考试练习应用',
-        theme_color: '#4f46e5',
-        background_color: '#ffffff',
+        theme_color: '#d63369',
+        background_color: '#fff7f8',
         display: 'standalone',
         orientation: 'portrait',
         scope: '/',
@@ -22,7 +22,7 @@ export default defineConfig({
         icons: [
           { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
           { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },
-          { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: 'pwa-maskable-512x512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       workbox: {
