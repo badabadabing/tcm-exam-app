@@ -896,6 +896,37 @@ button:disabled {
   color: #b4233c;
 }
 
+.diagnosis_header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+}
+
+.diagnosis_label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #92400e;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: #fef3c7;
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+.diagnosis_text {
+  font-size: 15px;
+  font-weight: 700;
+  color: #78350f;
+  font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+  letter-spacing: 0.03em;
+}
+
 .analysis_block {
   background: #fff;
   border: 1px solid #f0e5df;
@@ -2073,6 +2104,21 @@ button:disabled {
 }
 
 /* ── 卡片容器统一 ── */
+
+:root[data-theme='dark'] .diagnosis_header {
+  background: linear-gradient(135deg, #2d2510 0%, #332b10 100%);
+  border-color: #5a4c18;
+}
+
+:root[data-theme='dark'] .diagnosis_label {
+  background: #332b10;
+  border-color: #5a4c18;
+  color: #e8c96a;
+}
+
+:root[data-theme='dark'] .diagnosis_text {
+  color: #f3d87a;
+}
 
 :root[data-theme='dark'] .card,
 :root[data-theme='dark'] .metric_card,

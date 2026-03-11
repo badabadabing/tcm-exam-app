@@ -5,11 +5,12 @@ import { fileURLToPath } from 'node:url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const data_dir = path.resolve(__dirname, '../src/data')
+const chat_preview_dir = path.resolve(__dirname, '../src/data/imports/chat_preview')
 
 function parseArgs(argv) {
   const args = {
-    diseasesPath: path.join(data_dir, 'diseases.json'),
-    syndromesPath: path.join(data_dir, 'syndromes.json'),
+    diseasesPath: path.join(chat_preview_dir, 'diseases.json'),
+    syndromesPath: path.join(chat_preview_dir, 'syndromes.json'),
   }
 
   for (let index = 0; index < argv.length; index += 1) {

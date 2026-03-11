@@ -45,6 +45,9 @@ export interface QuestionOption {
 }
 
 export interface Explanation {
+  disease_name: string
+  syndrome_name: string
+  diagnosis_text: string
   correct_answer: string
   key_symptom_analysis: string[]
   pathogenesis: string

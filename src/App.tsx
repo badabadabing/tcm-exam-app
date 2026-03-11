@@ -31,6 +31,8 @@ import type {
   QuestionType,
 } from './types'
 import ShareCard, { type ShareCardData } from './components/ShareCard'
+import BottomNav from './components/BottomNav'
+import McqExplanation from './views/McqExplanation'
 import { trackEvent, EVENTS } from './utils/analytics'
 import { pickOne, randomInt, shuffle } from './utils/random'
 
@@ -2406,63 +2408,16 @@ function App() {
               </article>
 
               {submitted && session_mode === 'practice' && (
-                <article className="card analysis">
-                  <h3 className={selected_index === current_question.correct_index ? 'result_ok' : 'result_bad'}>
-                    {selected_index === current_question.correct_index ? '作答正确' : '作答错误'}
-                  </h3>
-                  <div className="analysis_block">
-                    <p className="analysis_title">正确答案</p>
-                    <p>
-                      {current_question.options[current_question.correct_index].key}. {current_question.explanation.correct_answer}
-                    </p>
-                  </div>
-                  <div className="analysis_block">
-                    <p className="analysis_title">辨证要点</p>
-                    <ul>
-                      {current_question.explanation.key_symptom_analysis.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="analysis_block">
-                    <p className="analysis_title">证机概要</p>
-                    <p>{current_question.explanation.pathogenesis}</p>
-                  </div>
-                  <div className="analysis_grid">
-                    <div className="analysis_block">
-                      <p className="analysis_title">治法</p>
-                      <p>{current_question.explanation.treatment_method}</p>
-                    </div>
-                    <div className="analysis_block">
-                      <p className="analysis_title">方药</p>
-                      <p>{current_question.explanation.prescription}</p>
-                    </div>
-                  </div>
-                  <div className="analysis_block">
-                    <p className="analysis_title">完整证候</p>
-                    <p>{current_question.explanation.full_symptoms}</p>
-                  </div>
-                  <div className="analysis_block">
-                    <p className="analysis_title">学习笔记</p>
-                    <textarea
-                      className="case_input"
-                      placeholder="记录本题易错点、辨证思路..."
-                      value={note_input_text}
-                      onChange={(event) => setNoteInputText(event.target.value)}
-                    />
-                    <div className="action_row">
-                      <button className="secondary_btn" onClick={() => void saveQuestionNote()}>
-                        保存本题笔记
-                      </button>
-                      <button className="secondary_btn" onClick={() => void saveSyndromeNote(current_question.syndrome_id)}>
-                        保存证型笔记
-                      </button>
-                    </div>
-                  </div>
-                  <button className="primary_btn full_btn" onClick={nextQuestion}>
-                    {current_index + 1 >= questions.length ? '完成本轮练习' : '下一题'}
-                  </button>
-                </article>
+                <McqExplanation
+                  question={current_question}
+                  selected_index={selected_index ?? -1}
+                  is_last_question={current_index + 1 >= questions.length}
+                  note_input_text={note_input_text}
+                  onNoteChange={setNoteInputText}
+                  onSaveQuestionNote={() => void saveQuestionNote()}
+                  onSaveSyndromeNote={(sid) => void saveSyndromeNote(sid)}
+                  onNext={nextQuestion}
+                />
               )}
               {submitted && session_mode === 'exam' && (
                 <article className="card">
@@ -2799,46 +2754,7 @@ function App() {
         </section>
       )}
 
-      <nav className="bottom_nav">
-        <button
-          className={tab === 'dashboard' ? 'nav_btn active' : 'nav_btn'}
-          onClick={() => navigateTab('dashboard')}
-          disabled={is_exam_running}
-        >
-          首页
-        </button>
-        <button
-          className={tab === 'library' ? 'nav_btn active' : 'nav_btn'}
-          onClick={() => navigateTab('library')}
-          disabled={is_exam_running}
-        >
-          病种库
-        </button>
-        <button className={tab === 'practice' ? 'nav_btn active' : 'nav_btn'} onClick={() => navigateTab('practice')}>
-          答题
-        </button>
-        <button
-          className={tab === 'review' ? 'nav_btn active' : 'nav_btn'}
-          onClick={() => navigateTab('review')}
-          disabled={is_exam_running}
-        >
-          复盘
-        </button>
-        <button
-          className={tab === 'stats' ? 'nav_btn active' : 'nav_btn'}
-          onClick={() => navigateTab('stats')}
-          disabled={is_exam_running}
-        >
-          统计
-        </button>
-        <button
-          className={tab === 'notes' ? 'nav_btn active' : 'nav_btn'}
-          onClick={() => navigateTab('notes')}
-          disabled={is_exam_running}
-        >
-          笔记
-        </button>
-      </nav>
+      <BottomNav tab={tab} is_exam_running={is_exam_running} onNavigate={navigateTab} />
 
       {share_card_data && (
         <ShareCard
