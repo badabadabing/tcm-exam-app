@@ -4,6 +4,19 @@ import { db } from './db'
 const ANSWER_RECORDS_KEY = 'tcm_answer_records'
 const BOOKMARKS_KEY = 'tcm_bookmarks'
 const MIGRATION_META_KEY = 'local_storage_migrated_v1'
+const BACKUP_SCHEMA_VERSION = 1
+
+export interface LearningBackupPayload {
+  schema_version: number
+  exported_at: number
+  data: {
+    answer_records: AnswerRecord[]
+    bookmarks: Bookmark[]
+    case_answer_records: CaseAnswerRecord[]
+    notes: NoteEntry[]
+    meta: Array<{ key: string; value: string }>
+  }
+}
 
 let init_task: Promise<void> | null = null
 
@@ -23,6 +36,138 @@ function toBookmarkWithQuestionId(bookmark: Bookmark | Omit<Bookmark, 'question_
   return {
     ...bookmark,
     question_id: bookmark.question_snapshot.id,
+  }
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null
+}
+
+function isString(value: unknown): value is string {
+  return typeof value === 'string'
+}
+
+function isNumber(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value)
+}
+
+function isAnswerRecord(value: unknown): value is AnswerRecord {
+  if (!isObject(value)) {
+    return false
+  }
+  return (
+    isString(value.id)
+    && isString(value.question_id)
+    && isString(value.syndrome_id)
+    && isString(value.disease_id)
+    && isString(value.question_type)
+    && isString(value.user_answer)
+    && typeof value.is_correct === 'boolean'
+    && isNumber(value.timestamp)
+    && isNumber(value.duration_ms)
+  )
+}
+
+function isBookmark(value: unknown): value is Bookmark {
+  if (!isObject(value)) {
+    return false
+  }
+  return (
+    isString(value.id)
+    && isString(value.syndrome_id)
+    && isString(value.question_type)
+    && isNumber(value.created_at)
+    && isObject(value.question_snapshot)
+  )
+}
+
+function isCaseAnswerRecord(value: unknown): value is CaseAnswerRecord {
+  if (!isObject(value)) {
+    return false
+  }
+  return (
+    isString(value.id)
+    && isString(value.case_id)
+    && isString(value.syndrome_id)
+    && isString(value.disease_id)
+    && isString(value.self_rating)
+    && isString(value.diagnosis_text)
+    && isString(value.pathogenesis_text)
+    && isString(value.treatment_text)
+    && isString(value.prescription_text)
+    && isString(value.mode)
+    && isNumber(value.timestamp)
+  )
+}
+
+function isNoteEntry(value: unknown): value is NoteEntry {
+  if (!isObject(value)) {
+    return false
+  }
+  return (
+    isString(value.id)
+    && isString(value.target_type)
+    && isString(value.target_id)
+    && isString(value.content)
+    && isNumber(value.timestamp)
+  )
+}
+
+function isMetaEntry(value: unknown): value is { key: string; value: string } {
+  if (!isObject(value)) {
+    return false
+  }
+  return isString(value.key) && isString(value.value)
+}
+
+function parseBackupPayload(payload: unknown): LearningBackupPayload {
+  if (!isObject(payload)) {
+    throw new Error('备份文件不是有效 JSON 对象。')
+  }
+  if (payload.schema_version !== BACKUP_SCHEMA_VERSION) {
+    throw new Error('备份版本不受支持，请升级应用后再导入。')
+  }
+  if (!isNumber(payload.exported_at)) {
+    throw new Error('备份文件缺少导出时间。')
+  }
+  if (!isObject(payload.data)) {
+    throw new Error('备份文件缺少 data 节点。')
+  }
+
+  const {
+    answer_records,
+    bookmarks,
+    case_answer_records,
+    notes,
+    meta,
+  } = payload.data
+
+  if (!Array.isArray(answer_records) || !answer_records.every((item) => isAnswerRecord(item))) {
+    throw new Error('备份中的 answer_records 格式不正确。')
+  }
+  if (!Array.isArray(bookmarks) || !bookmarks.every((item) => isBookmark(item))) {
+    throw new Error('备份中的 bookmarks 格式不正确。')
+  }
+  if (!Array.isArray(case_answer_records) || !case_answer_records.every((item) => isCaseAnswerRecord(item))) {
+    throw new Error('备份中的 case_answer_records 格式不正确。')
+  }
+  if (!Array.isArray(notes) || !notes.every((item) => isNoteEntry(item))) {
+    throw new Error('备份中的 notes 格式不正确。')
+  }
+  if (!Array.isArray(meta) || !meta.every((item) => isMetaEntry(item))) {
+    throw new Error('备份中的 meta 格式不正确。')
+  }
+
+  return {
+    schema_version: BACKUP_SCHEMA_VERSION,
+    exported_at: payload.exported_at,
+    data: {
+      answer_records,
+      bookmarks: bookmarks.map((item) => toBookmarkWithQuestionId(item)),
+      case_answer_records,
+      notes,
+      meta,
+    },
   }
 }
 
@@ -137,4 +282,60 @@ export async function getMetaJson<T>(key: string, fallback: T): Promise<T> {
   } catch {
     return fallback
   }
+}
+
+export async function exportLearningBackup(): Promise<LearningBackupPayload> {
+  await initStorage()
+  const [answer_records, bookmarks, case_answer_records, notes, meta] = await Promise.all([
+    db.answer_records.toArray(),
+    db.bookmarks.toArray(),
+    db.case_answer_records.toArray(),
+    db.notes.toArray(),
+    db.meta.toArray(),
+  ])
+
+  return {
+    schema_version: BACKUP_SCHEMA_VERSION,
+    exported_at: Date.now(),
+    data: {
+      answer_records,
+      bookmarks,
+      case_answer_records,
+      notes,
+      meta,
+    },
+  }
+}
+
+export async function importLearningBackup(payload: unknown): Promise<void> {
+  await initStorage()
+  const parsed = parseBackupPayload(payload)
+  const next_meta = [
+    ...parsed.data.meta.filter((item) => item.key !== MIGRATION_META_KEY),
+    { key: MIGRATION_META_KEY, value: '1' },
+  ]
+
+  await db.transaction('rw', [db.answer_records, db.bookmarks, db.case_answer_records, db.notes, db.meta], async () => {
+    await db.answer_records.clear()
+    await db.bookmarks.clear()
+    await db.case_answer_records.clear()
+    await db.notes.clear()
+    await db.meta.clear()
+
+    if (parsed.data.answer_records.length > 0) {
+      await db.answer_records.bulkPut(parsed.data.answer_records)
+    }
+    if (parsed.data.bookmarks.length > 0) {
+      await db.bookmarks.bulkPut(parsed.data.bookmarks)
+    }
+    if (parsed.data.case_answer_records.length > 0) {
+      await db.case_answer_records.bulkPut(parsed.data.case_answer_records)
+    }
+    if (parsed.data.notes.length > 0) {
+      await db.notes.bulkPut(parsed.data.notes)
+    }
+    if (next_meta.length > 0) {
+      await db.meta.bulkPut(next_meta)
+    }
+  })
 }

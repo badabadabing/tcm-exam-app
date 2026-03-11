@@ -1,14 +1,16 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } from 'react'
 import './App.css'
 import { loadDataset, type DatasetBundle } from './data/dataset'
 import { generateCasesByDisease, generateRandomCases } from './engine/caseGenerator'
 import { generateByDisease, generateQuestion, generateRandom } from './engine/questionEngine'
 import { createInitialSm2State, getNextSm2State, getReviewQuality } from './engine/spacedRepetition'
 import {
+  exportLearningBackup,
   getAnswerRecords,
   getBookmarks,
   getCaseAnswerRecords,
   getMetaJson,
+  importLearningBackup,
   getNotes,
   saveAnswerRecord,
   saveCaseAnswerRecord,
@@ -163,6 +165,17 @@ function formatDuration(seconds: number): string {
   return `${String(minutes).padStart(2, '0')}:${String(remain_seconds).padStart(2, '0')}`
 }
 
+function formatBackupFileTimestamp(timestamp: number): string {
+  const date = new Date(timestamp)
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  const hour = String(date.getHours()).padStart(2, '0')
+  const minute = String(date.getMinutes()).padStart(2, '0')
+  const second = String(date.getSeconds()).padStart(2, '0')
+  return `${year}${month}${day}_${hour}${minute}${second}`
+}
+
 function getWeekKey(timestamp: number): string {
   const date = new Date(timestamp)
   const day = date.getDay() || 7
@@ -245,7 +258,10 @@ function App() {
   const [visible_wrong_count, setVisibleWrongCount] = useState(20)
   const [dismissed_wrong_keys, setDismissedWrongKeys] = useState<string[]>([])
   const [celebration_text, setCelebrationText] = useState('')
+  const [backup_status_text, setBackupStatusText] = useState('')
+  const [is_backup_busy, setIsBackupBusy] = useState(false)
   const review_load_more_ref = useRef<HTMLDivElement | null>(null)
+  const backup_file_input_ref = useRef<HTMLInputElement | null>(null)
 
   // ── 病案论述题状态 ──
   const [case_questions, setCaseQuestions] = useState<CaseQuestion[]>([])
@@ -257,6 +273,34 @@ function App() {
   const [case_exam_summary, setCaseExamSummary] = useState<CaseExamSummary | null>(null)
   const [practice_summary, setPracticeSummary] = useState<PracticeSummary | null>(null)
   const [share_card_data, setShareCardData] = useState<ShareCardData | null>(null)
+
+  const reloadLearningData = useCallback(async () => {
+    const [
+      next_records,
+      next_bookmarks,
+      next_case_answer_records,
+      next_notes,
+      next_goals,
+      next_achievements,
+      next_dismissed_wrong_keys,
+    ] = await Promise.all([
+      getAnswerRecords(),
+      getBookmarks(),
+      getCaseAnswerRecords(),
+      getNotes(),
+      getMetaJson<LearningGoals>('learning_goals', DEFAULT_GOALS),
+      getMetaJson<Achievement[]>('achievements', []),
+      getMetaJson<string[]>('dismissed_wrong_keys', []),
+    ])
+
+    setRecords(next_records)
+    setBookmarks(next_bookmarks)
+    setCaseAnswerRecords(next_case_answer_records)
+    setNotes(next_notes)
+    setLearningGoals(next_goals)
+    setAchievements(next_achievements)
+    setDismissedWrongKeys(next_dismissed_wrong_keys)
+  }, [])
 
   const diseases = useMemo(() => dataset_bundle?.diseases ?? [], [dataset_bundle])
   const syndromes = useMemo(() => dataset_bundle?.syndromes ?? [], [dataset_bundle])
@@ -873,6 +917,51 @@ function App() {
     const timer = window.setTimeout(() => setCelebrationText(''), 2600)
     return () => window.clearTimeout(timer)
   }, [learning_goal_progress.daily_percent, today_stats.count])
+
+  const handleExportBackup = useCallback(async () => {
+    try {
+      setIsBackupBusy(true)
+      const payload = await exportLearningBackup()
+      const file_name = `tcm-learning-backup-${formatBackupFileTimestamp(payload.exported_at)}.json`
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' })
+      const object_url = URL.createObjectURL(blob)
+      const anchor = document.createElement('a')
+      anchor.href = object_url
+      anchor.download = file_name
+      document.body.append(anchor)
+      anchor.click()
+      anchor.remove()
+      URL.revokeObjectURL(object_url)
+      setBackupStatusText(`备份已导出：${file_name}`)
+    } catch (error) {
+      console.error('导出备份失败', error)
+      setBackupStatusText('导出失败，请稍后重试。')
+    } finally {
+      setIsBackupBusy(false)
+    }
+  }, [])
+
+  const handleImportBackupFile = useCallback(async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) {
+      return
+    }
+
+    try {
+      setIsBackupBusy(true)
+      const raw_text = await file.text()
+      const parsed = JSON.parse(raw_text) as unknown
+      await importLearningBackup(parsed)
+      await reloadLearningData()
+      setBackupStatusText(`导入成功：${file.name}`)
+    } catch (error) {
+      console.error('导入备份失败', error)
+      setBackupStatusText(error instanceof Error ? `导入失败：${error.message}` : '导入失败，请检查备份文件。')
+    } finally {
+      setIsBackupBusy(false)
+      event.target.value = ''
+    }
+  }, [reloadLearningData])
 
   function startSession(
     next_questions: Question[],
@@ -1736,6 +1825,31 @@ function App() {
               收藏练习（{bookmarks.length}）
             </button>
           </div>
+
+          <article className="card">
+            <h2 className="card_title">学习数据备份</h2>
+            <p className="hint_text">可将学习记录导出为 JSON；导入会覆盖当前设备上的本地数据。</p>
+            <div className="action_row">
+              <button className="primary_btn" onClick={() => void handleExportBackup()} disabled={is_backup_busy}>
+                导出备份
+              </button>
+              <button
+                className="secondary_btn"
+                onClick={() => backup_file_input_ref.current?.click()}
+                disabled={is_backup_busy}
+              >
+                导入备份
+              </button>
+              <input
+                ref={backup_file_input_ref}
+                type="file"
+                accept=".json,application/json"
+                style={{ display: 'none' }}
+                onChange={(event) => void handleImportBackupFile(event)}
+              />
+            </div>
+            {backup_status_text && <p className="hint_text">{backup_status_text}</p>}
+          </article>
 
           {/* ═══ 4. 最近练习病种 ═══ */}
           {recent_practice_rows.length > 0 && (
